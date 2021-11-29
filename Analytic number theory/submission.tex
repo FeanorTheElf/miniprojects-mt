@@ -8,6 +8,7 @@
 \usepackage{mathtools}
 \usepackage{amssymb}
 \usepackage{listings}
+\usepackage{amsthm}
 \usepackage[style=english]{csquotes}
 \usepackage[language=english, backend=biber, style=alphabetic, sorting=nyt]{biblatex}
 
@@ -24,6 +25,8 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\divides}{\ | \ }
+\newcommand{\units}{\times}
+\newcommand{\sgn}{\mathrm{sgn}}
 \newcommand\restr[2]{{
     \left.\kern-\nulldelimiterspace
     #1
@@ -31,10 +34,170 @@
     \right|_{#2}
 }}
 
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{example}[definition]{Example}
+
 \begin{document}
 \maketitle
 
+We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
 
+\section{Part 1}
+
+For convenience, we include the definition of a Dirichlet character from the task description first.
+\begin{definition}
+    Let $q \geq 2$, then a \emph{Dirichlet character (mod $q$)} is a function $\chi: \N \to \C$ such that
+    \begin{itemize}
+        \item $\chi$ is completely multiplicative, so $\chi(a)\chi(b) = \chi(ab)$
+        \item $\chi$ is periodic modulo $q$, so $\chi(n + q) = \chi(n)$
+        \item $\chi(n) \neq 0$ if and only if $n \perp q$
+    \end{itemize}
+\end{definition}
+First, we will give another characterization of Dirichlet characters.
+\begin{lemma}[Characterization of Dirichlet characters]
+    \label{prop:characterization_dirichlet_character}
+    We have a one-to-one correspondence between Dirichlet characters mod $q$ and group homomorphisms $(\Z/q\Z)^\units \to \C^\units$ via
+    \begin{align*}
+        \{ \chi: (\Z/q\Z)^\units \to \C^\units \ | \ \chi \ \text{group hom} \} &\to \{ \chi: \N \to \C \ | \ \chi \ \text{Dirichlet character mod $q$} \} \\
+        \chi &\mapsto \tilde{\chi} := \left( \N \to \C, \ n \mapsto \begin{cases}
+            \chi([n]_q) & \text{if $n \perp q$} \\
+            0 & \text{otherwise}
+        \end{cases} \right)
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    First of all, we show that the map is well-defined. Let $\chi: (\Z/q\Z)^\units \to \C^\units$ be a (multiplicative) group homomorphism, and we show that $\tilde{\chi}$ is a Dirichlet character.
+    
+    Note that property (ii) and (iii) directly follow from the definition, as $\tilde{\chi}(n)$ only depends on the value of $n \mod q$.
+    So consider some $a, b \in \N$.
+    If both $a \perp q$ and $b \perp q$ then
+    \begin{equation*}
+        \tilde{\chi}(a)\tilde{\chi}(b) = \chi([a])\chi([b]) = \chi([ab]) = \tilde{\chi}(ab)
+    \end{equation*}
+    as also $ab \perp q$.
+
+    On the other hand, if $a \not\perp q$ or $b \not\perp q$ have $\chi(a) = 0$ resp. $\chi(b) = 0$.
+    We also have in this case that $ab \not\perp q$ and so
+    \begin{equation*}
+        \chi(a)\chi(b) = 0 = \chi(ab)
+    \end{equation*}
+    Now it is left to show that the correspondence is a bijection.
+    Clearly, if $\chi \neq \xi$ then $\chi(x) \neq \xi(x)$ for some $x \in (\Z/q\Z)^\units$ and so $\tilde{\chi}(n) \neq \tilde{\xi}(n)$ for some representative $n \in \N$ of $x$.
+    
+    To show surjectivity, consider some Dirichlet character $f: \N \to \C$ and construct a group homomorphism $\chi: (\Z/q\Z)^\units \to \C^\units$. 
+    For each $x \in (\Z/q\Z)^\units$, there is a representative $n \in \N$ of $x$ and as $f(n)$ does not depend on the choice of $n$, we may define $\chi(x) := f(n)$.
+    Note that as $x \in (\Z/q\Z)^\units$, we find $n \perp q$ and so $f(n) \neq 0$, i.e. $f(n) \in \C^*$.
+    Then clearly for $a, b \in (\Z/q\Z)^*$ with representatives $n, m \in \N$ have
+    \begin{equation*}
+        \chi(ab) = f(nm) = f(n)f(m) = \chi(a)\chi(b)
+    \end{equation*}
+    So $\chi$ is a well-defined group homomorphism and we obviously have $\tilde{\chi} = f$.
+\end{proof}
+\begin{example}[Part 1 (i)]
+    \label{ex:nontrivial_dirichlet_character_mod_4}
+    The function
+    \begin{equation*}
+        f: \N \to \C, \quad n \mapsto \begin{cases}
+            0 & \text{if $n \equiv 0, 2 \mod 4$} \\
+            1 & \text{if $n \equiv 1 \mod 4$} \\
+            -1 & \text{if $n \equiv 3 \mod 4$}
+        \end{cases}
+    \end{equation*}
+    is a Dirichlet character.
+\end{example}
+\begin{proof}
+    This follows directly from Lemma~\ref{prop:characterization_dirichlet_character}, as $f = \tilde{\chi}$ for the group homomorphism
+    \begin{equation*}
+        \chi: (\Z/4\Z)^\units = \{ 1, 3 \} \to \C^*, \quad 1 \mapsto 1, \ 3 \mapsto -1
+    \end{equation*}
+    (this is a group homomorphism, as $3^2 = 9 \equiv 1 \mod 4$)
+\end{proof}
+Now we want to define Dirichlet series of Dirichlet characters.
+\begin{proposition}
+    For a Dirichlet character $\chi: \N \to \C$ and some $\epsilon > 0$, the series
+    \begin{equation*}
+        L(s, f) := \sum_{n \geq 1} f(n) n^{-s}
+    \end{equation*}
+    converges uniformly on $\Re(s) \geq 1 + \epsilon$.
+    We will call it the Dirichlet series of $\chi$.
+\end{proposition}
+\begin{proof}
+    By Lemma~\ref{prop:characterization_dirichlet_character}, we know that $\chi$ corresponds to a group homomorphism $\chi': (\Z/q\Z)^\units \to \C^\units$ such that $\chi(\N) = \chi((\Z/q\Z)^*) \cup \{ 0 \} \subseteq \C$ is a finite subset of $\C$.
+    Hence, there is $C > 0$ with $|\chi(n)| \leq C$ for all $n \in \N$, and it follows that
+    \begin{equation*}
+        \sum_{1 \leq n \leq X} \left| f(n) n^{-s} \right| \leq \sum_{1 \leq n \leq X} C \left| n^{-s} \right| \leq C \sum_{1 \leq n \leq X} n^{-1 - \epsilon}
+    \end{equation*}
+    which is finite.
+\end{proof}
+\begin{proposition}[Part 1 (ii)]
+    \label{prop:dirichlet_series_at_one}
+    Let $\chi: (\Z/q\Z)^\units \to \C^\units$ be a group homomorphism. Then for the associated Dirichlet character $\tilde{\chi}$ we have that
+    \begin{equation*}
+        \lim_{s \to 1^+} L(s, \tilde{\chi}) \ \text{exists} \ \Leftrightarrow \ \sum_{x \in (\Z/q\Z)^\units} \chi(x) = 0
+    \end{equation*}
+    In this case, have that
+    \begin{equation*}
+        \lim_{s \to 1^+} L(s, \tilde{\chi}) = \sum_{n \geq 1} f(n) n^{-s}
+    \end{equation*}
+    where the right sum converges (but not absolutely) for $\Re(s) > 0$.
+\end{proposition}
+\begin{proof}
+    Let $c = \sum_{x \in (\Z/q\Z)^\units} \chi(x)$.
+    For the direction $\Rightarrow$ assume that $c \neq 0$.
+    Then have for $\Re(s) > 1$ that
+    \begin{align*}
+        \sgn(c) \sum_{n \geq 1} \tilde{\chi}(n) n^{-s} &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \sgn(c) \tilde{\chi}(qn + k) (qn + k)^{-s} \\
+        &\geq \sum_{n \geq 1} \ \sum_{0 \leq k < 1}\sgn(c) \tilde{\chi}(qn + k) (qn + n)^{-s} \\
+        &= \sum_{n \geq 1} \sgn(c) (qn + n)^{-s} \underbrace{\sum_{0 \leq k < q} \tilde{\chi}(qn + k)}_{= c} \\
+        &\geq \frac {|c|} {(q + 1)^s} \sum_{n \geq 1} n^{-s} = \frac {|c|} {(q + 1)^s} \zeta(s)
+    \end{align*}
+    which clearly has a pole at $s = 1$. Hence $\lim_{s \to 1^+} L(s, \tilde{\chi})$ cannot exist.
+
+    For the other direction, assume that $c = 0$.
+    Again, have for $\Re(s) > 1$ that
+    \begin{align*}
+        \sum_{n \geq 1} \tilde{\chi}(n) n^{-s} &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \tilde{\chi}(qn + k) (qn + k)^{-s} \\
+        &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \tilde{\chi}(qn + k) \Bigl( (qn)^{-s} + (qn + k)^{-s} - (qn)^{-s} \Bigr)
+    \end{align*}
+    Observe that by Bernoulli's inequality, have
+    \begin{align*}
+        (qn)^{-s} - (qn + k)^{-s} &= \frac {(qn)^s - (qn + k)^s} {(q^2n^2 + qnk)^s} = (qn)^{s} \frac {1 - (1 + k(qn)^{-1})^s} {(q^2n^2 + qnk)^s} \\
+        &\leq (qn)^s \frac {sk(qn)^{-1}} {(q^2n^2 + qnk)^s} = \frac {sk} {qn(qn + k)^s} = O(sn^{-s - 1})
+    \end{align*}
+    As $\chi((\Z/q\Z)^\units) \subseteq \C$ is finite, find $C > 0$ with $|\tilde{\chi}(n)| \leq C$ for all $n \in \N$. Then
+    \begin{align*}
+        \sum_{n \geq X} \tilde{\chi}(n) n^{-s} &= O(qCX^{-s}) + \sum_{n \geq X/q} \ \sum_{0 \leq k < q} \tilde{\chi}(qn + k) \Bigl( (qn)^{-s} + O(sn^{-s - 1}) \Bigr) \\
+        &= O(qCX^{-s}) + \sum_{n \leq X/q} \Bigl( (qn)^{-s} c + \sum_{0 \geq k < q} O(Csn^{-s - 1}) \Bigr) = \\
+        &= O(qCX^{-s}) + 0 + O\Bigl( Cqs \sum_{n \geq X/q} n^{-s - 1} \Bigr) \\
+        &\leq O(qCX^{-s}) + O\Bigl( Cqs\zeta(s + 1) \Bigr)
+    \end{align*}
+    which is well-defined and finite for $\Re(s) > 0$.
+    Further, the expression converges uniformly (as a function in $s$ on a neighborhood of $1$) to $0$ as $X \to \infty$. 
+    So
+    \begin{equation*}
+        \sum_{n < X} \tilde{\chi}(n) n^{-s} \quad \text{converges uniformly to} \quad \sum_{n \geq 1} \tilde{\chi}(n) n^{-s}
+    \end{equation*}
+    as $X \to \infty$ (on a neighborhood of $1$). 
+    Thus the limit is continuous and a continuation of $L(s, \tilde{\chi})$ which is defined on $\Re(s) > 1$.
+    From this it follows that $\lim_{s \to 1} L(s, \tilde{\chi})$ exists and is equal to $\sum_n \tilde{\chi}(n) n^{-s}$.
+\end{proof}
+Applied to our example, we find
+\begin{example}
+    Let $f: \N \to \C$ be the Dirichlet character from Example~\ref{ex:nontrivial_dirichlet_character_mod_4} with corresponding group homomorphism $\chi: (\Z/4\Z)^\units \to \C$.
+    Then
+    \begin{equation*}
+        \sum_{x \in (\Z/4\Z)^*} \chi(x) = \chi(1) + \chi(3) = 1 - 1 = 0
+    \end{equation*}
+    and so by Lemma~\ref{prop:dirichlet_series_at_one} the limit $\lim_{s \to 1^+} L(s, f)$ exists.
+    The lemma further yields that
+    \begin{align*}
+        \lim_{s \to 1} L(s, f) &= \sum_{n \geq 1} f(n) n^{-1} = \sum_{n \geq 0} \frac {f(4n + 1)} {4n + 1} + \frac {f(4n + 3)} {4n + 3} = \sum_{n \geq 0} \frac 1 {4n + 1} - \frac 1 {4n + 3} \\
+        &= 2 \sum_{n \geq 0} \frac 1 {(4n + 1)(4n + 3)} > 0
+    \end{align*}
+    is positive.
+\end{example}
 
 \printbibliography
 \end{document}

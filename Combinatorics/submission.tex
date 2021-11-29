@@ -3,10 +3,11 @@
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{listings}
 \usepackage[style=english]{csquotes}
 \usepackage[language=english, backend=biber, style=alphabetic, sorting=nyt]{biblatex}
@@ -23,6 +24,8 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\C}{\mathbb{C}}
+\newcommand{\units}{\times}
+\newcommand{\sgn}{\mathrm{sgn}}
 \newcommand{\divides}{\ | \ }
 \newcommand\restr[2]{{
     \left.\kern-\nulldelimiterspace
@@ -31,10 +34,12 @@
     \right|_{#2}
 }}
 
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{example}[definition]{Example}
+
 \begin{document}
 \maketitle
 
-
-
-\printbibliography
 \end{document}
