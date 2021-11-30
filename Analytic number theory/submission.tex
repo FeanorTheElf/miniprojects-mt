@@ -3,7 +3,7 @@
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{amssymb}
@@ -38,11 +38,13 @@
 \newtheorem{lemma}[definition]{Lemma}
 \newtheorem{proposition}[definition]{Proposition}
 \newtheorem{example}[definition]{Example}
+\newtheorem{corollary}[definition]{Corollary}
 
 \begin{document}
 \maketitle
-
 We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
+Further, we write $a \divides b$ if $a$ divides $b$ and $a \perp b$ if $a$ and $b$ are coprime.
+Finally, let $\primes$ be the set of prime numbers in $\N$.
 
 \section{Part 1}
 
@@ -131,7 +133,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
     \end{equation*}
     which is finite.
 \end{proof}
-\begin{proposition}[Part 1 (ii)]
+\begin{proposition}
     \label{prop:dirichlet_series_at_one}
     Let $\chi: (\Z/q\Z)^\units \to \C^\units$ be a group homomorphism. Then for the associated Dirichlet character $\tilde{\chi}$ we have that
     \begin{equation*}
@@ -184,7 +186,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
     From this it follows that $\lim_{s \to 1} L(s, \tilde{\chi})$ exists and is equal to $\sum_n \tilde{\chi}(n) n^{-s}$.
 \end{proof}
 Applied to our example, we find
-\begin{example}
+\begin{example}[Part 1 (ii)]
     Let $f: \N \to \C$ be the Dirichlet character from Example~\ref{ex:nontrivial_dirichlet_character_mod_4} with corresponding group homomorphism $\chi: (\Z/4\Z)^\units \to \C$.
     Then
     \begin{equation*}
@@ -196,8 +198,76 @@ Applied to our example, we find
         \lim_{s \to 1} L(s, f) &= \sum_{n \geq 1} f(n) n^{-1} = \sum_{n \geq 0} \frac {f(4n + 1)} {4n + 1} + \frac {f(4n + 3)} {4n + 3} = \sum_{n \geq 0} \frac 1 {4n + 1} - \frac 1 {4n + 3} \\
         &= 2 \sum_{n \geq 0} \frac 1 {(4n + 1)(4n + 3)} > 0
     \end{align*}
-    is positive.
+    is positive. 
+    Wolfram Alpha \cite{wolfram_alpha} can give an explicit value to this sum, using the digamma function $\psi$. Namely
+    \begin{equation*}
+        \sum_{x \in (\Z/4\Z)^\units} f(n) n^{-1} = \frac 1 4 (\psi(\frac 7 4) - \psi(\frac 5 4))
+    \end{equation*}
+    which seems to be $\frac 1 4$.
 \end{example}
+Now we want to study the series
+\begin{equation*}
+    \sum_p f(p) p^{-s}
+\end{equation*}
+For this, we are first interested in how many primes $\equiv 1, 3 \mod 4$ there are.
+\begin{lemma}
+    \label{prop:prime_factor_3_mod_4}
+    Let $n \equiv 3 \mod 4$. Then $n$ has a prime factor $p \equiv 3 \mod 4$.
+\end{lemma}
+\begin{proof}
+    Use induction on $n$.
+    If $n = 3$, the claim is trivial. 
+    So let $n > 3$. If $n$ is prime, the claim again follows.
+    Otherwise, have $n = ab$ with nontrivial divisors $a, b$.
+    However, $3 \equiv n$ is not a square modulo $4$, so find that $a \not\equiv b \mod 4$.
+    As both $a$ and $b$ must be odd, we see that either $a \equiv 3 \mod 4$ or $b \equiv 3 \mod 4$ and the claim follows by the induction hypothesis.
+\end{proof}
+\begin{corollary}[Part 1 (iii)]
+    There are infinitely many primes $p$ with $p \equiv 3 \mod 4$.
+\end{corollary}
+\begin{proof}
+    It suffices to show that there is a prime number $q \equiv 3 \mod 4$ with $q \geq N$ for every $N \in \N$.
+    Let
+    \begin{equation*}
+        P := \prod_{p \in \primes, \ p \leq N} p
+    \end{equation*}
+\end{proof}
+For the case of primes $\equiv 1 \mod 4$, I have remembered the two-square theorem and its connection to primes in the ring $\Z[i]$ of Gaussian integers, and somehow my train of thoughts went into Algebraic Number Theory.
+After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch} that requires the reader to prove the following proposition.
+\begin{proposition}
+    Let $q \geq 3$ be an integer.
+    Then there are infinitely many primes $p$ with $p \equiv 1 \mod q$.
+\end{proposition}
+\begin{proof}
+    Assume there were only finitely many such primes $p_i$, then we have their product $P = \prod_i p_i \in \Z$.
+    Consider now the $q$-th cyclotomic polynomial $\Phi_q$.
+    Clearly $\Phi_q(qPX) - 1 \in \Q[X]$ has at most $\phi(q)$ zeros, so there exists some $x \in \Z$ with $\Phi_q(qPx) \neq 1$ (this ``Ansatz'' was given as a hint).
+
+    Let now $K = \Q(\omega_q)$ be the $q$-th cyclotomic number field with a primitive $q$-th root of unity $\omega_q$ (i.e. $\Phi_q(\omega_q) = 0$).
+    Let further $\mathcal{O} \subseteq K$ be the ring of integral elements over $\Z$ in $K$.
+    The prime decomposition law for Dedekind ring extension \cite[Chapter I, Prop 8.3]{neukirch} tells us that for a prime $p$, the ideal $(p)$ is reducible in $\mathcal{O}$ if and only if $\Phi_q \mod p$ is reducible.
+    As $(\Z/p\Z)^\units$ is cyclic of order $p - 1$, this is the case if and only if $q \divides p - 1$, i.e. $p \equiv 1 \mod q$.
+
+    Now consider the element $\alpha = \omega_q - xqP \in \mathcal{O}$. Then
+    \begin{align*}
+        N_{K/\Q}(\alpha) &= \prod_{\sigma: K \to \C \ \text{$\Q$-field homomorphism}} \sigma(\omega_q - xqP) \\
+        &= \prod_{\sigma} (\sigma(\omega_q) - xqP) = \mathrm{MiPo}_\Q(\omega_q)(xqP) = \Phi_q(xqP) \neq 1
+    \end{align*}
+    as $\mathrm{MiPo}_\Q(\omega_q) = \prod_\sigma (\sigma(\omega_q) - X)$.
+    Hence, $\alpha$ is not a unit in $\mathcal{O}$.
+    On the other hand, $(\alpha)$ is coprime to $(p_i)$ for each $p_i$, as 
+    \begin{equation*}
+        \omega_q = \alpha - xqP \in (\alpha) + (p_i) \quad \text{and} \quad \omega_q \in \mathcal{O}^\units
+    \end{equation*}
+    By our assumption, the only prime ideals in $\mathcal{O}$ are the prime ideal factors of $(p_i)$ and $(p)$ for $p \neq p_i$.
+    Thus, the prime ideal factorization of $(\alpha)$ consists only of prime ideals $(p), p \neq p_i$ and it follows that $(\alpha) = (n)$ for some integer $n \geq 2$.
+    As $\omega_q$ and $xqP \in \Z$ are $\Q$-linearly independent, we see that $n \divides \omega_q$ and $n \divides xqP$.
+    However, the former is a contradiction, as $\omega_q \in \mathcal{O}^\units$ is a unit and no $n \geq 2$ is a unit.
+\end{proof}
+The book also mentions that the general case can be proven by using L-series in algebraic number fields.
+\begin{corollary}[Part 1 (iii)]
+    There are infinitely many primes $p$ with $p \equiv 1 \mod 4$.
+\end{corollary}
 
 \printbibliography
 \end{document}
