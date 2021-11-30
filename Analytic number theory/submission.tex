@@ -64,40 +64,40 @@ First, we will give another characterization of Dirichlet characters.
     \label{prop:characterization_dirichlet_character}
     We have a one-to-one correspondence between Dirichlet characters mod $q$ and group homomorphisms $(\Z/q\Z)^\units \to \C^\units$ via
     \begin{align*}
-        \{ \chi: (\Z/q\Z)^\units \to \C^\units \ | \ \chi \ \text{group hom} \} &\to \{ \chi: \N \to \C \ | \ \chi \ \text{Dirichlet character mod $q$} \} \\
-        \chi &\mapsto \tilde{\chi} := \left( \N \to \C, \ n \mapsto \begin{cases}
-            \chi([n]_q) & \text{if $n \perp q$} \\
+        \{ f: (\Z/q\Z)^\units \to \C^\units \ | \ f \ \text{group hom} \} &\to \{ \chi: \N \to \C \ | \ \chi \ \text{Dirichlet character mod $q$} \} \\
+        f &\mapsto \chi_f := \left( \N \to \C, \ n \mapsto \begin{cases}
+            f([n]) & \text{if $n \perp q$} \\
             0 & \text{otherwise}
         \end{cases} \right)
     \end{align*}
 \end{lemma}
 \begin{proof}
-    First of all, we show that the map is well-defined. Let $\chi: (\Z/q\Z)^\units \to \C^\units$ be a (multiplicative) group homomorphism, and we show that $\tilde{\chi}$ is a Dirichlet character.
+    First of all, we show that the map is well-defined. Let $f: (\Z/q\Z)^\units \to \C^\units$ be a (multiplicative) group homomorphism, and we show that $\chi_f$ is a Dirichlet character.
     
-    Note that property (ii) and (iii) directly follow from the definition, as $\tilde{\chi}(n)$ only depends on the value of $n \mod q$.
+    Note that property (ii) and (iii) directly follow from the definition, as $\chi_f(n)$ only depends on the value of $n \mod q$.
     So consider some $a, b \in \N$.
     If both $a \perp q$ and $b \perp q$ then
     \begin{equation*}
-        \tilde{\chi}(a)\tilde{\chi}(b) = \chi([a])\chi([b]) = \chi([ab]) = \tilde{\chi}(ab)
+        \chi_f(a)\chi_f(b) = \chi([a])\chi([b]) = \chi([ab]) = \chi_f(ab)
     \end{equation*}
     as also $ab \perp q$.
 
-    On the other hand, if $a \not\perp q$ or $b \not\perp q$ have $\chi(a) = 0$ resp. $\chi(b) = 0$.
+    On the other hand, if $a \not\perp q$ or $b \not\perp q$ have $\chi_f(a) = 0$ resp. $\chi_f(b) = 0$.
     We also have in this case that $ab \not\perp q$ and so
     \begin{equation*}
-        \chi(a)\chi(b) = 0 = \chi(ab)
+        \chi_f(a)\chi_f(b) = 0 = \chi_f(ab)
     \end{equation*}
     Now it is left to show that the correspondence is a bijection.
-    Clearly, if $\chi \neq \xi$ then $\chi(x) \neq \xi(x)$ for some $x \in (\Z/q\Z)^\units$ and so $\tilde{\chi}(n) \neq \tilde{\xi}(n)$ for some representative $n \in \N$ of $x$.
+    Clearly, if $f \neq g$ then $f(x) \neq g(x)$ for some $x \in (\Z/q\Z)^\units$ and so $\chi_f(n) \neq \chi_g(n)$ for some representative $n \in \N$ of $x$.
     
-    To show surjectivity, consider some Dirichlet character $f: \N \to \C$ and construct a group homomorphism $\chi: (\Z/q\Z)^\units \to \C^\units$. 
-    For each $x \in (\Z/q\Z)^\units$, there is a representative $n \in \N$ of $x$ and as $f(n)$ does not depend on the choice of $n$, we may define $\chi(x) := f(n)$.
-    Note that as $x \in (\Z/q\Z)^\units$, we find $n \perp q$ and so $f(n) \neq 0$, i.e. $f(n) \in \C^*$.
+    To show surjectivity, consider some Dirichlet character $\chi: \N \to \C$ and construct a group homomorphism $f: (\Z/q\Z)^\units \to \C^\units$. 
+    For each $x \in (\Z/q\Z)^\units$, there is a representative $n \in \N$ of $x$ and as $\chi(n)$ does not depend on the choice of $n$, we may define $f(x) := \chi(n)$.
+    Note that as $x \in (\Z/q\Z)^\units$, we find $n \perp q$ and so $\chi(n) \neq 0$, i.e. $\chi(n) \in \C^*$.
     Then clearly for $a, b \in (\Z/q\Z)^*$ with representatives $n, m \in \N$ have
     \begin{equation*}
-        \chi(ab) = f(nm) = f(n)f(m) = \chi(a)\chi(b)
+        f(ab) = \chi(nm) = \chi(n)\chi(m) = f(a)f(b)
     \end{equation*}
-    So $\chi$ is a well-defined group homomorphism and we obviously have $\tilde{\chi} = f$.
+    So $f$ is a well-defined group homomorphism and we obviously have $\chi_f = \chi$.
 \end{proof}
 For simplicity of notation we sometimes will identify a Dirichlet character and its group homomorphism if it is always clear which one is meant.
 \begin{example}[Ex (i)]
@@ -113,9 +113,9 @@ For simplicity of notation we sometimes will identify a Dirichlet character and 
     is a Dirichlet character.
 \end{example}
 \begin{proof}
-    This follows directly from Lemma~\ref{prop:characterization_dirichlet_character}, as $f = \tilde{\chi}$ for the group homomorphism
+    This follows directly from Lemma~\ref{prop:characterization_dirichlet_character}, as $f = \chi_g$ for the group homomorphism
     \begin{equation*}
-        \chi: (\Z/4\Z)^\units = \{ 1, 3 \} \to \C^*, \quad 1 \mapsto 1, \ 3 \mapsto -1
+        g: (\Z/4\Z)^\units = \{ 1, 3 \} \to \C^*, \quad 1 \mapsto 1, \ 3 \mapsto -1
     \end{equation*}
     (this is a group homomorphism, as $3^2 = 9 \equiv 1 \mod 4$)
 \end{proof}
@@ -129,71 +129,71 @@ Now we want to define Dirichlet series of Dirichlet characters.
     We will call it the Dirichlet series of $\chi$.
 \end{proposition}
 \begin{proof}
-    By Lemma~\ref{prop:characterization_dirichlet_character}, we know that $\chi$ corresponds to a group homomorphism $\chi': (\Z/q\Z)^\units \to \C^\units$ such that $\chi(\N) = \chi((\Z/q\Z)^*) \cup \{ 0 \} \subseteq \C$ is a finite subset of $\C$.
+    By Lemma~\ref{prop:characterization_dirichlet_character}, we know that $\chi$ corresponds to a group homomorphism $f: (\Z/q\Z)^\units \to \C^\units$ such that $\chi(\N) = f((\Z/q\Z)^*) \cup \{ 0 \} \subseteq \C$ is a finite subset of $\C$.
     Hence, there is $C > 0$ with $|\chi(n)| \leq C$ for all $n \in \N$, and it follows that
     \begin{equation*}
-        \sum_{1 \leq n \leq X} \left| f(n) n^{-s} \right| \leq \sum_{1 \leq n \leq X} C \left| n^{-s} \right| \leq C \sum_{1 \leq n \leq X} n^{-1 - \epsilon}
+        \sum_{1 \leq n \leq X} \left| \chi(n) n^{-s} \right| \leq \sum_{1 \leq n \leq X} C \left| n^{-s} \right| \leq C \sum_{1 \leq n \leq X} n^{-1 - \epsilon} \leq C \sum_{n \geq 1} n^{-1 - \epsilon}
     \end{equation*}
     which is finite.
 \end{proof}
 \begin{proposition}
     \label{prop:dirichlet_series_at_one}
-    Let $\chi: (\Z/q\Z)^\units \to \C^\units$ be a group homomorphism. Then for the associated Dirichlet character $\tilde{\chi}$ we have that
+    Let $f: (\Z/q\Z)^\units \to \C^\units$ be a group homomorphism. Then for the associated Dirichlet character $\chi = \chi_f$ we have that
     \begin{equation*}
-        \lim_{s \to 1^+} L(s, \tilde{\chi}) \ \text{exists} \ \Leftrightarrow \ \sum_{x \in (\Z/q\Z)^\units} \chi(x) = 0
+        \lim_{s \to 1^+} L(s, \chi) \ \text{exists} \ \Leftrightarrow \ \sum_{x \in (\Z/q\Z)^\units} f(x) = 0
     \end{equation*}
-    In this case, have that
+    In this case, have that $L(s, \chi)$ is well-defined, $\lim_{t \to s} L(t, \chi)$ exists and
     \begin{equation*}
-        \lim_{s \to 1^+} L(s, \tilde{\chi}) = \sum_{n \geq 1} f(n) n^{-s}
+        \lim_{t \to s} L(t, \chi) = \sum_{n \geq 1} \chi(n) n^{-s}
     \end{equation*}
-    where the right sum converges (but not absolutely) for $\Re(s) > 0$.
+    where the right sum converges (but not absolutely), for all $\Re(s) > 0$.
 \end{proposition}
 \begin{proof}
-    Let $c = \sum_{x \in (\Z/q\Z)^\units} \chi(x)$.
+    Let $c = \sum_{x \in (\Z/q\Z)^\units} f(x)$.
     For the direction $\Rightarrow$ assume that $c \neq 0$.
     Then have for $\Re(s) > 1$ that
     \begin{align*}
-        \sgn(c) \sum_{n \geq 1} \tilde{\chi}(n) n^{-s} &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \sgn(c) \tilde{\chi}(qn + k) (qn + k)^{-s} \\
-        &\geq \sum_{n \geq 1} \ \sum_{0 \leq k < 1}\sgn(c) \tilde{\chi}(qn + k) (qn + n)^{-s} \\
-        &= \sum_{n \geq 1} \sgn(c) (qn + n)^{-s} \underbrace{\sum_{0 \leq k < q} \tilde{\chi}(qn + k)}_{= c} \\
+        \sgn(c) \sum_{n \geq 1} \chi(n) n^{-s} &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \sgn(c) \chi(qn + k) (qn + k)^{-s} \\
+        &\geq \sum_{n \geq 1} \ \sum_{0 \leq k < 1}\sgn(c) \chi(qn + k) (qn + n)^{-s} \\
+        &= \sum_{n \geq 1} \sgn(c) (qn + n)^{-s} \underbrace{\sum_{0 \leq k < q} \chi(qn + k)}_{= c} \\
         &\geq \frac {|c|} {(q + 1)^s} \sum_{n \geq 1} n^{-s} = \frac {|c|} {(q + 1)^s} \zeta(s)
     \end{align*}
-    which clearly has a pole at $s = 1$. Hence $\lim_{s \to 1^+} L(s, \tilde{\chi})$ cannot exist.
+    which clearly has a pole at $s = 1$. Hence $\lim_{s \to 1^+} L(s, \chi_f)$ cannot exist.
 
     For the other direction, assume that $c = 0$.
     Again, have for $\Re(s) > 1$ that
     \begin{align*}
-        \sum_{n \geq 1} \tilde{\chi}(n) n^{-s} &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \tilde{\chi}(qn + k) (qn + k)^{-s} \\
-        &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \tilde{\chi}(qn + k) \Bigl( (qn)^{-s} + (qn + k)^{-s} - (qn)^{-s} \Bigr)
+        \sum_{n \geq 1} \chi(n) n^{-s} &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \chi(qn + k) (qn + k)^{-s} \\
+        &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \chi(qn + k) \Bigl( (qn)^{-s} + (qn + k)^{-s} - (qn)^{-s} \Bigr)
     \end{align*}
     Observe that by Bernoulli's inequality, have
     \begin{align*}
         (qn)^{-s} - (qn + k)^{-s} &= \frac {(qn)^s - (qn + k)^s} {(q^2n^2 + qnk)^s} = (qn)^{s} \frac {1 - (1 + k(qn)^{-1})^s} {(q^2n^2 + qnk)^s} \\
         &\leq (qn)^s \frac {sk(qn)^{-1}} {(q^2n^2 + qnk)^s} = \frac {sk} {qn(qn + k)^s} = O(sn^{-s - 1})
     \end{align*}
-    As $\chi((\Z/q\Z)^\units) \subseteq \C$ is finite, find $C > 0$ with $|\tilde{\chi}(n)| \leq C$ for all $n \in \N$. Then
+    As $\chi((\Z/q\Z)^\units) \subseteq \C$ is finite, find $C > 0$ with $|\chi_f(n)| \leq C$ for all $n \in \N$. Then
     \begin{align*}
-        \sum_{n \geq X} \tilde{\chi}(n) n^{-s} &= O(qCX^{-s}) + \sum_{n \geq X/q} \ \sum_{0 \leq k < q} \tilde{\chi}(qn + k) \Bigl( (qn)^{-s} + O(sn^{-s - 1}) \Bigr) \\
+        \sum_{n \geq X} \chi(n) n^{-s} &= O(qCX^{-s}) + \sum_{n \geq X/q} \ \sum_{0 \leq k < q} \chi(qn + k) \Bigl( (qn)^{-s} + O(sn^{-s - 1}) \Bigr) \\
         &= O(qCX^{-s}) + \sum_{n \leq X/q} \Bigl( (qn)^{-s} c + \sum_{0 \geq k < q} O(Csn^{-s - 1}) \Bigr) = \\
         &= O(qCX^{-s}) + 0 + O\Bigl( Cqs \sum_{n \geq X/q} n^{-s - 1} \Bigr) \\
         &\leq O(qCX^{-s}) + O\Bigl( Cqs\zeta(s + 1) \Bigr)
     \end{align*}
     which is well-defined and finite for $\Re(s) > 0$.
-    Further, the expression converges uniformly (as a function in $s$ on a neighborhood of $1$) to $0$ as $X \to \infty$. 
+    Further, the expression converges uniformly (as a function in $s$ on $\Re(s) \geq \epsilon > 0$) to $0$ as $X \to \infty$. 
     So
     \begin{equation*}
-        \sum_{n < X} \tilde{\chi}(n) n^{-s} \quad \text{converges uniformly to} \quad \sum_{n \geq 1} \tilde{\chi}(n) n^{-s}
+        \sum_{n < X} \chi(n) n^{-s} \quad \text{converges uniformly to} \quad \sum_{n \geq 1} \chi(n) n^{-s}
     \end{equation*}
-    as $X \to \infty$ (on a neighborhood of $1$). 
-    Thus the limit is continuous and a continuation of $L(s, \tilde{\chi})$ which is defined on $\Re(s) > 1$.
-    From this it follows that $\lim_{s \to 1} L(s, \tilde{\chi})$ exists and is equal to $\sum_n \tilde{\chi}(n) n^{-s}$.
+    as $X \to \infty$ (on a $\Re(s) \geq \epsilon > 0$). 
+    Thus the limit is continuous and a continuation of $L(s, \chi_f)$ defined on $\Re(s) > 1$.
+    From this it follows that $\lim_{t \to s} L(t, \chi_f)$ exists and is equal to $\sum_n \chi_f(n) n^{-s}$.
 \end{proof}
 Applied to our example, we find
 \begin{example}[Ex (ii)]
-    Let $f: \N \to \C$ be the Dirichlet character from Example~\ref{ex:nontrivial_dirichlet_character_mod_4} with corresponding group homomorphism $\chi: (\Z/4\Z)^\units \to \C$.
+    Let $f: \N \to \C$ be the Dirichlet character from Example~\ref{ex:nontrivial_dirichlet_character_mod_4} with corresponding group homomorphism $g: (\Z/4\Z)^\units \to \C$.
     Then
     \begin{equation*}
-        \sum_{x \in (\Z/4\Z)^*} \chi(x) = \chi(1) + \chi(3) = 1 - 1 = 0
+        \sum_{x \in (\Z/4\Z)^*} g(x) = g(1) + g(3) = 1 - 1 = 0
     \end{equation*}
     and so by Lemma~\ref{prop:dirichlet_series_at_one} the limit $\lim_{s \to 1^+} L(s, f)$ exists.
     The lemma further yields that
@@ -292,29 +292,29 @@ We have already shown that Dirichlet characters are, in principle, group homomor
 If we now assume $q$ to be prime, we get an even nicer characterization.
 \begin{corollary}[Ex (i)]
     \label{prop:dirichlet_character_image_group}
-    Let $\chi, \chi': \N \to \C$ be Dirichlet characters mod $q$ and $r$ a primitive root modulo $q$.
+    Let $\chi, \chi': \N \to \C$ be Dirichlet characters mod $q$ and $r$ a representative of a primitive root modulo $q$.
     If $\chi(r) = \chi'(r)$, then $\chi = \chi'$.
     Further, have that $\chi(n)^{q - 1} = 1$ for all $n \in \N$ with $n \perp q$.
 \end{corollary}
 \begin{proof}
     The properties follow directly from Lemma~\ref{prop:characterization_dirichlet_character}.
     Let $f, f': (\Z/q\Z)^\units \to \C^\units$ be the associated group homomorphisms of $\chi, \chi'$ as in Lemma~\ref{prop:characterization_dirichlet_character}.
-    If $f(r) = \chi(r) = \chi'(r) = f'(r)$ then clearly $f = f'$, as these are group homomorphisms and $\langle r \rangle = (\Z/q\Z)^\units$.
+    If $f([r]) = \chi(r) = \chi'(r) = f'([r])$ then clearly $f = f'$, as these are group homomorphisms and $\langle [r] \rangle = (\Z/q\Z)^\units$.
     Hence $\chi = \chi'$.
 
-    Further, have for $n \in \N$ with $n \perp q$ that $n \in (\Z/q\Z)^\units$ and thus
+    Further, have for $n \in \N$ with $n \perp q$ that $[n] \in (\Z/q\Z)^\units$ and thus
     \begin{equation*}
-        n^{q - 1} = n^{\phi(q)} = n^{|(\Z/q\Z)^\units|} = 1 
+        [n]^{q - 1} = [n]^{\phi(q)} = [n]^{|(\Z/q\Z)^\units|} = 1 
     \end{equation*}
     As $f$ is a group homomorphism, find
     \begin{equation*}
-        \chi(n)^{q - 1} = f(n)^{q - 1} = f(n^{q - 1}) = f(1) = 1
+        \chi(n)^{q - 1} = f([n])^{q - 1} = f([n]^{q - 1}) = f(1) = 1
     \end{equation*}
 \end{proof}
 This correspondence also works in the other direction.
 \begin{corollary}[Ex (ii)]
     \label{prop:dirichlet_character_primitive_root}
-    Let $\omega \in \C$ be a $(q - 1)$-th root of unity, i.e. $\omega^{q - 1} = 1$ and let $r \in (\Z/q\Z)^\units$ be a primitive root.
+    Let $\omega \in \C$ be a $(q - 1)$-th root of unity, i.e. $\omega^{q - 1} = 1$ and let $r \in \Z$ be a representative of a primitive root modulo $q$.
     Then
     \begin{equation*}
         g: \N \to \C, \quad n \mapsto \begin{cases}
@@ -325,26 +325,28 @@ This correspondence also works in the other direction.
     is a well-defined Dirichlet character.
 \end{corollary}
 \begin{proof}
-    Follows again directly from Lemma~\ref{prop:characterization_dirichlet_character}, as $r \mapsto \omega$ induces a unique group homomorphism $(\Z/q\Z)^\units \to \C^\units$.
+    Follows again directly from Lemma~\ref{prop:characterization_dirichlet_character}, as $[r] \mapsto \omega$ induces a unique group homomorphism $(\Z/q\Z)^\units \to \C^\units$.
     The associated Dirichlet character is obviously $g$.
 \end{proof}
-Note that the image of a group homomorphism $\chi: (\Z/q\Z)^\units \to \C^\units$ is a subgroup of $\C^\units$.
+Note that the image of a group homomorphism $f: (\Z/q\Z)^\units \to \C^\units$ is a subgroup of $\C^\units$.
 Using Corollary~\ref{prop:dirichlet_character_image_group}, we can describe it quite concretely.
 \begin{proposition}
     Let $\chi: \N \to \C$ be a Dirichlet character with group homomorphism $f: (\Z/q\Z)^\units \to \C^\units$.
-    Then $\mathrm{im}f \leq S$ is a subgroup where $S = \{ \omega_q^k \ | \ k \in \Z \}$ is the group of $q$-th roots of unity.
+    Then $\mathrm{im}f \leq S$ is a subgroup where $S_q := \{ \omega_q^k \ | \ k \in \Z \}$ is the group of $q$-th roots of unity.
     
-    It is a fact from Algebra that $S \cong (\Z/q\Z)^\units$, hence Dirichlet characters modulo a prime $q$ are in 1-to-1 correspondence with the endomorphism monoid $\mathrm{End}((\Z/q\Z)^\units)$.
+    It is a fact from Algebra that $S_q \cong (\Z/q\Z)^\units$, hence Dirichlet characters modulo a prime $q$ are in 1-to-1 correspondence with the endomorphisms $\mathrm{End}((\Z/q\Z)^\units)$ of $(\Z/q\Z)^\units$.
 \end{proposition}
 \begin{proof}
-    We have that $S = \{ x \in \C^\units \ | \ x^{q - 1} = 1 \}$ and the claim directly follows from Corollary~\ref{prop:dirichlet_character_image_group}.
+    We have that $S_q = \{ x \in \C^\units \ | \ x^{q - 1} = 1 \}$ and the claim directly follows from Corollary~\ref{prop:dirichlet_character_image_group}.
 \end{proof}
 Note that the endomorphism monoid $\mathrm{End}((\Z/q\Z)^\units)$ is not a group, except in the trivial case $q = 2$.
 The reason is that e.g. the trivial group homomorphism $r \mapsto 1$ is not surjective and thus not invertible.
-
+\begin{definition}
+    Denote by $\mathrm{Dir}(q)$ the set of Dirichlet characters modulo $q$.
+\end{definition}
 By Corollary~\ref{prop:dirichlet_character_primitive_root} each group endomorphism $f \in \mathrm{End}((\Z/q\Z)^\units)$ is determined by its value at a primitive root of unity $r \in (\Z/q\Z)^\units$, hence
 \begin{equation*}
-    |\mathrm{End}((\Z/q\Z)^\units)| = |(\Z/q\Z)^\units| = q - 1
+    |\mathrm{Dir}(q)| = |\mathrm{End}((\Z/q\Z)^\units)| = |(\Z/q\Z)^\units| = q - 1
 \end{equation*}
 It follows that there are exactly $q - 1$ distinct Dirichlet characters modulo a prime $q$.
 \begin{remark}
@@ -360,14 +362,14 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
             q - 1 & \text{if $\chi = \chi_0$} \\
             0 & \text{otherwise}
         \end{cases}, \\
-        \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(a) &= \begin{cases}
+        \sum_{\chi \in \mathrm{Dir}(q)} \chi(a) &= \begin{cases}
             q - 1 & \text{if $a \equiv 1 \mod q$} \\
             0 & \text{otherwise}
         \end{cases}
     \end{align*}
     Furthermore, for $b \perp q$ have
     \begin{equation*}
-        \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(a)\overline{\chi(b)} = \begin{cases}
+        \sum_{\chi \in \mathrm{Dir}(q)} \chi(a)\overline{\chi(b)} = \begin{cases}
             q - 1 & \text{if $a \equiv b \mod q$} \\
             0 & \text{otherwise}
         \end{cases}
@@ -376,7 +378,7 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
 \begin{proof}
     Clearly
     \begin{equation*}
-        \sum_{a \in (\Z/q\Z)^\units} \chi_0(a) = q - 1 \quad \text{and} \quad \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(1) = \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} 1 = q - 1
+        \sum_{a \in (\Z/q\Z)^\units} \chi_0(a) = q - 1 \quad \text{and} \quad \sum_{\chi \in \mathrm{Dir}(q)} \chi(1) = \sum_{\chi \in \mathrm{Dir}(q)} 1 = q - 1
     \end{equation*}
     So it is left to show that we get zero in the other cases.
     
@@ -385,20 +387,20 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
     \begin{equation*}
         \sum_{a \in (\Z/q\Z)^\units} \chi(a) = \sum_{k = 0}^{q - 2} \chi(r^k) = \sum_{k = 0}^{q - 2} \xi^k = \frac {1 - \xi^{q - 1}} {q - \xi} = 0 
     \end{equation*}
-    By using the earlier results on the structure of $\mathrm{End}((\Z/q\Z)^\units)$ we see that for $a = r^k \not\equiv 1 \mod q$, have
+    By using the earlier results on the structure of $\mathrm{Dir}(q)$ we see that for $a = r^k \not\equiv 1 \mod q$, have
     \begin{align*}
-        \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(a) &= \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(r)^k \\
+        \sum_{\chi \in \mathrm{Dir}(q)} \chi(a) &= \sum_{\chi \in \mathrm{Dir}(q)} \chi(r)^k \\
         &= \sum_{\xi \ \text{$q$-th root of unity}} \xi^k = \sum_{l = 0}^{q - 2} \omega^{kl} = \frac {1 - (\omega^{q - 1})^k} {1 - \omega^k} = 0 
     \end{align*}
     where $\omega$ is a primitive $q$-th root of unity.
     
     For the last part, note that for any $q$-th root of unity $\xi$, we have $\xi\overline{\xi} \in \R$ with $\xi\overline{\xi} = |\xi|^2 > 0$.
-    Furthermore, $\overline{\xi}$ is also a $q$-th root of unity, and so we see that $\xi\overline{\xi} = 1$.
-    It follows that for any Dirichlet character $\chi$ have $\overline{\chi}(a) = \chi(a^{-1})$ (where the inversion happens in $(\Z/q\Z)^\units$).
+    Furthermore, $\overline{\xi}$ is also a $q$-th root of unity, and so we see that $\xi\overline{\xi} = 1$ (the only real, positive root of unity is 1).
+    It follows that for any Dirichlet character $\chi$ have $\overline{\chi([a])} = \chi([a]^{-1})$.
     Thus
     \begin{equation*}
-        \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(a)\overline{\chi}(b) = \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(ab^{-1}) = \begin{cases}
-            q - 1 & \text{if $ab^{-1} = 1 \in (\Z/q\Z)^\units$} \\
+        \sum_{\chi \in \mathrm{Dir}(q)} \chi(a)\overline{\chi(b)} = \sum_{\chi \in \mathrm{Dir}(q)} \chi([a][b]^{-1}) = \begin{cases}
+            q - 1 & \text{if $[a][b]^{-1} = 1 \in (\Z/q\Z)^\units$} \\
             0 & \text{otherwise}
         \end{cases}
     \end{equation*}
