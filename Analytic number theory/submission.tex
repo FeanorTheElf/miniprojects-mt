@@ -34,8 +34,10 @@
     \right|_{#2}
 }}
 
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}
 \newtheorem{lemma}[definition]{Lemma}
+\newtheorem{remark}[definition]{Remark}
 \newtheorem{proposition}[definition]{Proposition}
 \newtheorem{example}[definition]{Example}
 \newtheorem{corollary}[definition]{Corollary}
@@ -46,7 +48,7 @@ We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
 Further, we write $a \divides b$ if $a$ divides $b$ and $a \perp b$ if $a$ and $b$ are coprime.
 Finally, let $\primes$ be the set of prime numbers in $\N$.
 
-\section{Part 1}
+\section{Part I}
 
 For convenience, we include the definition of a Dirichlet character from the task description first.
 \begin{definition}
@@ -97,7 +99,8 @@ First, we will give another characterization of Dirichlet characters.
     \end{equation*}
     So $\chi$ is a well-defined group homomorphism and we obviously have $\tilde{\chi} = f$.
 \end{proof}
-\begin{example}[Part 1 (i)]
+For simplicity of notation we sometimes will identify a Dirichlet character and its group homomorphism if it is always clear which one is meant.
+\begin{example}[Ex (i)]
     \label{ex:nontrivial_dirichlet_character_mod_4}
     The function
     \begin{equation*}
@@ -186,7 +189,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
     From this it follows that $\lim_{s \to 1} L(s, \tilde{\chi})$ exists and is equal to $\sum_n \tilde{\chi}(n) n^{-s}$.
 \end{proof}
 Applied to our example, we find
-\begin{example}[Part 1 (ii)]
+\begin{example}[Ex (ii)]
     Let $f: \N \to \C$ be the Dirichlet character from Example~\ref{ex:nontrivial_dirichlet_character_mod_4} with corresponding group homomorphism $\chi: (\Z/4\Z)^\units \to \C$.
     Then
     \begin{equation*}
@@ -222,19 +225,24 @@ For this, we are first interested in how many primes $\equiv 1, 3 \mod 4$ there 
     However, $3 \equiv n$ is not a square modulo $4$, so find that $a \not\equiv b \mod 4$.
     As both $a$ and $b$ must be odd, we see that either $a \equiv 3 \mod 4$ or $b \equiv 3 \mod 4$ and the claim follows by the induction hypothesis.
 \end{proof}
-\begin{corollary}[Part 1 (iii)]
+\begin{corollary}[Ex (iii)]
     There are infinitely many primes $p$ with $p \equiv 3 \mod 4$.
 \end{corollary}
 \begin{proof}
-    It suffices to show that there is a prime number $q \equiv 3 \mod 4$ with $q \geq N$ for every $N \in \N$.
-    Let
+    Assume there were only finitely many, say $p_1, ..., p_N$.
+    Let $P := p_1 ... p_N$ if $N$ is even and $P := p_1^2 p_2 ... p_N$ if $N$ is odd.
+    Then
     \begin{equation*}
-        P := \prod_{p \in \primes, \ p \leq N} p
+        P \equiv 3^{2 \lceil \frac N 2 \rceil} \equiv 1^{\lceil \frac N 2 \rceil} = 1 \mod 4
     \end{equation*}
+    Thus, by Lemma~\ref{prop:prime_factor_3_mod_4}, $P + 2$ has a prime factor $q \equiv 3 \mod 4$.
+    However, $q \neq p_i$ as $p_i \perp P + 2$ for all $i$ (if $p_i \divides P + 2$, then $p_i \divides P + 2 - P = 2$, a contradiction).
+    This contradicts our assumption.
 \end{proof}
 For the case of primes $\equiv 1 \mod 4$, I have remembered the two-square theorem and its connection to primes in the ring $\Z[i]$ of Gaussian integers, and somehow my train of thoughts went into Algebraic Number Theory.
 After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch} that requires the reader to prove the following proposition.
 \begin{proposition}
+    \label{prop:primes_1_mod_q}
     Let $q \geq 3$ be an integer.
     Then there are infinitely many primes $p$ with $p \equiv 1 \mod q$.
 \end{proposition}
@@ -265,9 +273,137 @@ After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch
     However, the former is a contradiction, as $\omega_q \in \mathcal{O}^\units$ is a unit and no $n \geq 2$ is a unit.
 \end{proof}
 The book also mentions that the general case can be proven by using L-series in algebraic number fields.
-\begin{corollary}[Part 1 (iii)]
+\begin{corollary}[Ex (iii)]
     There are infinitely many primes $p$ with $p \equiv 1 \mod 4$.
 \end{corollary}
+\begin{proof}
+    This is just a special case of Prop.~\ref{prop:primes_1_mod_q}.
+\end{proof}
+\begin{example}[Ex (iii)]
+    Using a computer, we can also study the actual frequency of prime numbers $\equiv 1, 3 \mod 4$ among e.g. the first $10^8$ integers.
+    This seems to indicate that both numbers are asymptotically equal.
+    For example, there are 332180 primes $\equiv 1 \mod 4$ and 332398 primes $\equiv 3 \mod 4$ smaller than $10^8$.
+    To find these numbers, the following python code was used.
+    \lstinputlisting[language = python]{./primes.py}
+\end{example}
+
+\section{Part II}
+We have already shown that Dirichlet characters are, in principle, group homomorphisms $(\Z/q\Z)^\units \to \C^\units$.
+If we now assume $q$ to be prime, we get an even nicer characterization.
+\begin{corollary}[Ex (i)]
+    \label{prop:dirichlet_character_image_group}
+    Let $\chi, \chi': \N \to \C$ be Dirichlet characters mod $q$ and $r$ a primitive root modulo $q$.
+    If $\chi(r) = \chi'(r)$, then $\chi = \chi'$.
+    Further, have that $\chi(n)^{q - 1} = 1$ for all $n \in \N$ with $n \perp q$.
+\end{corollary}
+\begin{proof}
+    The properties follow directly from Lemma~\ref{prop:characterization_dirichlet_character}.
+    Let $f, f': (\Z/q\Z)^\units \to \C^\units$ be the associated group homomorphisms of $\chi, \chi'$ as in Lemma~\ref{prop:characterization_dirichlet_character}.
+    If $f(r) = \chi(r) = \chi'(r) = f'(r)$ then clearly $f = f'$, as these are group homomorphisms and $\langle r \rangle = (\Z/q\Z)^\units$.
+    Hence $\chi = \chi'$.
+
+    Further, have for $n \in \N$ with $n \perp q$ that $n \in (\Z/q\Z)^\units$ and thus
+    \begin{equation*}
+        n^{q - 1} = n^{\phi(q)} = n^{|(\Z/q\Z)^\units|} = 1 
+    \end{equation*}
+    As $f$ is a group homomorphism, find
+    \begin{equation*}
+        \chi(n)^{q - 1} = f(n)^{q - 1} = f(n^{q - 1}) = f(1) = 1
+    \end{equation*}
+\end{proof}
+This correspondence also works in the other direction.
+\begin{corollary}[Ex (ii)]
+    \label{prop:dirichlet_character_primitive_root}
+    Let $\omega \in \C$ be a $(q - 1)$-th root of unity, i.e. $\omega^{q - 1} = 1$ and let $r \in (\Z/q\Z)^\units$ be a primitive root.
+    Then
+    \begin{equation*}
+        g: \N \to \C, \quad n \mapsto \begin{cases}
+            \omega^{\log_r n} & \text{if $n \perp q$} \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{equation*}
+    is a well-defined Dirichlet character.
+\end{corollary}
+\begin{proof}
+    Follows again directly from Lemma~\ref{prop:characterization_dirichlet_character}, as $r \mapsto \omega$ induces a unique group homomorphism $(\Z/q\Z)^\units \to \C^\units$.
+    The associated Dirichlet character is obviously $g$.
+\end{proof}
+Note that the image of a group homomorphism $\chi: (\Z/q\Z)^\units \to \C^\units$ is a subgroup of $\C^\units$.
+Using Corollary~\ref{prop:dirichlet_character_image_group}, we can describe it quite concretely.
+\begin{proposition}
+    Let $\chi: \N \to \C$ be a Dirichlet character with group homomorphism $f: (\Z/q\Z)^\units \to \C^\units$.
+    Then $\mathrm{im}f \leq S$ is a subgroup where $S = \{ \omega_q^k \ | \ k \in \Z \}$ is the group of $q$-th roots of unity.
+    
+    It is a fact from Algebra that $S \cong (\Z/q\Z)^\units$, hence Dirichlet characters modulo a prime $q$ are in 1-to-1 correspondence with the endomorphism monoid $\mathrm{End}((\Z/q\Z)^\units)$.
+\end{proposition}
+\begin{proof}
+    We have that $S = \{ x \in \C^\units \ | \ x^{q - 1} = 1 \}$ and the claim directly follows from Corollary~\ref{prop:dirichlet_character_image_group}.
+\end{proof}
+Note that the endomorphism monoid $\mathrm{End}((\Z/q\Z)^\units)$ is not a group, except in the trivial case $q = 2$.
+The reason is that e.g. the trivial group homomorphism $r \mapsto 1$ is not surjective and thus not invertible.
+
+By Corollary~\ref{prop:dirichlet_character_primitive_root} each group endomorphism $f \in \mathrm{End}((\Z/q\Z)^\units)$ is determined by its value at a primitive root of unity $r \in (\Z/q\Z)^\units$, hence
+\begin{equation*}
+    |\mathrm{End}((\Z/q\Z)^\units)| = |(\Z/q\Z)^\units| = q - 1
+\end{equation*}
+It follows that there are exactly $q - 1$ distinct Dirichlet characters modulo a prime $q$.
+\begin{remark}
+    It is again a fact that $(\Z/p^k\Z)^\units$ is cyclic for an odd prime $p$ and $k \geq 1$.
+    Hence, everything up to now can also be done for odd prime powers, if we replace $q - 1$ by $\phi(q)$.
+\end{remark}
+Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good idea to study in which cases the value $\sum_{x \in (\Z/q\Z)^\units} \chi(x)$ is zero.
+\begin{proposition}[Ex (iii)]
+    Let $\chi_0$ be the trivial Dirichlet character given by $r \mapsto 1$.
+    Then
+    \begin{align*}
+        \sum_{a \in (\Z/q\Z)^\units} \chi(a) &= \begin{cases}
+            q - 1 & \text{if $\chi = \chi_0$} \\
+            0 & \text{otherwise}
+        \end{cases}, \\
+        \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(a) &= \begin{cases}
+            q - 1 & \text{if $a \equiv 1 \mod q$} \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{align*}
+    Furthermore, for $b \perp q$ have
+    \begin{equation*}
+        \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(a)\overline{\chi(b)} = \begin{cases}
+            q - 1 & \text{if $a \equiv b \mod q$} \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    Clearly
+    \begin{equation*}
+        \sum_{a \in (\Z/q\Z)^\units} \chi_0(a) = q - 1 \quad \text{and} \quad \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(1) = \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} 1 = q - 1
+    \end{equation*}
+    So it is left to show that we get zero in the other cases.
+    
+    Consider a Dirichlet character $\chi \neq \chi_0$ given by $r \mapsto \xi$ for a $q$-th root of unity $\xi \neq 1$.
+    Then
+    \begin{equation*}
+        \sum_{a \in (\Z/q\Z)^\units} \chi(a) = \sum_{k = 0}^{q - 2} \chi(r^k) = \sum_{k = 0}^{q - 2} \xi^k = \frac {1 - \xi^{q - 1}} {q - \xi} = 0 
+    \end{equation*}
+    By using the earlier results on the structure of $\mathrm{End}((\Z/q\Z)^\units)$ we see that for $a = r^k \not\equiv 1 \mod q$, have
+    \begin{align*}
+        \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(a) &= \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(r)^k \\
+        &= \sum_{\xi \ \text{$q$-th root of unity}} \xi^k = \sum_{l = 0}^{q - 2} \omega^{kl} = \frac {1 - (\omega^{q - 1})^k} {1 - \omega^k} = 0 
+    \end{align*}
+    where $\omega$ is a primitive $q$-th root of unity.
+    
+    For the last part, note that for any $q$-th root of unity $\xi$, we have $\xi\overline{\xi} \in \R$ with $\xi\overline{\xi} = |\xi|^2 > 0$.
+    Furthermore, $\overline{\xi}$ is also a $q$-th root of unity, and so we see that $\xi\overline{\xi} = 1$.
+    It follows that for any Dirichlet character $\chi$ have $\overline{\chi}(a) = \chi(a^{-1})$ (where the inversion happens in $(\Z/q\Z)^\units$).
+    Thus
+    \begin{equation*}
+        \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(a)\overline{\chi}(b) = \sum_{\chi \in \mathrm{End}((\Z/q\Z)^\units)} \chi(ab^{-1}) = \begin{cases}
+            q - 1 & \text{if $ab^{-1} = 1 \in (\Z/q\Z)^\units$} \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{equation*}
+    The condition $ab^{-1} = 1$ is equivalent to $a \equiv b \mod q$, so the claim follows.
+\end{proof}
 
 \printbibliography
 \end{document}
