@@ -592,28 +592,32 @@ Now we can show the analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
     Provided that $L(1, \chi) \neq 0$, it follows that $L(s, \chi)'/L(s, \chi)$ is holomorphic on a compact neighborhood of $1$, so bounded.
 \end{proof}
 Now we can show the main result of this miniproject.
-We will prove one auxiliary lemma before.
+We will prove two auxiliary lemmas before.
 \begin{lemma}
+    \label{prop:rho_pole_at_one}
     For $a \perp q$, the function
     \begin{equation*}
-        \rho_q(s) := \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
+        \rho_a(s) := \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
     \end{equation*}
-    is a meromorphic function on $\Re(s) > 0$ with a simple pole at $s = 1$. 
+    is a meromorphic function on $\Re(s) > 0$ with a simple poles at $1$ (and possibly other poles on $\Re(s) > 0$).
 \end{lemma}
 \begin{proof}
     By Prop.~\ref{prop:logarithmic_derivative_L}, we have for $\chi \in \mathrm{Dir}(q)$ that
     \begin{equation*}
         \frac {\overline{\chi(a)}} {q - 1} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s} = \frac {\overline{\chi(a)}} {q - 1} \frac {L(s, \chi)'} {L(s, \chi)}
     \end{equation*}
-    If $\chi \neq \chi_0$, then Corollary~\ref{prop:logarithmic_derivative_L_bounded} shows that this function is holomorphic on $\Re(s) > 0$.
+    If $\chi \neq \chi_0$, then Corollary~\ref{prop:logarithmic_derivative_L_bounded} shows that this function has no pole at $s = 1$.
     
     If $\chi = \chi_0$ on the other hand, Prop.~\ref{prop:formula_trivial_L_series} shows that
     \begin{equation*}
-        \frac {L(s, \chi_0)'} {L(s, \chi_0)}
+        L(s, \chi_0) = (1 - q^{-s}) \zeta(s)
     \end{equation*}
-    is the logarithmic derivative of $L(s, \chi_0) = (1 - q^{-s}) \zeta(s)$ which has a simple pole at $s = 1$.
-    Hence, also $L(s, \chi_0)'/L(s, \chi_0)$ has a simple pole at $s = 1$.
-    And as $a \perp q$, we see that $\chi_0(a) = 1$ and thus also
+    Hence
+    \begin{equation*}
+        \frac {L(s, \chi_0)'} {L(s, \chi_0)} = \frac { \log(q)q^{-s} \zeta(s) + (1 - q^{-s}) \zeta'(s) } { (1 - q^{-s})\zeta(s) } = \frac {\log(q)} {q^s - 1} + \frac {\zeta'(s)} {\zeta(s)}
+    \end{equation*}
+    has a simple pole at $s = 1$.
+    Since $a \perp q$, we see that $\chi_0(a) = 1$ and thus also
     \begin{equation*}
         \frac {\overline{\chi_0(a)}} {q - 1} \sum_{n \geq 1} \frac {\Lambda(n) \chi_0(n)} {n^s} = \frac {\overline{\chi_0(a)}} {q - 1} \frac {L(s, \chi_0)'} {L(s, \chi_0)}
     \end{equation*}
@@ -625,14 +629,53 @@ We will prove one auxiliary lemma before.
     \end{equation*}
     is a meromorphic function with a simple pole at $s = 1$.
 \end{proof}
-\begin{proposition}
-    Assume that $L(1, \chi) \neq 0$ for all $\chi \in \mathrm{Dir}(q)$.
+\begin{lemma}
+    \label{prop:correlation_theta_Psi}
+    Let $a \perp q$ and define
+    \begin{equation*}
+        \Psi_a(x) := \sum_{n < x, \ n \equiv a \mod q} \Lambda(n)
+    \end{equation*}
+    and
+    \begin{equation*}
+        \theta_a(x) := \sum_{p < x, \ p \equiv a \mod q} \log(p)
+    \end{equation*}
+    Then
+    \begin{equation*}
+        \Psi_a(x) - \theta_a(x) = O(x^{1/2}\log(x))
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    Have
+    \begin{align*}
+        \Psi_a(x) - \theta_a(x) =& \sum_{p^k < x, \ p^k \equiv a \mod q} \log(p) - \sum_{p < x, \ p \equiv a \mod q} \log(p) \\
+        =& \sum_{p^k < x, \ k \geq 2, \ p^k \equiv a \mod q} \log(p) \leq \sum_{p^k < x, \ k \geq 2} \log(p) \\
+        =& \Psi(x) - \theta(x) = O(x^{1/2}\log(x))
+    \end{align*}
+    where the last equality was proven in the lecture.
+\end{proof}
+\begin{proposition}[Ex (v)]
+    Assume that $L(1, \chi) \neq 0$ for all $\chi \in \mathrm{Dir}(q) \setminus \{ \chi_0 \}$.
     Then for all $a \perp q$ there are infinitely many primes $p \equiv a \mod q$.
 \end{proposition}
 \begin{proof}
-    Assume the opposite, i.e. the only primes $p \in \primes$ with $p \equiv a \mod q$ are $p_1, ..., p_N$.
-    By Prop.~\ref{prop:representation_mangoldt_series_congruent_a} we have that
+    Assume not, then $\theta_a(x)$ is bounded, i.e. $\theta_a(x) = O(1)$.
+    With Lemma~\ref{prop:correlation_theta_Psi} it follows that $\Psi_a(x) = O(x^{1/2} \log x)$.
 
+    By Prop.~\ref{prop:representation_mangoldt_series_congruent_a} we have that for $\Re(s) > 1$
+    \begin{equation*}
+        \rho_a(s) = \sum_{n \equiv a \mod q} \Lambda(n) n^{-s}
+    \end{equation*}
+    Partial summation yields that for $\Re(s) > 1$ have
+    \begin{align*}
+        \rho_a(s) =& \sum_{n \equiv a \mod q} \Lambda(n) n^{-s} \\
+        =& \lim_{t \to \infty} \Bigl( \underbrace{ t^{-s} \sum_{n < t, \ n \equiv a \mod q} \Lambda(n) }_{ = t^{-s} \Psi_a(t) = t^{-s} O(t\log t) = o(1)} \Bigr) 
+        + s \int_1^\infty \Bigl( \underbrace{\sum_{n < t, \ n \equiv a \mod q} \Lambda(n) }_{ = \Psi_a(t)} \Bigr) t^{-(s + 1)} dt \\
+        =& s \int_1^\infty \Psi_a(t) t^{-s - 1} dt = s \int_1^\infty O(t^{1/2}\log t) t^{-s - 1} dt \\
+        =& O\left( |s| \int_1^\infty \log(t) t^{-\Re(s) - 1/2} dt \right) \\
+        =& O\left( |s| \left( \frac 1 {1/2 - \Re(s)} 1^{1/2 - \Re(s)} + \frac 1 {1/2 - \Re(s)} \int_1^\infty t^{-\Re(s) - 1/2} dt \right) \right) \\
+        =& O\left( |s| \frac 1 {(1/2 - \Re(s))^2} \right)
+    \end{align*}
+    However this function has no pole at $s = 1$, a contradiction to Lemma~\ref{prop:rho_pole_at_one}.
 \end{proof}
 
 \printbibliography
