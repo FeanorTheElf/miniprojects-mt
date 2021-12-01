@@ -142,51 +142,49 @@ Now we want to define Dirichlet series of Dirichlet characters.
     \begin{equation*}
         \lim_{s \to 1^+} L(s, \chi) \ \text{exists} \ \Leftrightarrow \ \sum_{x \in (\Z/q\Z)^\units} f(x) = 0
     \end{equation*}
-    In this case, have that $L(s, \chi)$ is well-defined, $\lim_{t \to s} L(t, \chi)$ exists and
+    If this is the case, then
     \begin{equation*}
-        \lim_{t \to s} L(t, \chi) = \sum_{n \geq 1} \chi(n) n^{-s}
+        \lim_{s \to 1} L(s, \chi) = \sum_{n \geq 1} \frac {\chi(n)} n
     \end{equation*}
-    where the right sum converges (but not absolutely), for all $\Re(s) > 0$.
+    where the right-hand side converges (but not absolutely).
 \end{proposition}
 \begin{proof}
     Let $c = \sum_{x \in (\Z/q\Z)^\units} f(x)$.
     For the direction $\Rightarrow$ assume that $c \neq 0$.
     Then have for $\Re(s) > 1$ that
     \begin{align*}
-        \sgn(c) \sum_{n \geq 1} \chi(n) n^{-s} &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \sgn(c) \chi(qn + k) (qn + k)^{-s} \\
-        &\geq \sum_{n \geq 1} \ \sum_{0 \leq k < 1}\sgn(c) \chi(qn + k) (qn + n)^{-s} \\
-        &= \sum_{n \geq 1} \sgn(c) (qn + n)^{-s} \underbrace{\sum_{0 \leq k < q} \chi(qn + k)}_{= c} \\
+        \sgn(c) \sum_{n \geq 1} \chi(n) n^{-s} &= \sum_{n \geq 0} \ \sum_{0 < k \leq q} \sgn(c) \chi(qn + k) (qn + k)^{-s} \\
+        &\geq \sum_{n \geq 0} \ \sum_{0 < k \leq q}\sgn(c) \chi(qn + k) (qn + n)^{-s} \\
+        &= \sum_{n \geq 0} \sgn(c) (qn + n)^{-s} \underbrace{\sum_{0 < k \leq q} \chi(qn + k)}_{= c} \\
         &\geq \frac {|c|} {(q + 1)^s} \sum_{n \geq 1} n^{-s} = \frac {|c|} {(q + 1)^s} \zeta(s)
     \end{align*}
     which clearly has a pole at $s = 1$. Hence $\lim_{s \to 1^+} L(s, \chi_f)$ cannot exist.
 
     For the other direction, assume that $c = 0$.
-    Again, have for $\Re(s) > 1$ that
+    Observe that by Bernoulli's inequality, have for $0 < s \leq 1$ that
     \begin{align*}
-        \sum_{n \geq 1} \chi(n) n^{-s} &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \chi(qn + k) (qn + k)^{-s} \\
-        &= \sum_{n \geq 1} \ \sum_{0 \leq k < q} \chi(qn + k) \Bigl( (qn)^{-s} + (qn + k)^{-s} - (qn)^{-s} \Bigr)
-    \end{align*}
-    Observe that by Bernoulli's inequality, have
-    \begin{align*}
-        (qn)^{-s} - (qn + k)^{-s} &= \frac {(qn)^s - (qn + k)^s} {(q^2n^2 + qnk)^s} = (qn)^{s} \frac {1 - (1 + k(qn)^{-1})^s} {(q^2n^2 + qnk)^s} \\
+        (qn)^{-s} - (qn + k)^{-s} &= \frac {(qn + k)^s - (qn)^s} {(q^2n^2 + qnk)^s} = (qn)^{s} \frac {(1 + k(qn)^{-1})^s - 1} {(q^2n^2 + qnk)^s} \\
         &\leq (qn)^s \frac {sk(qn)^{-1}} {(q^2n^2 + qnk)^s} = \frac {sk} {qn(qn + k)^s} = O(sn^{-s - 1})
     \end{align*}
-    As $\chi((\Z/q\Z)^\units) \subseteq \C$ is finite, find $C > 0$ with $|\chi_f(n)| \leq C$ for all $n \in \N$. Then
+    If $s > 1$ and $k \leq q$, then also $(qn)^{-s} - (qn + k)^{-s} = O(sn^{-(1 + \epsilon)})$ for some small enough $0 < \epsilon < 1$.
+    As $\chi((\Z/q\Z)^\units) \subseteq \C$ is finite, find $C > 0$ with $|\chi_f(n)| \leq C$ for all $n \in \N$. 
+    Then for all $s \geq \epsilon$ and $X \leq Y$ it holds
     \begin{align*}
-        \sum_{n \geq X} \chi(n) n^{-s} &= O(qCX^{-s}) + \sum_{n \geq X/q} \ \sum_{0 \leq k < q} \chi(qn + k) \Bigl( (qn)^{-s} + O(sn^{-s - 1}) \Bigr) \\
-        &= O(qCX^{-s}) + \sum_{n \leq X/q} \Bigl( (qn)^{-s} c + \sum_{0 \geq k < q} O(Csn^{-s - 1}) \Bigr) = \\
-        &= O(qCX^{-s}) + 0 + O\Bigl( Cqs \sum_{n \geq X/q} n^{-s - 1} \Bigr) \\
-        &\leq O(qCX^{-s}) + O\Bigl( Cqs\zeta(s + 1) \Bigr)
+        &\sum_{X \leq n \leq Y} \chi(n) n^{-s} \\
+        =& \ O(qCX^{-s} + qCY^{-s}) + \sum_{X/q \leq n \leq Y/q} \ \sum_{0 < k \leq q} \chi(qn + k) \Bigl( (qn)^{-s} + \underbrace{(qn + k)^{-s} - (qn)^{-s}}_{= O(sn^{-(1 + \epsilon)})} \Bigr) \\
+        =& \ O(qCX^{-s}) + \sum_{X/q \leq n \leq Y/q} \Bigl( (qn)^{-s} c + \sum_{0 < k \leq q} O(Csn^{-(1 + \epsilon)}) \Bigr) = \\
+        =& \ O(qCX^{-s}) + 0 + O\Bigl( Cqs \sum_{X/q \leq n \leq Y/q} n^{-(1 + \epsilon)} \Bigr) \\
+        =& \ O(qCX^{-s}) + O\Bigl( Cqs \sum_{X/q \leq n} n^{-(1 + \epsilon)} \Bigr)
     \end{align*}
-    which is well-defined and finite for $\Re(s) > 0$.
-    Further, the expression converges uniformly (as a function in $s$ on $\Re(s) \geq \epsilon > 0$) to $0$ as $X \to \infty$. 
+    which is well-defined and finite.
+    Further, the expression converges uniformly (as a function in $s$ on $[\epsilon, \infty[$) to $0$ as $X \to \infty$. 
     So
     \begin{equation*}
         \sum_{n < X} \chi(n) n^{-s} \quad \text{converges uniformly to} \quad \sum_{n \geq 1} \chi(n) n^{-s}
     \end{equation*}
-    as $X \to \infty$ (on a $\Re(s) \geq \epsilon > 0$). 
-    Thus the limit is continuous and a continuation of $L(s, \chi_f)$ defined on $\Re(s) > 1$.
-    From this it follows that $\lim_{t \to s} L(t, \chi_f)$ exists and is equal to $\sum_n \chi_f(n) n^{-s}$.
+    as $X \to \infty$ (on $[\epsilon, \infty[$). 
+    Thus the limit is continuous and extends $L(s, \chi_f)$ defined on $]1, \infty[$.
+    It follows that $\lim_{t \to s} L(t, \chi_f)$ exists and is equal to $\sum_{n \geq 1} \chi(n) n^{-s}$.
 \end{proof}
 Applied to our example, we find
 \begin{example}[Ex (ii)]
@@ -290,6 +288,7 @@ The book also mentions that the general case can be proven by using L-series in 
 \section{Part II}
 We have already shown that Dirichlet characters are, in principle, group homomorphisms $(\Z/q\Z)^\units \to \C^\units$.
 If we now assume $q$ to be prime, we get an even nicer characterization.
+So for the whole section, assume that $q \geq 3$ is a prime.
 \begin{corollary}[Ex (i)]
     \label{prop:dirichlet_character_image_group}
     Let $\chi, \chi': \N \to \C$ be Dirichlet characters mod $q$ and $r$ a representative of a primitive root modulo $q$.
@@ -355,6 +354,7 @@ It follows that there are exactly $q - 1$ distinct Dirichlet characters modulo a
 \end{remark}
 Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good idea to study in which cases the value $\sum_{x \in (\Z/q\Z)^\units} \chi(x)$ is zero.
 \begin{proposition}[Ex (iii)]
+    \label{prop:finite_sums_characters}
     Let $\chi_0$ be the trivial Dirichlet character given by $r \mapsto 1$.
     Then
     \begin{align*}
@@ -387,12 +387,12 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
     \begin{equation*}
         \sum_{a \in (\Z/q\Z)^\units} \chi(a) = \sum_{k = 0}^{q - 2} \chi(r^k) = \sum_{k = 0}^{q - 2} \xi^k = \frac {1 - \xi^{q - 1}} {q - \xi} = 0 
     \end{equation*}
-    By using the earlier results on the structure of $\mathrm{Dir}(q)$ we see that for $a = r^k \not\equiv 1 \mod q$, have
+    By using the earlier results on the structure of $\mathrm{Dir}(q)$ we see that for $a \equiv r^k \not\equiv 1 \mod q$, have
     \begin{align*}
         \sum_{\chi \in \mathrm{Dir}(q)} \chi(a) &= \sum_{\chi \in \mathrm{Dir}(q)} \chi(r)^k \\
         &= \sum_{\xi \ \text{$q$-th root of unity}} \xi^k = \sum_{l = 0}^{q - 2} \omega^{kl} = \frac {1 - (\omega^{q - 1})^k} {1 - \omega^k} = 0 
     \end{align*}
-    where $\omega$ is a primitive $q$-th root of unity.
+    where $\omega \in \C$ is a primitive $q$-th root of unity and $r \in \Z$ is a primitive root modulo $q$.
     
     For the last part, note that for any $q$-th root of unity $\xi$, we have $\xi\overline{\xi} \in \R$ with $\xi\overline{\xi} = |\xi|^2 > 0$.
     Furthermore, $\overline{\xi}$ is also a $q$-th root of unity, and so we see that $\xi\overline{\xi} = 1$ (the only real, positive root of unity is 1).
@@ -405,6 +405,234 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
         \end{cases}
     \end{equation*}
     The condition $ab^{-1} = 1$ is equivalent to $a \equiv b \mod q$, so the claim follows.
+\end{proof}
+Using these basic results, we can now prove facts on the Dirichlet series of characters.
+\begin{proposition}[Ex (iv)]
+    \label{prop:representation_mangoldt_series_congruent_a}
+    Let $a \perp q$. Then for $\Re(s) > 1$ have
+    \begin{equation*}
+        \sum_{n \equiv a \mod q} \frac {\Lambda(n)} {n^s} = \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
+    \end{equation*}
+    (All those series obviously converge absolutely since $\Re(s) > 1$)
+\end{proposition}
+\begin{proof}
+    By Prop.~\ref{prop:finite_sums_characters} we have for all $n \in \N$ that
+    \begin{equation*}
+        \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \chi(n) = \begin{cases}
+            1 & \text{if $a \equiv n \mod q$} \\
+            0 & \text{otherwise}
+        \end{cases}
+    \end{equation*}
+    It follows that
+    \begin{align*}
+        \sum_{n \equiv a \mod q} \Lambda(n) n^{-s} =& \sum_{n \geq 1} \Lambda(n) n^{-s} \begin{cases}
+            1 & \text{if $a \equiv n \mod q$} \\
+            0 & \text{otherwise}
+        \end{cases} \\
+        =& \sum_{n \geq 1} \Lambda(n) n^{-s} \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \chi(n) \\
+        =& \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \Lambda(n) \chi(n) n^{-s} 
+    \end{align*}
+    as infinite summation clearly commutes with finite sums.
+\end{proof}
+\begin{example}[Ex (v)]
+    We consider the Dirichlet characters mod 5.
+    A (primitive) 5-th root of unity $\omega_5 \in \C$ is given by $\omega_5 = \exp(2\pi i/5)$.
+    On the other hand, a primitive root modulo 5 is e.g. given by $r = 2$ since $2^2 \equiv -1 \mod 5$.
+    Thus we have $5 - 1 = 4$ Dirichlet characters mod 5, namely those given by
+    \begin{align*}
+        1 &\mapsto 1,\ 2 \mapsto \omega_5 = \exp(2\pi i/5),\ 3 \mapsto \omega_5^3 = \exp(6\pi i/5),\ 4 \mapsto \omega_5^2 = \exp(4\pi i/5),\ \\
+        1 &\mapsto 1,\ 2 \mapsto \omega_5^2 = \exp(4\pi i/5),\ 3 \mapsto \omega_5 = \exp(2\pi i/5),\ 4 \mapsto \omega_5^4 = \exp(8\pi i/5),\ \\
+        1 &\mapsto 1,\ 2 \mapsto \omega_5^3 = \exp(6\pi i/5),\ 3 \mapsto \omega_5^4 = \exp(8\pi i/5),\ 4 \mapsto \omega_5^1 = \exp(2\pi i/5),\ \\
+        1 &\mapsto 1,\ 2 \mapsto \omega_5^4 = \exp(8\pi i/5),\ 3 \mapsto \omega_5^2 = \exp(4\pi i/5),\ 4 \mapsto \omega_5^3 = \exp(6\pi i/5),\ \\
+    \end{align*}
+\end{example}
+
+\section{Part III}
+Again, let $q \geq 3$ be a prime.
+Let further $\chi$ be a Dirichlet character mod $q$.
+\begin{proposition}[Ex (i)]
+    \label{prop:logarithmic_derivative_L}
+    For $\Re(s) > 1$ have that
+    \begin{equation*}
+        \frac {L(s, \chi)'} {L(s, \chi)} = \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    Consider any $\epsilon > 0$. The series
+    \begin{equation*}
+        \sum_{n \geq 1} \frac d {ds} \chi(n) n^{-s} = \sum_{n \geq 1} \chi(n) \log(n) n^{-s}
+    \end{equation*}
+    converges uniformly on $\Re(s) \geq 1 + \epsilon$, as $|\chi(n)| \leq C$ for some $C > 0$ and all $n \in \N$ (by the lecture, we know that $\sum_n \log(n) n^{-s}$ converges uniformly on $\Re(s) \geq 1 + \epsilon$).
+    Hence, we may interchange summation and differentiation to get
+    \begin{equation*}
+        L(s, \chi)' = \sum_{n \geq 1} \chi(n) \frac d {ds} n^{-s} = \sum_{n \geq 1} \chi(n) \log(n) n^{-s}
+    \end{equation*}
+    for $\Re(s) \geq 1 + \epsilon$.
+    As $\epsilon > 0$ was arbitrary, we get
+    \begin{equation*}
+        L(s, \chi)' = \sum_{n \geq 1} \chi(n) \log(n) n^{-s}
+    \end{equation*}
+    for all $\Re(s) > 1$.
+
+    Furthermore, $\chi$ and $\mu$ are multiplicative, and hence so is $(\chi\mu)(n) := \chi(n)\mu(n)$.
+    Thus we have the Euler products
+    \begin{equation*}
+        \sum_{n \geq 1} \mu(n) \chi(n) n^{-s} = \prod_{p \in \primes} \ \sum_{k \in \N} \mu(p^k) \chi(p^k) p^{-sk} = \prod_{p \in \primes} (1 - \chi(p)p^{-s})
+    \end{equation*}
+    and
+    \begin{equation*}
+        \sum_{n \geq 1} \chi(n) n^{-s} = \prod_{p \in \primes} \ \sum_{k \in \N} \chi(p^k) p^{-sk} = \prod_{p \in \primes} \frac 1 {1 - \chi(p)p^{-s}}
+    \end{equation*}
+    Everything converges absolutely for $\Re(s) > 1$, and so it follows
+    \begin{equation*}
+        \frac 1 {L(s, \chi)} = \sum_{n \geq 1} (\chi\mu)(n) n^{-s}
+    \end{equation*}
+    By the compatibility of Dirichlet convolution and Dirichlet summation, we now find
+    \begin{equation*}
+        L(s, \chi)' \frac 1 {L(s, \chi)} = \Bigl( \sum_{n \geq 1} \chi(n) \log(n) n^{-s} \Bigr) \Bigl( \sum_{n \geq 1} \chi(n) \mu(n) n^{-s} \Bigr) = \sum_{n \geq 1} (\chi\log * \chi\mu)(n) n^{-s}
+    \end{equation*}
+    and so it is left to show that $\chi\log * \chi\mu = \chi\Lambda$.
+
+    This is true, as for all $n \in \N$ it holds
+    \begin{align*}
+        (\chi\log * \chi\mu)(n) &= \sum_{ab = n} \chi(a)\chi(b) \log(a)\mu(b) \\
+        &= \sum_{ab = n} \chi(ab) \log(a)\mu(b) = \chi(n) \sum_{ab = n} \log(a) \mu(b) \\
+        &= \chi(n) (\log * \mu)(n) = (\chi\Lambda)(n)
+    \end{align*}
+\end{proof}
+Now we want to find an analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
+First of all, we consider $\chi_0$.
+\begin{proposition}[Ex (ii)]
+    \label{prop:formula_trivial_L_series}
+    For $\Re(s) > 1$ we have
+    \begin{equation*}
+        L(s, \chi_0) = (1 - q^{-s}) \zeta(s)
+    \end{equation*}
+    In particular, $L(s, \chi_0)$ has a meromorphic continuation to $\Re(s) > 0$ with only one simple pole at $s = 1$.
+\end{proposition}
+\begin{proof}
+    As $\chi_0$ is fully multiplicative, we have the Euler product
+    \begin{align*}
+        L(s, \chi_0) =& \sum_{n \geq 1} \chi_0(n) n^{-s} = \prod_{p \in \primes} \frac 1 {1 - \chi_0(p)p^{-s}} = \prod_{p \neq q} \frac 1 {1 - p^{-s}} \\
+        =& (1 - q^{-s}) \prod_{p \in \primes} \frac 1 {1 - p^{-s}} = (1 - q^{-s}) \zeta(s)
+    \end{align*}
+    as all products converge absolutely.
+\end{proof}
+For the other Dirichlet characters, the situation is slightly more complicated.
+First, we will bound the value of the partial sums of the Dirichlet series for $0 < \Re(s) \leq 1$.
+\begin{lemma}
+    \label{prop:bound_partsums_character}
+    Let $\chi \neq \chi_0$ be a Dirichlet character mod $q$ and consider the sum function
+    \begin{equation*}
+        A(n) := \sum_{1 \leq k \leq n} \chi(k)
+    \end{equation*}
+    Then $|A(n)| \leq q$ for all $n \in \N$.
+\end{lemma}
+\begin{proof}
+    Have
+    \begin{align*}
+        |A(n)| =& \ \Bigl| \sum_{1 \leq k \leq n} \chi(k) \Bigr| \leq \Bigl| \sum_{q\lfloor n/q \rfloor < l \leq n} \chi(l) \Bigr| + \Bigl| \sum_{0 \leq k < \lfloor n/q \rfloor} \ \underbrace{\sum_{0 < l \leq q} \chi(kq + l)}_{= 0 \ \text{by Prop.~\ref{prop:finite_sums_characters}}} \Bigr| \\
+        =& \ \Bigl| \sum_{q\lfloor n/q \rfloor < l \leq n} \chi(l) \Bigr| \leq \sum_{q\lfloor n/q \rfloor < l \leq n} |\chi(l)| = \sum_{q\lfloor n/q \rfloor < l \leq n} 1 \\
+        =& q(n/q - \lfloor n/q \rfloor) \leq q
+    \end{align*}
+    for all $n \in \N$.
+\end{proof}
+\begin{lemma}[Ex (iii)]
+    \label{prop:character_partsums_bounded}
+    Let $\chi \neq \chi_0$ be a Dirichlet character.
+    Then for $\Re(s) > 0$ have
+    \begin{equation*}
+        \Bigl| \sum_{1 \leq n \leq X} \chi(n) n^{-s} \Bigr| \leq q + \frac {q|s|} {\Re(s)} = O\left( \frac {q|s|} {\Re(s)} \right)
+    \end{equation*}
+    and in particular, this does not depend on $X$.
+\end{lemma}
+\begin{proof}
+    Using partial summation yields
+    \begin{align*}
+        \sum_{1 \leq n \leq X} \chi(n) n^{-s} =& \sum_{1 - \epsilon < n \leq X} \chi(n) n^{-s} \\
+        =& \underbrace{A(1 - \epsilon)}_{= 0} (1 - \epsilon)^{-s} - A(X) X^{-s} + s\int_{1 - \epsilon}^X A(t) t^{-(s + 1)} dt \\
+        =& -A(X) X^{-s} + s\int_1^X A(t) t^{-(s + 1)} dt
+    \end{align*}
+    So
+    \begin{align*}
+        \Bigl| \sum_{1 \leq n \leq X} \chi(n) n^{-s} \Bigr| \leq& \ |A(X) X^{-s}| + |s| \int_1^X |A(t) t^{-(s + 1)}| dt \\
+        \leq& \ q X^{-\Re(s)} + |s| \int_1^X q t^{-\Re(s) - 1} dt \\
+        =& \ q X^{-\Re(s)} + q|s| \left( \frac 1 {\Re(s)} - \frac 1 {X^{\Re(s)}\Re(s)} \right) \\
+        \leq& \ q + q \frac {|s|} {\Re(s)} = O\left( \frac {q|s|} {\Re(s)} \right)
+    \end{align*}
+    for $\Re(s) > 0$.
+\end{proof}
+Now we can show the analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
+\begin{proposition}[Ex (iv)]
+    Let $\chi \neq \chi_0$ be a Dirichlet character mod $q$.
+    Then
+    \begin{align*}
+        L(s, \chi) = s \int_1^\infty A(t) t^{-(s + 1)} dt
+    \end{align*}
+    for $\Re(s) > 1$.
+    Further, the right-hand side is a holomorphic function on $\Re(s) > 0$ and thus provides an analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
+\end{proposition}
+\begin{proof}
+    Similar to the proof of Lemma~\ref{prop:character_partsums_bounded}, partial summation yields
+    \begin{align*}
+        \sum_{n \geq 1} \chi(n) n^{-s} = s \int_1^\infty A(t) t^{-(s + 1)} dt
+    \end{align*}
+    By Lemma~\ref{prop:character_partsums_bounded}, this is bounded and hence well-defined and finite for $\Re(s) > 0$.
+    Further, the integral converges absolutely by Lemma~\ref{prop:bound_partsums_character}, and thus is holomorphic on $\Re(s) > 0$.
+\end{proof}
+\begin{corollary}[Ex (iv)]
+    \label{prop:logarithmic_derivative_L_bounded}
+    The function $L(s, \chi)'/L(s, \chi)$ is bounded on a neighborhood of $1$, provided that $L(1, \chi) \neq 0$.
+\end{corollary}
+\begin{proof}
+    As $L(s, \chi)'/L(s, \chi)$ is meromorphic on $\Re(s) > 0$, we know that it is holomorphic on some neighborhood of $1$ unless it has a pole at $s = 1$.
+    In the third exercise class of ANT, it was shown that this would imply $L(1, \chi) = 0$ or $L(s, \chi)'$ has a pole at $s = 1$.
+
+    However, the derivative of a holomorphic function is again holomorphic, so $L(s, \chi)'$ has no pole at $s = 1$.
+    Provided that $L(1, \chi) \neq 0$, it follows that $L(s, \chi)'/L(s, \chi)$ is holomorphic on a compact neighborhood of $1$, so bounded.
+\end{proof}
+Now we can show the main result of this miniproject.
+We will prove one auxiliary lemma before.
+\begin{lemma}
+    For $a \perp q$, the function
+    \begin{equation*}
+        \rho_q(s) := \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
+    \end{equation*}
+    is a meromorphic function on $\Re(s) > 0$ with a simple pole at $s = 1$. 
+\end{lemma}
+\begin{proof}
+    By Prop.~\ref{prop:logarithmic_derivative_L}, we have for $\chi \in \mathrm{Dir}(q)$ that
+    \begin{equation*}
+        \frac {\overline{\chi(a)}} {q - 1} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s} = \frac {\overline{\chi(a)}} {q - 1} \frac {L(s, \chi)'} {L(s, \chi)}
+    \end{equation*}
+    If $\chi \neq \chi_0$, then Corollary~\ref{prop:logarithmic_derivative_L_bounded} shows that this function is holomorphic on $\Re(s) > 0$.
+    
+    If $\chi = \chi_0$ on the other hand, Prop.~\ref{prop:formula_trivial_L_series} shows that
+    \begin{equation*}
+        \frac {L(s, \chi_0)'} {L(s, \chi_0)}
+    \end{equation*}
+    is the logarithmic derivative of $L(s, \chi_0) = (1 - q^{-s}) \zeta(s)$ which has a simple pole at $s = 1$.
+    Hence, also $L(s, \chi_0)'/L(s, \chi_0)$ has a simple pole at $s = 1$.
+    And as $a \perp q$, we see that $\chi_0(a) = 1$ and thus also
+    \begin{equation*}
+        \frac {\overline{\chi_0(a)}} {q - 1} \sum_{n \geq 1} \frac {\Lambda(n) \chi_0(n)} {n^s} = \frac {\overline{\chi_0(a)}} {q - 1} \frac {L(s, \chi_0)'} {L(s, \chi_0)}
+    \end{equation*}
+    has a simple pole at $s = 1$.
+
+    Together, this yields that the sum of those functions
+    \begin{equation*}
+        \rho_a(s) = \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
+    \end{equation*}
+    is a meromorphic function with a simple pole at $s = 1$.
+\end{proof}
+\begin{proposition}
+    Assume that $L(1, \chi) \neq 0$ for all $\chi \in \mathrm{Dir}(q)$.
+    Then for all $a \perp q$ there are infinitely many primes $p \equiv a \mod q$.
+\end{proposition}
+\begin{proof}
+    Assume the opposite, i.e. the only primes $p \in \primes$ with $p \equiv a \mod q$ are $p_1, ..., p_N$.
+    By Prop.~\ref{prop:representation_mangoldt_series_congruent_a} we have that
+
 \end{proof}
 
 \printbibliography
