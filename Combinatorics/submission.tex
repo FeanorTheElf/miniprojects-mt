@@ -129,12 +129,11 @@ Now we will show some basic properties of the rank function.
     \end{itemize}
 \end{proposition}
 \begin{proof}
-    We show (ii) $\Rightarrow$ (i) $\Rightarrow$ (iii) $\Rightarrow$ (ii).
     For convenience of notation, write
     \begin{equation*}
         A_i := \bigcup_{i \leq j \leq n} A \cap L_j
     \end{equation*}
-    
+
     \paragraph{(ii) $\Rightarrow$ (i)} Define sets
     \begin{equation*}
         G_n := A \cap L_n \quad \text{and} \quad G_i := \partial G_{i + 1} \cup (A \cap L_i) \ \text{for $0 \leq i < n$}
@@ -154,7 +153,7 @@ Now we will show some basic properties of the rank function.
     However, $a \in L_i$ and so $a \neq c$.
     So we found $a \leq c$ comparable elements in the antichain $A$, a contradiction.
 
-    So we get
+    Now we get by using the assumption that
     \begin{align*}
         \sum_{j = i}^n \frac {|A \cap L_j|} {|L_j|} =& \frac {|A \cap L_i|} {|L_i|} + \sum_{j = i + 1}^n \frac {|A \cap L_j|} {|L_j|} \\
         \leq& \frac {|A \cap L_i|} {|L_i|} + \frac {|G_{i + 1}|} {|L_{i + 1}|} \leq \frac {|A \cap L_i|} {|L_i|} + \frac {|\partial G_{i + 1}|} {|L_i|} \\
@@ -165,7 +164,69 @@ Now we will show some basic properties of the rank function.
         \sum_{j = 0}^n \frac {|A \cap L_j|} {|L_j|} \leq \frac {|G_i|} {|L_i|} \leq 1
     \end{equation*}
 
-    \paragraph{(i) $\Rightarrow$ (iii)}
+    \paragraph{(ii) $\Rightarrow$ (iii)} Use induction on $n$.
+    Again, the base case is trivial, just take chains $\{x\}$ for each $x \in A = L_0$.
+    So assume that $n > 0$. The set
+    \begin{equation*}
+        A' := \bigcup_{i = 0}^{n - 1} L_i
+    \end{equation*}
+    is a graded poset of maximal rank $n - 1$, and hence there are maximal chains $C_1, ..., C_t \subseteq A'$ such that for all $1 \leq i \leq n - 1$ have
+    \begin{equation*}
+        |\{j \ | \ x \in C_j\}| = |\{j \ | \ y \in C_j\}| \ \text{for all $x, y \in L_i$}
+    \end{equation*}
+    by induction hypothesis.
+    Let now $V_1 = V_2 := [t] \times L_n$ and consider the bipartite graph $G := (V_1 \sqcup V_2, E)$ where $E$ is defined as follows:
+    \begin{equation*}
+        \{ \underbrace{(i, a)}_{\in V_1}, \underbrace{(j, b)}_{\in V_2} \} \in E \ \Leftrightarrow \ \max C_j < a
+    \end{equation*}
+    We use Hall's theorem to show that $G$ has a perfect matching.
+
+    Consider any $W = \{ (i_1, a_1), ..., (i_w, a_w) \} \subseteq V_1$ and let $F = \{ a_1, ..., a_w \}$.
+    Then
+    \begin{equation*}
+        W \subseteq [t] \times F \ \Rightarrow \ |W| \leq t|F|
+    \end{equation*}
+    By choice of $C_1, ..., C_t$, we have that the number of $j$ with $x \in C_j$ is the same for all $x \in L_{n - 1}$, say $k$.
+    Since the $C_i$ are maximal chains, each intersects $L_{n - 1}$ in exactly one element.
+    So have bijection
+    \begin{align*}
+        \{ (x, i) \ | \ x \in L_{n - 1}, 1 \leq i \leq t, x \in C_i\} \to \{ i \ | \ 1 \leq i \leq t \}, \quad (x, i) \mapsto i
+    \end{align*}
+    where the set on the left-hand side has size $k |L_{n - 1}|$. It follows that $k|L_{n - 1}| = t$.
+
+    Using this, we find
+    \begin{align*}
+        N(W) =& \{ (j, b) \ | \ b \in L_n, \exists a \in F: \max C_j < a \} \\
+        =& L_n \times \{ j \ | \ \exists a \in F: \max C_j = a \} \\
+        =& L_n \times \{ j \ | \ \max C_j \in \partial F \}
+    \end{align*}
+    and so
+    \begin{align*}
+        |N(W)| = |L_n| \sum_{C_j \cap \partial F \neq \emptyset} 1 = |L_n| \sum_{x \in \partial F} \sum_{x \in C_j} 1 = |L_n| \sum_{x \in \partial F} k = |L_n| |\partial F| k
+    \end{align*}
+    Together with the assumption that $|\partial F| |L_n| \geq |F| |L_{n - 1}|$ we see that
+    \begin{equation*}
+        |W| \leq t |F| = k |L_{n - 1}| |F| \leq k |\partial F| |L_n| = |N(W)|
+    \end{equation*}
+    So Hall's theorem yields a perfect matching $M \subseteq E$ from $V_1$ to $V_2$.
+    As $|V_1| = |V_2|$, this is already a 1-to-one correspondence.
+
+    Now consider the sets
+    \begin{equation*}
+        C'_m := C_j \cup \{ a \} \ \text{where} \ m = \{\underbrace{(i, a)}_{\in V_1}, \underbrace{(j, b)}_{\in V_2}\} \in M
+    \end{equation*}
+    These are chains, as $\max C_j < a$ for each $C'_m$.
+    Further, for each $x, y \in L_i, i < n$ have that
+    \begin{equation*}
+        |\{ C'_m \ | \ x \in C'_m \}| = |L_n \times \{ j \ | \ x \in C_j \}| = |L_n \times \{ j \ | \ y \in C_j \}| = |\{ C'_m \ | \ y \in C'_m \}|
+    \end{equation*}
+    as $M$ is a matching from $V_2$ to $V_1$.
+    Finally, for all $x \in L_n$ we have that
+    \begin{align*}
+        |\{ C'_m \ | \ x \in C'_m \}| =& |\{ m \in M \ | \ \exists i, v \in V_2: m = \{ (i, x), v \} \}| = |\{ (i, x) \ | \ (i, x) \in V_1 \}| = t
+    \end{align*}
+    as $M$ is a matching from $V_1$ to $V_2$.
+    \paragraph{(iii) $\Rightarrow$ (i)}
 \end{proof}
 
 \end{document}
