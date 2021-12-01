@@ -18,15 +18,12 @@
 \author{Simon Pohmann}
 \date{}
 
-\newcommand{\primes}{\mathbb{P}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\C}{\mathbb{C}}
-\newcommand{\units}{\times}
-\newcommand{\sgn}{\mathrm{sgn}}
-\newcommand{\divides}{\ | \ }
+
 \newcommand\restr[2]{{
     \left.\kern-\nulldelimiterspace
     #1
@@ -34,12 +31,141 @@
     \right|_{#2}
 }}
 
+\theoremstyle{definition}
 \newtheorem{definition}{Definition}
 \newtheorem{lemma}[definition]{Lemma}
+\newtheorem{remark}[definition]{Remark}
 \newtheorem{proposition}[definition]{Proposition}
 \newtheorem{example}[definition]{Example}
+\newtheorem{corollary}[definition]{Corollary}
 
 \begin{document}
 \maketitle
+
+We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
+
+\section{Part I}
+
+\begin{proposition}
+    \label{prop:definition_rank_function}
+    Let $P$ be a graded poset in which every maximal chain has length $n + 1$. Then the function
+    \begin{equation*}
+        r: P \to \{ 0, ..., n \}, \quad x \mapsto \max\{ k \in \N \ | \ \exists a_1, ..., a_k \in P: \ a_1 < a_2 < ... < a_k < x \}
+    \end{equation*}
+    is well-defined and the unique function with $x < y$ implies $r(x) < r(y)$ for all $x, y \in P$.
+    We call it the \emph{rank function} of $P$.
+\end{proposition}
+\begin{proof}
+    Clearly $r$ is well-defined, as for every increasing sequence $a_1 < ... < a_k < x$, we have the chain $C := \{ a_1, ..., a_k, x \}$ of size $k + 1$.
+    Hence by assumption, $k \leq n$ and so $r(x)$ is finite and in $\{ 0, ..., n \}$.
+
+    Further, consider $x < y$ in $P$.
+    We have a sequence $a_1 < ... < a_{r(x)} < x$ by definition of $r$.
+    It follows that there is an increasing sequence $a_1 < ... < a_{r(x)} < x < y$ and so $r(y) \geq r(k) + 1 > r(x)$.
+
+    Lastly, assume there was another function $r': P \to \{ 0, ..., n \}$ with this property.
+    Consider any $x \in P$.
+    By definition of $r$, there is an increasing sequence $a_1 < ... < a_{r(x)} < x$ in $P$.
+    Now consider a maximal chain $C$ containing the chain $\{ a_1, ..., a_{r(x)}, x \}$.
+
+    Say $C = \{ b_1, ..., b_{n + 1} \}$ with $b_1 < ... < b_{n + 1}$ and $x = b_j$.
+    Note that we have the increasing sequence $b_1 < ... < b_{j - 1} < b_j = x$ and so by the definition of $r$, find $j \leq r(x) + 1$.
+    On the other hand, have $a_1, ..., a_{r(x)} \in C$ and thus $j = r(x) + 1$, i.e.
+    \begin{equation*}
+        a_1 = b_1, \ ..., \ a_{r(x)} = b_{r(x)}, \ x = b_{r(x) + 1}
+    \end{equation*}
+    As $b_i < b_{i + 1}$, we know that $r'(b_i) < r'(b_{i + 1})$ and inductively, we see $r'(b_i) \geq i - 1$.
+    However, $r'(b_{n + 1}) \leq n$ and thus $r'(b_i) = i - 1$.
+    Finally it follows that $r'(x) = r'(b_{r(x) + 1}) = r(x)$.
+\end{proof}
+Now we will show some basic properties of the rank function.
+\begin{proposition}
+    Let $P$ be a graded poset of maximal rank $n$ with rank function $r$.
+    Then
+    \begin{itemize}
+        \item $x \in P$ is minimal iff $r(x) = 0$ and maximal iff $r(x) = n$.
+        \item If $x < y$ and $r(x) + 1 \neq r(y)$ then there is $z \in P$ with $x < z < y$.
+        \item If $x < y$ then there is an increasing sequence $x < a_1 < ... < a_{r(y) - r(x) - 1} < y$ in $P$. 
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    For (i), let $x \in P$ be minimal. Then there is no increasing sequence $a_1 < x$ in $P$, so $r(x) \leq 0$.
+    Conversely, let $r(x) = 0$. Assume there was $y \in P$ with $y < x$, then $r(y) < r(x) = 0$, a contradiction.
+    The analogous statement for maximal elements is proved in the same way.
+    
+    For (iii), consider $x < y$ in $P$. Then the chain $\{ x, y \}$ is contained in a maximal chain $C \subseteq P$.
+    Say $C = \{ b_1, ..., b_{n + 1} \}$ with $b_1 < ... < b_{n + 1}$.
+
+    Hence we find $r(b_i) < r(b_{i + 1})$ and so inductively that $r(b_i) \geq i - 1$ and $r(b_i) \leq i - 1$ since $r(b_1) \geq 0$ and $r(b_{n + 1}) \leq n$.
+    It follows that $r(b_i) = i - 1$ and so $x = b_{r(x) + 1}, y = {r(y) + 1}$.
+    Therefore, we have a chain
+    \begin{equation*}
+        x < b_{r(x) + 2} < ... < b_{r(y)} < y
+    \end{equation*}
+    of length $r(y) - r(x) - 1$.
+    Statement (ii) follows directly, as in this setting, have $r(y) \geq r(x) + 2$ and so $r(y) - r(x) - 1 \neq 0$.
+\end{proof}
+
+\section{Part II}
+\begin{proposition}
+    For a graded poset $P$ with layers $L_0, ..., L_n$ the following statements are equivalent:
+    \begin{itemize}
+        \item For every antichain $A \subseteq P$ have
+        \begin{equation*}
+            \sum_{i = 0}^n \frac {|A \cap L_i|} {|L_i|} \leq 1
+        \end{equation*}
+        \item For each $1 \leq i \leq n$ and $F \subseteq L_i$ have
+        \begin{equation*}
+            \frac {|\partial F|} {|L_{i - 1}|} \geq \frac {|F|} {|L_i|}
+        \end{equation*}
+        where
+        \begin{equation*}
+            \partial F := \{ a \in L_{i - 1} \ | \ \exists b \in F: \ a \leq b \}
+        \end{equation*}
+        \item There exists a (nonempty) sequence of maximal chains $C_1, ..., C_t$ such that for all $1 \leq i \leq n$ we have:
+        \begin{equation*}
+            |\{ j \ | \ x \in C_j \}| = |\{ j \ | \ y \in C_j \}| \ \text{for all $x, y \in L_i$}
+        \end{equation*}
+    \end{itemize}
+\end{proposition}
+\begin{proof}
+    We show (ii) $\Rightarrow$ (i) $\Rightarrow$ (iii) $\Rightarrow$ (ii).
+    For convenience of notation, write
+    \begin{equation*}
+        A_i := \bigcup_{i \leq j \leq n} A \cap L_j
+    \end{equation*}
+    
+    \paragraph{(ii) $\Rightarrow$ (i)} Define sets
+    \begin{equation*}
+        G_n := A \cap L_n \quad \text{and} \quad G_i := \partial G_{i + 1} \cup (A \cap L_i) \ \text{for $0 \leq i < n$}
+    \end{equation*}
+    We show by induction that for $a \in G_i$ there is some $b \in A_i$ with $a \leq b$ and that we have the inequality
+    \begin{equation*}
+        \sum_{j = i}^n \frac {|A \cap L_j|} {|L_j|} \leq \frac {|G_i|} {|L_i|}
+    \end{equation*}
+    The base case is trivial, so let $i < n$.
+    Consider some $a \in G_i$.
+    If $a \in \partial G_{i + 1}$, then there is $b \in G_{i + 1}$ with $a \leq b$.
+    By induction hypothesis, have $c \in A_{i + 1} \supseteq A_i$ with $b \leq c$ and thus $a \leq c$.
+    Otherwise, find $a \in A \cap L_i$ and so $a \leq a$ with $a \in A \cap L_i \subseteq A_i$.
+
+    To show the inequality, note that $\partial G_{i + 1}$ and $A \cap L_i$ are disjoint.
+    Indeed, if $a \in \partial G_{i + 1} \cap A \cap L_i$ then there is $b \in G_{i + 1}$ with $a \leq b$, and further by induction hypothesis there is $c \in A_{i + 1}$ with $a \leq b \leq c$.
+    However, $a \in L_i$ and so $a \neq c$.
+    So we found $a \leq c$ comparable elements in the antichain $A$, a contradiction.
+
+    So we get
+    \begin{align*}
+        \sum_{j = i}^n \frac {|A \cap L_j|} {|L_j|} =& \frac {|A \cap L_i|} {|L_i|} + \sum_{j = i + 1}^n \frac {|A \cap L_j|} {|L_j|} \\
+        \leq& \frac {|A \cap L_i|} {|L_i|} + \frac {|G_{i + 1}|} {|L_{i + 1}|} \leq \frac {|A \cap L_i|} {|L_i|} + \frac {|\partial G_{i + 1}|} {|L_i|} \\
+        =& \frac {|A \cap L_i| + |\partial G_{i + 1}|} {|L_i|} = \frac {|G_i|} {|L_i|}
+    \end{align*}
+    Finally, we have that $G_0 \subseteq L_0$, so
+    \begin{equation*}
+        \sum_{j = 0}^n \frac {|A \cap L_j|} {|L_j|} \leq \frac {|G_i|} {|L_i|} \leq 1
+    \end{equation*}
+
+    \paragraph{(i) $\Rightarrow$ (iii)}
+\end{proof}
 
 \end{document}
