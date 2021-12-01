@@ -114,7 +114,7 @@ Now we will show some basic properties of the rank function.
         \begin{equation*}
             \sum_{i = 0}^n \frac {|A \cap L_i|} {|L_i|} \leq 1
         \end{equation*}
-        \item For each $1 \leq i \leq n$ and $F \subseteq L_i$ have
+        \item For each $1 < i \leq n$ and $F \subseteq L_i$ have
         \begin{equation*}
             \frac {|\partial F|} {|L_{i - 1}|} \geq \frac {|F|} {|L_i|}
         \end{equation*}
@@ -129,41 +129,7 @@ Now we will show some basic properties of the rank function.
     \end{itemize}
 \end{proposition}
 \begin{proof}
-    For convenience of notation, write
-    \begin{equation*}
-        A_i := \bigcup_{i \leq j \leq n} A \cap L_j
-    \end{equation*}
-
-    \paragraph{(ii) $\Rightarrow$ (i)} Define sets
-    \begin{equation*}
-        G_n := A \cap L_n \quad \text{and} \quad G_i := \partial G_{i + 1} \cup (A \cap L_i) \ \text{for $0 \leq i < n$}
-    \end{equation*}
-    We show by induction that for $a \in G_i$ there is some $b \in A_i$ with $a \leq b$ and that we have the inequality
-    \begin{equation*}
-        \sum_{j = i}^n \frac {|A \cap L_j|} {|L_j|} \leq \frac {|G_i|} {|L_i|}
-    \end{equation*}
-    The base case is trivial, so let $i < n$.
-    Consider some $a \in G_i$.
-    If $a \in \partial G_{i + 1}$, then there is $b \in G_{i + 1}$ with $a \leq b$.
-    By induction hypothesis, have $c \in A_{i + 1} \supseteq A_i$ with $b \leq c$ and thus $a \leq c$.
-    Otherwise, find $a \in A \cap L_i$ and so $a \leq a$ with $a \in A \cap L_i \subseteq A_i$.
-
-    To show the inequality, note that $\partial G_{i + 1}$ and $A \cap L_i$ are disjoint.
-    Indeed, if $a \in \partial G_{i + 1} \cap A \cap L_i$ then there is $b \in G_{i + 1}$ with $a \leq b$, and further by induction hypothesis there is $c \in A_{i + 1}$ with $a \leq b \leq c$.
-    However, $a \in L_i$ and so $a \neq c$.
-    So we found $a \leq c$ comparable elements in the antichain $A$, a contradiction.
-
-    Now we get by using the assumption that
-    \begin{align*}
-        \sum_{j = i}^n \frac {|A \cap L_j|} {|L_j|} =& \frac {|A \cap L_i|} {|L_i|} + \sum_{j = i + 1}^n \frac {|A \cap L_j|} {|L_j|} \\
-        \leq& \frac {|A \cap L_i|} {|L_i|} + \frac {|G_{i + 1}|} {|L_{i + 1}|} \leq \frac {|A \cap L_i|} {|L_i|} + \frac {|\partial G_{i + 1}|} {|L_i|} \\
-        =& \frac {|A \cap L_i| + |\partial G_{i + 1}|} {|L_i|} = \frac {|G_i|} {|L_i|}
-    \end{align*}
-    Finally, we have that $G_0 \subseteq L_0$, so
-    \begin{equation*}
-        \sum_{j = 0}^n \frac {|A \cap L_j|} {|L_j|} \leq \frac {|G_i|} {|L_i|} \leq 1
-    \end{equation*}
-
+    Show the directions (ii) $\Rightarrow$ (iii) $\Rightarrow$ (i) $\Rightarrow$ (ii)
     \paragraph{(ii) $\Rightarrow$ (iii)} Use induction on $n$.
     Again, the base case is trivial, just take chains $\{x\}$ for each $x \in A = L_0$.
     So assume that $n > 0$. The set
@@ -175,7 +141,7 @@ Now we will show some basic properties of the rank function.
         |\{j \ | \ x \in C_j\}| = |\{j \ | \ y \in C_j\}| \ \text{for all $x, y \in L_i$}
     \end{equation*}
     by induction hypothesis.
-    Let now $V_1 = V_2 := [t] \times L_n$ and consider the bipartite graph $G := (V_1 \sqcup V_2, E)$ where $E$ is defined as follows:
+    Let now $V_1, V_2 := [t] \times L_n$ (treat them as disjoint) and consider the bipartite graph $G := (V_1 \sqcup V_2, E)$ where $E$ is defined as follows:
     \begin{equation*}
         \{ \underbrace{(i, a)}_{\in V_1}, \underbrace{(j, b)}_{\in V_2} \} \in E \ \Leftrightarrow \ \max C_j < a
     \end{equation*}
@@ -202,7 +168,7 @@ Now we will show some basic properties of the rank function.
     \end{align*}
     and so
     \begin{align*}
-        |N(W)| = |L_n| \sum_{C_j \cap \partial F \neq \emptyset} 1 = |L_n| \sum_{x \in \partial F} \sum_{x \in C_j} 1 = |L_n| \sum_{x \in \partial F} k = |L_n| |\partial F| k
+        |N(W)| = |L_n| \sum_{\max C_j \in \partial F} 1 = |L_n| \sum_{x \in \partial F} \sum_{x \in C_j} 1 = |L_n| \sum_{x \in \partial F} k = |L_n| |\partial F| k
     \end{align*}
     Together with the assumption that $|\partial F| |L_n| \geq |F| |L_{n - 1}|$ we see that
     \begin{equation*}
@@ -226,7 +192,40 @@ Now we will show some basic properties of the rank function.
         |\{ C'_m \ | \ x \in C'_m \}| =& |\{ m \in M \ | \ \exists i, v \in V_2: m = \{ (i, x), v \} \}| = |\{ (i, x) \ | \ (i, x) \in V_1 \}| = t
     \end{align*}
     as $M$ is a matching from $V_1$ to $V_2$.
-    \paragraph{(iii) $\Rightarrow$ (i)}
+
+    \paragraph{(iii) $\Rightarrow$ (i)} Let $C_1, ..., C_t$ be a sequence of maximal chains given by the assumption.
+    For $1 \leq i \leq n$ let $k_i$ be the number of different $j$ such that a fixed element $x \in L_i$ is contained in exactly the $C_j$.
+    By assumption, this does not depend on $x$.
+
+    As in the direction above, we see that $k_i |L_i| = t$ because each $C_j$ intersects $L_i$ in exactly one element, so there is a bijection
+    \begin{align*}
+        \{ (x, j) \ | \ x \in L_i, 1 \leq j \leq t, x \in C_j\} \to \{ j \ | \ 1 \leq j \leq t \}, \quad (x, j) \mapsto j
+    \end{align*}
+    and the set on the left has size $k_i |L_i|$.
+
+    Since each $C_j$ is a chain and $A$ is an antichain, we find that $A$ and $C_j$ intersect in at most one element.
+    So
+    \begin{align*}
+        t \geq& |\{ j \ | \ A \cap C_j \neq \emptyset \}| = \sum_{a \in A} |\{ j \ | \ a \in C_j \}| = \sum_{i = 0}^n \ \sum_{a \in A \cap L_i} |\{ j \ | \ a \in C_j \}| \\
+        =& \sum_{i = 0}^n \ \sum_{a \in A \cap L_i} k_i = \sum_{i = 0}^n k_i |A \cap L_i| = \sum_{i = 0}^n \frac {|A \cap L_i|} {|L_i|} t
+    \end{align*}
+    The claim follows by canceling $t$.
+
+    \paragraph{(i) $\Rightarrow$ (ii)}
+    Consider $A := F \cup (L_{i - 1} \setminus \partial F)$.
+    This is clearly an antichain, as for $x \in F, y \in L_{i - 1} \setminus \partial F$ have $y \not< x$.
+    However, $r(y) < r(x)$ so also $x \not< y$, thus $x$ and $y$ are incomparable.
+    Clearly elements from the same layer are incomparable.
+
+    Thus, the assumption yields that
+    \begin{equation*}
+        \frac {|L_{i - 1}| - |\partial F|} {|L_{i - 1}|} + \frac {|F|} {|L_i|} = \frac {|A \cap L_{i - 1}|} {|L_{i - 1}|} + \frac {|A \cap L_i|} {|L_i|} = \sum_{j = 0}^n \frac {|A \cap L_j|} {|L_j|} \leq 1
+    \end{equation*}
+    This gives
+    \begin{equation*}
+        1 + \frac {|F|} {|L_i|} \leq 1 + \frac {|\partial F|} {|L_{i - 1}|}
+    \end{equation*}
+    and the claim follows.
 \end{proof}
 
 \end{document}
