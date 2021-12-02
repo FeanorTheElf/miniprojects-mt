@@ -108,6 +108,7 @@ Now we will show some basic properties of the rank function.
 
 \section{Part II}
 \begin{proposition}
+    \label{prop:characterization_lym}
     For a graded poset $P$ with layers $L_0, ..., L_n$ the following statements are equivalent:
     \begin{itemize}
         \item For every antichain $A \subseteq P$ have
@@ -160,13 +161,13 @@ Now we will show some basic properties of the rank function.
     \end{align*}
     where the set on the left-hand side has size $k |L_{n - 1}|$. It follows that $k|L_{n - 1}| = t$.
 
-    Using this, we find
+    Since $\max C_j \in L_{n - 1}$ for all $j$, we have
     \begin{align*}
         N(W) =& \{ (j, b) \ | \ b \in L_n, \exists a \in F: \max C_j < a \} \\
-        =& L_n \times \{ j \ | \ \exists a \in F: \max C_j = a \} \\
+        =& L_n \times \{ j \ | \ \exists a \in F: \max C_j < a \} \\
         =& L_n \times \{ j \ | \ \max C_j \in \partial F \}
     \end{align*}
-    and so
+    and so by the above
     \begin{align*}
         |N(W)| = |L_n| \sum_{\max C_j \in \partial F} 1 = |L_n| \sum_{x \in \partial F} \sum_{x \in C_j} 1 = |L_n| \sum_{x \in \partial F} k = |L_n| |\partial F| k
     \end{align*}
@@ -226,6 +227,46 @@ Now we will show some basic properties of the rank function.
         1 + \frac {|F|} {|L_i|} \leq 1 + \frac {|\partial F|} {|L_{i - 1}|}
     \end{equation*}
     and the claim follows.
+\end{proof}
+\section{Part III}
+We even show the slightly stronger stronger statement that the implication to the second condition of Prop.\ref{prop:characterization_lym} already holds ``locally'', i.e. for each layer separately.
+\begin{proposition}
+    Let $P$ be a graded poset with layers $L_0, ..., L_n$ and let $0 < i \leq n$ such that
+    \begin{itemize}
+        \item Each element $a \in L_i$ covers the same number of elements in $L_{i - 1}$
+        \item Each element $a \in L_{i - 1}$ is covered by the same number of elements in $L_i$
+    \end{itemize}
+    Then for each $F \subseteq L_i$ have
+    \begin{equation*}
+        \frac {|\partial F|} {|L_{i - 1}|} \geq \frac {|F|} {|L_i|}
+    \end{equation*}
+    In particular, if this is true for all $i$, then all the equivalent conditions from Prop.~\ref{prop:characterization_lym} follow.
+\end{proposition}
+\begin{proof}
+    Assume that for all $a \in L_i$
+    \begin{equation*}
+        |\{ b \in L_{i - 1} \ | \ \text{$a$ covers $b$} \}| = k \in \N
+    \end{equation*}
+    and for all $b \in L_{i - 1}$
+    \begin{equation*}
+        |\{ a \in L_i \ | \ \text{$a$ covers $b$} \}| = l \in \N
+    \end{equation*}
+    Double-counting pairs $(a, b) \in L_i \times L_{i - 1}$ such that $a$ covers $b$ yields $k|L_i| = l|L_{i - 1}|$.
+    Now consider $F \subseteq L_i$.
+    Note that by definition of $\partial F$, we have for all $a \in F$ that
+    \begin{equation*}
+        \{ b \in \partial F \ | \ \text{$a$ covers $b$} \} = \{ b \in L_{i - 1} \ | \ \text{$a$ covers $b$} \} = \partial \{a\} \subseteq \partial F
+    \end{equation*}
+    Again by double-counting pairs $(a, b) \in F \times \partial F$ such that $a$ covers $b$, we find
+    \begin{align*}
+        k|F| =& \sum_{a \in F} k = \sum_{a \in F} |\{ b \in L_{i - 1} \ | \ \text{$a$ covers $b$} \}| = \sum_{a \in F} |\{ b \in \partial F \ | \ \text{$a$ covers $b$} \}| \\
+        =& |\{ (a, b) \in F \times \partial F \ | \ \text{$a$ covers $b$} \}| = \sum_{b \in \partial F} |\{ a \in F \ | \ \text{$a$ covers $b$}\}| \\
+        \leq& \sum_{b \in \partial F} |\{ a \in L_i \ | \ \text{$a$ covers $b$}\}| = \sum_{b \in \partial F} l = l |\partial F|
+    \end{align*}
+    Hence
+    \begin{equation*}
+        \frac {|\partial F|} {|L_{i - 1}|} = \frac {l |\partial F|} {l |L_{i - 1}|} \leq \frac {k |F|} {k |L_i|} = \frac {|F|} {|L_i|}
+    \end{equation*}
 \end{proof}
 
 \end{document}
