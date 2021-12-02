@@ -273,7 +273,7 @@ We even show the slightly stronger stronger statement that the implication to th
 
 \section{Part IV}
 \begin{example}
-    Let $\Pi = \{ \pi \subseteq \powerset(n) \ | \ \text{$\pi$ partition} \}$ be the poset of partitions ordered by refinement.
+    Let $\Pi_m = \{ \pi \subseteq \powerset(n) \ | \ \text{$\pi$ partition} \}$ be the poset of partitions ordered by refinement.
     Then $\Pi$ is a graded poset with rank function
     \begin{equation*}
         r: \Pi \to \{ 0, ..., n - 1 \}, \quad \pi \mapsto n - |\pi|
@@ -341,23 +341,79 @@ We even show the slightly stronger stronger statement that the implication to th
     Note that this is the partition into \emph{exactly} $k$ sets; 
     I am not completely sure what the exercise description tells us to show, but if it is about the number of ways of decomposing $[m]$ into \emph{at most} $k$ sets, then have
     \begin{equation*}
-        \Sigma S(m, k)(2) = 2^{m - 1} \quad \text{and} \quad \Sigma S(m, k)(3) = 3^{m - 1} = \frac 1 2 3^{m - 1} - \frac 1 2
+        \Sigma S(m, k)(2) = 2^{m - 1} \quad \text{and} \quad \Sigma S(m, k)(3) = 3^{m - 1} = \frac 1 2 3^{m - 1} + \frac 1 2
     \end{equation*}
     for $m \geq 3$.
     Here $\Sigma S(m, k) = \sum_{l \leq k} S(m, l)$ is the number of partitions of $[m]$ into at most $k$ sets.
-\end{example}
-\begin{proof}
-    By Prop.~\ref{prop:partitions_recursion} have that for $m \geq 1$ we have $S(m, 1) = 1$.
-    Further, for $m \geq 2$ have
+    \begin{proof}
+        By Prop.~\ref{prop:partitions_recursion} have that for $m \geq 1$ we have $S(m, 1) = 1$.
+        Further, for $m \geq 2$ have
+        \begin{equation*}
+            S(m, 2) = \sum_{n = 1}^{m - 1} {m - 1 \choose n} 1 = 2^{m - 1} - 1
+        \end{equation*}
+        Applying this once more yields for $m \geq 3$ that
+        \begin{align*}
+            S(m, 3) =& \sum_{n = 1}^{m - 1} {m - 1 \choose n} (2^{n - 1} - 1) = \frac 1 2 \sum_{n = 1}^{m - 1} {m - 1 \choose n} 2^n - \sum_{n = 1}^{m - 1} {m - 1 \choose n} 1 \\
+            =&\frac 1 2 \sum_{n = 0}^{m - 1} {m - 1 \choose n} 2^n - \frac 1 2 - \sum_{n = 0}^{m - 1} {m - 1 \choose n} 1 + 1 \\
+            =& \frac 1 2 (1 + 2)^{m - 1} - 2^{m - 1} + \frac 1 2 = \frac 1 2 (3^{m - 1} - 2^m + 1)
+        \end{align*}
+    \end{proof}
+    Let $m$ be even and consider $\mathcal{A} \subseteq \Pi_m$ of partitions of $[m]$ into two equally sized sets.
+    Then
     \begin{equation*}
-        S(m, 2) = \sum_{n = 1}^{m - 1} {m - 1 \choose n} 1 = 2^{m - 1} - 1
+        |\mathcal{A}| = \frac 1 2 {m \choose m/2}
     \end{equation*}
-    Applying this once more yields for $m \geq 3$ that
+    \begin{proof}
+        Consider the map
+        \begin{equation*}
+            f: [m]^{(m/2)} \to \mathcal{A}, \quad A \mapsto \{ A, [m] \setminus A \}
+        \end{equation*}
+        Then for $A$ and $B \neq A, [m] \setminus A$ have that $\{ A, [m] \setminus A \} \neq \{ B, [m] \setminus B \}$.
+        Conversely, $A$ and $[m] \setminus A$ have the same image under $f$.
+        This shows that $f$ is 2-to-1 and thus 
+        \begin{equation*}
+            |\mathcal{A}| = \frac 1 2 \left| [m]^{(m/2)} \right| = \frac 1 2 {m \choose m/2}
+        \end{equation*}
+    \end{proof}
+    Further have
+    \begin{equation*}
+        |\partial \mathcal{A}| = {m \choose m/2} \left( 2^{m/2 - 1} - 1 \right)
+    \end{equation*}
+    \begin{proof}
+        Consider the map
+        \begin{align*}
+            g: \underbrace{\{ (A, B, C) \ | \ A \in [m]^{(m/2)}, \{ A, B, C \} \in \Pi_m \}}_{ =: \mathcal{G} } \to \partial \mathcal{A}, \quad (A, B, C) &\mapsto \{ A, B, C \}
+        \end{align*}
+        Note that $g$ is well-defined, as for $A \in [m]^{(m/2)}, \{ A, B, C \} \in \Pi_m$ have that $\pi := \{ A, B, C \}$ is a partition in $L_{m - 3}$ that refines the partition $\{ A, B \cup C \} \in \mathcal{A} \subseteq L_{m - 2}$.
+        Further, it is easy to see that $g$ is surjective, as every partition $\pi \in \partial \mathcal{A}$ satisfies $|\pi| = 3$ and has some $A \in \pi$ with $|A| = m/2$.
+
+        To complete the proof, we investigate to what ``extend $g$ is injective''.
+
+        Assume $g(A, B, C) = g(A', B', C')$. As $B, C, B', C' \neq \emptyset$ and $|B \cup C| = |B' \cup C'| = m/2$, we see that $A = A'$.
+        Further, we must then have that $\{ B, C \} = \{ B', C' \}$, hence $(A, B, C) = (A', B', C')$ or $(A, B, C) = (A', C', B')$ (clearly $B \neq C, B' \neq C'$).
+        This shows that the map $g$ is 2-to-1.
+        
+        Using this, we find
+        \begin{align*}
+            |\partial \mathcal{A}| =& \frac 1 2 |\mathcal{G}| = \frac 1 2 \sum_{A \in [m]^{(m/2)}} |\{ (B, C) \ | \ \{ B, C \} \ \text{partition of} \ [m] \setminus A \}| \\
+            =& \frac 1 2 \sum_{A \in [m]^{(m/2)}} 2 S(m/2, 2) = \sum_{A \in [m]^{(m/2)}} 2^{m/2 - 1} - 1 = {m \choose m/2} \left( 2^{m/2 - 1} - 1 \right)
+        \end{align*}
+    \end{proof}
+    We can now plug this into the second condition of Prop.~\ref{prop:characterization_lym} to see
     \begin{align*}
-        S(m, 3) =& \sum_{n = 1}^{m - 1} {m - 1 \choose n} (2^{n - 1} - 1) = \frac 1 2 \sum_{n = 1}^{m - 1} {m - 1 \choose n} 2^n - \sum_{n = 1}^{m - 1} {m - 1 \choose n} 1 \\
-        =&\frac 1 2 \sum_{n = 0}^{m - 1} {m - 1 \choose n} 2^n - \frac 1 2 - \sum_{n = 0}^{m - 1} {m - 1 \choose n} 1 + 1 \\
-        =& \frac 1 2 (1 + 2)^{m - 1} - 2^{m - 1} + \frac 1 2 = \frac 1 2 (3^{m - 1} - 2^m + 1)
+        \frac {|\partial \mathcal{A}|} {|L_{n - 3}|} &= \frac {{m \choose m/2}\left( 2^{m/2 - 1} - 1\right)} {S(m, 3)} = \frac {{m \choose m/2}\left( 2^{m/2 - 1} - 1\right)} {\frac 1 2 \left( 3^{m - 1} - 2^m + 1 \right)} \\
+        &\quad \sim \frac {2^{m + m/2}} {\sqrt{n}(3^{m - 1} - 2^m)} \sim \frac {3 \left( 2^{3/2} \right)^m} {\sqrt{n} 3^m} = \frac 3 {\sqrt{n}} c^m
     \end{align*}
-\end{proof}
+    and
+    \begin{align*}
+        \frac {|\mathcal{A}|} {|L_{n - 2}|} &= \frac {\frac 1 2 {m \choose m/2}} {S(m, 2)} = \frac {{m \choose m/2}} {2^m - 2} \sim \frac {2^m} {\sqrt{n}2^m} = \frac 1 {\sqrt{n}}
+    \end{align*}
+    for some $0 < c < 1$ (here $\sim$ means asymptotically equivalent as $m \to \infty$).
+    In particular, find for sufficiently large $m$ that
+    \begin{equation*}
+        \frac {|\partial \mathcal{A}|} {|L_{n - 3}|} < \frac {|\mathcal{A}|} {|L_{n - 2}|}
+    \end{equation*}
+    and so the conditions of Prop.~\ref{prop:characterization_lym} are not satisfied.
+\end{example}
 
 \end{document}
