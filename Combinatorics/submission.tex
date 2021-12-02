@@ -23,6 +23,7 @@
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\C}{\mathbb{C}}
+\newcommand{\powerset}{\mathfrak{P}}
 
 \newcommand\restr[2]{{
     \left.\kern-\nulldelimiterspace
@@ -228,6 +229,7 @@ Now we will show some basic properties of the rank function.
     \end{equation*}
     and the claim follows.
 \end{proof}
+
 \section{Part III}
 We even show the slightly stronger stronger statement that the implication to the second condition of Prop.\ref{prop:characterization_lym} already holds ``locally'', i.e. for each layer separately.
 \begin{proposition}
@@ -267,6 +269,95 @@ We even show the slightly stronger stronger statement that the implication to th
     \begin{equation*}
         \frac {|\partial F|} {|L_{i - 1}|} = \frac {l |\partial F|} {l |L_{i - 1}|} \leq \frac {k |F|} {k |L_i|} = \frac {|F|} {|L_i|}
     \end{equation*}
+\end{proof}
+
+\section{Part IV}
+\begin{example}
+    Let $\Pi = \{ \pi \subseteq \powerset(n) \ | \ \text{$\pi$ partition} \}$ be the poset of partitions ordered by refinement.
+    Then $\Pi$ is a graded poset with rank function
+    \begin{equation*}
+        r: \Pi \to \{ 0, ..., n - 1 \}, \quad \pi \mapsto n - |\pi|
+    \end{equation*}
+\end{example}
+\begin{proof}
+    First of all, have $1 \leq |X| \leq n$ for all subsets $X \subseteq \powerset(n)$, hence the function $r$ is well-defined.
+    Next we show that for all $x < y$ have $r(x) < r(y)$.
+    However, if $x$ is a proper refinement of $y$, then clearly $|x| > |y|$, so $r(x) < r(y)$.
+
+    Now assume there is a maximal chain $\pi_1 < ... < \pi_t$ in $\Pi$.
+    As the chain is maximal and $\Pi$ has the maximal element $[n]$, we may assume that $\pi_t = [n]$ and thus $r(\pi_t) = n - 1$.
+    Similarly, we may assume that $p_1 = \powerset(n)$ and so $r(\pi_1) = 0$.
+    We have to show that $t = n$, and so it suffices to show that $r(\pi_i) = 1 + r(\pi_{i - 1})$ for all $0 < i \leq t$.
+
+    Assume not, i.e. $|\pi_{i - 1}| \geq 2 + |\pi_i|$ for some $0 < i \leq t$.
+    Since $\pi_{i - 1}$ is a refinement of $\pi_i$, we find that
+    \begin{equation*}
+        \pi_{i - 1} = \{ A_{11}, ..., A_{1m_1}, \ ..., \ A_{n1}, ..., A_{nm_n} \} \quad \text{with} \quad \pi_i = \Bigl\{ \bigcup_{j \leq m_1} A_{1j}, ..., \bigcup_{j \leq m_n} A_{nj} \Bigr\}
+    \end{equation*}
+    where $n = |\pi_i|$ and $\sum_j m_j = |\pi_{i - 1}| \geq 2 + n$.
+    Hence, for at least two different $s, r \leq n$ we have $m_s, m_r \geq 2$.
+    Now define
+    \begin{equation*}
+        \tilde{\pi} := \{ A_{jk} \ | \ j \neq s \} \cup \Bigl\{ \bigcup_{j \leq m_s} A_{sj} \Bigr\}
+    \end{equation*}
+    Then clearly $\pi_{i - 1} < \tilde{\pi} \leq \pi_i$.
+    However, we know that $\bigcup_j A_{rj} \in \pi_i$ but $\bigcup_j A_{rj} \notin \tilde{\pi}$.
+    Thus $\pi_{i - 1} < \tilde{\pi} < \pi_i$ and we found a longer chain
+    \begin{equation*}
+        \pi_1 < ... < \pi_{i - 1} < \tilde{\pi} < \pi_i < ... < \pi_t
+    \end{equation*}
+    which contradicts the assumed maximality. The claim follows.
+\end{proof}
+\begin{proposition}
+    \label{prop:partitions_recursion}
+    For the number $S(m, k) := |\{ \pi \in \Pi \ | \ |\pi| = k\}|$ we have recursion
+    \begin{equation*}
+        S(m, 1) = 1 \quad \text{and} \quad S(m, k) = \sum_{n = 1}^{m - 1} {m - 1 \choose n} S(n, k - 1)
+    \end{equation*}
+    where $1 \leq k \leq m$.
+\end{proposition}
+\begin{proof}
+    Use induction on $k$. 
+    The base case $k = 1$ is trivial, so let $k > 1$.
+    For any partition $\pi \in \Pi_m$, denote by $A(1, \pi)$ the unique set $A \in \pi$ with $1 \in A$.
+    We find
+    \begin{align*}
+        S(m, k) =& |\{ \pi \in \Pi_m \ | \ |\pi| = k \}| = \Bigl| \bigcup_{\emptyset \neq A \subseteq [m], \ 1 \in A} \{ \pi \in \Pi_m \ | \ |\pi| = k, A(1, \pi) = A \} \Bigr| \\
+        =& \sum_{\emptyset \neq A \subseteq [m], \ 1 \in A} |\{ \pi \in \Pi_m \ | \ |\pi| = k, A(1, \pi) = A \}| \\
+        =& \sum_{\emptyset \neq A \subseteq [m], \ 1 \in A} |\{ \pi \in \Pi_m \ | \ |\pi \setminus \{A\}| = k - 1, A(1, \pi) = A\}| \\
+        =& \sum_{\emptyset \neq A \subseteq [m], \ 1 \in A} |\{ \pi \in \Pi_{m - |A|} \ | \ |\pi| = k - 1 \}| \\
+        =& \sum_{i = 1}^m \ \sum_{A \subseteq [m], \ |A| = i, \ 1 \in A} |\{ \pi \in \Pi_{m - i} \ | \ |\pi| = k - 1 \} \\
+        =& \sum_{i = 1}^m {m - 1 \choose i - 1} S(m - i, k - 1) = \sum_{i = 0}^{m - 1} {m - 1 \choose m - i - 1} S(i, k - 1) \\
+        =& \sum_{i = 1}^{m - 1} {m - 1 \choose i} S(i, k - 1)
+    \end{align*}
+    as for $k > 1$ have that $S(0, k) = 0$.
+\end{proof}
+\begin{example}
+    Have for $m \geq 3$ that
+    \begin{equation*}
+        S(m, 2) = 2^{m - 1} - 1 \quad \text{and} \quad S(m, 3) = \frac 1 2 (3^{m - 1} - 2^m + 1)
+    \end{equation*}
+
+    Note that this is the partition into \emph{exactly} $k$ sets; 
+    I am not completely sure what the exercise description tells us to show, but if it is about the number of ways of decomposing $[m]$ into \emph{at most} $k$ sets, then have
+    \begin{equation*}
+        \Sigma S(m, k)(2) = 2^{m - 1} \quad \text{and} \quad \Sigma S(m, k)(3) = 3^{m - 1} = \frac 1 2 3^{m - 1} - \frac 1 2
+    \end{equation*}
+    for $m \geq 3$.
+    Here $\Sigma S(m, k) = \sum_{l \leq k} S(m, l)$ is the number of partitions of $[m]$ into at most $k$ sets.
+\end{example}
+\begin{proof}
+    By Prop.~\ref{prop:partitions_recursion} have that for $m \geq 1$ we have $S(m, 1) = 1$.
+    Further, for $m \geq 2$ have
+    \begin{equation*}
+        S(m, 2) = \sum_{n = 1}^{m - 1} {m - 1 \choose n} 1 = 2^{m - 1} - 1
+    \end{equation*}
+    Applying this once more yields for $m \geq 3$ that
+    \begin{align*}
+        S(m, 3) =& \sum_{n = 1}^{m - 1} {m - 1 \choose n} (2^{n - 1} - 1) = \frac 1 2 \sum_{n = 1}^{m - 1} {m - 1 \choose n} 2^n - \sum_{n = 1}^{m - 1} {m - 1 \choose n} 1 \\
+        =&\frac 1 2 \sum_{n = 0}^{m - 1} {m - 1 \choose n} 2^n - \frac 1 2 - \sum_{n = 0}^{m - 1} {m - 1 \choose n} 1 + 1 \\
+        =& \frac 1 2 (1 + 2)^{m - 1} - 2^{m - 1} + \frac 1 2 = \frac 1 2 (3^{m - 1} - 2^m + 1)
+    \end{align*}
 \end{proof}
 
 \end{document}
