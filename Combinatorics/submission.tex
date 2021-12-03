@@ -456,4 +456,60 @@ We even show the slightly stronger stronger statement that the implication to th
     \end{equation*}
     which contradicts the assumed maximality. The claim follows.
 \end{proof}
+\begin{definition}
+    Let $P$ be a graded poset with layers $L_0, ..., L_n$.
+    A symmetric chain in $P$ is a chain $C \subseteq P$ such that there is $i \leq n/2$ with
+    \begin{equation*}
+        \forall 0 \leq j \leq n: \ C \cap L_j \neq \emptyset \ \Leftrightarrow \ i \leq j \leq n - i
+    \end{equation*}
+    A decomposition $\mathcal{C}$ of $P$ into chains is called symmetric chain decomposition, if all $C \in \mathcal{C}$ are symmetric.
+\end{definition}
+Note that this definition is compatible with the definition of a symmetric chain for the classical graded poset $\powerset(n)$.
+\begin{proposition}
+    Let $k, d \geq 1$. Then $\mathcal{P}_{k, d}$ has a symmetric chain decomposition.
+\end{proposition}
+\begin{proof}
+    
+\end{proof}
+\begin{proposition}
+    Let $M(k, d, n) := |\{ x \in \mathcal{P}_{k, d} \ | \ r(x) = n\}|$. Then for $k, d \geq 1$ we have the recurrence relation
+    \begin{equation*}
+        M(k, 1, n) = \begin{cases}
+            1 & \text{if $0 \leq n \leq k$} \\
+            0 & \text{otherwise}
+        \end{cases}
+        \quad \text{and} \quad
+        M(k, d, n) = \sum_{i = 0}^k M(k, d - 1, n - i)
+    \end{equation*}
+\end{proposition}
+\begin{corollary}
+    Let $k, d \geq 1$. Then
+    \begin{align*}
+        M(k, 2, n) := \begin{cases}
+            0 & \text{if $n > 2k$} \\
+            k + 1 & \text{if $k < n \leq 2k$} \\
+            n + 1 & \text{if $0 \leq n \leq k$} \\
+            0 & \text{if $n < 0$}
+        \end{cases}
+    \end{align*}
+    and
+    \begin{align*}
+        M(k, 3, n) := \begin{cases}
+            0 & \text{if $n > 3k$} \\
+            (k + 1)^2 & \text{if $2k < n \leq 3k$} \\
+            (k + 1)(2n + 2 - k) / 2 & \text{if $k < n \leq 2k$} \\
+            {n + 1 \choose 2} & \text{if $0 \leq n \leq k$} \\
+            0 & \text{if $n < 0$}
+        \end{cases}
+    \end{align*}
+\end{corollary}
+\begin{proof}
+    Just use the recurrence relation twice.
+    The only nontrivial computation is if $k < n \leq 2k$ and $d = 3$; We find
+    \begin{align*}
+        &\sum_{i = 0}^k M(k, 2, n) = \sum_{i = 0}^n M(k, 2, n) = \sum_{i = 0}^{n - 2k - 1} 0 + \sum_{i = n - 2k}^{n - k - 1} (k + 1) + \sum_{i = n - k}^n (i + 1) \\
+        =& (k + 1)(n - k - 1 - (n - 2k) + 1) + \frac {(n + 1)(n + 2)} 2 - \frac {(n - k)(n - k + 1)} 2 \\
+        =& k(k + 1) + kn + n + 1 - \frac {k^2} 2 + \frac k 2 = \frac {(k + 1)(2n + 2 - k)} 2
+    \end{align*}
+\end{proof}
 \end{document}
