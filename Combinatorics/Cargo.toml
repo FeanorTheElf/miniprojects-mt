@@ -1,0 +1,10 @@
+[package]
+name = "Combinatorics"
+version = "0.1.0"
+edition = "2018"
+
+# remember to do $env:MOSEK_BINDIR_93="E:/Programs/Mosek/9.3/tools/platform/win64x86/bin" before building
+
+[dependencies]
+feanor_la = { git = "https://github.com/feanorTheElf/FeanorLA.git"  }
+mosek = "0.2"

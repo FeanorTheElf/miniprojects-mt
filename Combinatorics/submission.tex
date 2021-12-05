@@ -233,6 +233,7 @@ Now we will show some basic properties of the rank function.
 \section{Part III}
 We even show the slightly stronger stronger statement that the implication to the second condition of Prop.\ref{prop:characterization_lym} already holds ``locally'', i.e. for each layer separately.
 \begin{proposition}
+    \label{prop:biregular_implies_lym}
     Let $P$ be a graded poset with layers $L_0, ..., L_n$ and let $0 < i \leq n$ such that
     \begin{itemize}
         \item Each element $a \in L_i$ covers the same number of elements in $L_{i - 1}$
@@ -336,6 +337,7 @@ We even show the slightly stronger stronger statement that the implication to th
     as for $k > 1$ have that $S(0, k) = 0$.
 \end{proof}
 \begin{example}
+    \label{ex:partitions_have_no_lym}
     Have for $m \geq 3$ that
     \begin{equation*}
         S(m, 2) = 2^{m - 1} - 1 \quad \text{and} \quad S(m, 3) = \frac 1 2 (3^{m - 1} - 2^m + 1)
@@ -469,8 +471,135 @@ Note that this definition is compatible with the definition of a symmetric chain
     Let $k, d \geq 1$. Then $\mathcal{P}_{k, d}$ has a symmetric chain decomposition.
 \end{proposition}
 \begin{proof}
-    
+    Use induction on $d$.
+    The base case $d = 1$ is trivial, so assume that $d > 1$.
+    By induction hypothesis, have a symmetric chain decomposition $\mathcal{C}$ of $\mathcal{P}_{k, d - 1}$.
+    For some $C = \{ A_i, A_{i + 1}, ..., A_{d(k - 1) - i} \} \in \mathcal{C}, i < \frac n 2$ with $r(A_j) = j$ and $0 \leq l \leq k, n - 2i - 1$ consider now the chain
+    \begin{equation*}
+        \tilde{C}_l := \{ (A_{i + l}, j) \ | \ 0 \leq j \leq k - l \} \cup \{ (A_j, k - l) \ | \ i + l < j \leq d(k - 1) - (i + l) \}
+    \end{equation*}
+    Then $\tilde{C}_l$ is symmetric w.r.t. $i + l$, as for $i + l \leq j \leq dk - (i + l)$ we have
+    \begin{align*}
+        i + l \leq j \leq k + i \quad &\Rightarrow \quad (A_{i + l}, j - i - l) \in \tilde{C}_l, \\
+        k + i < j \leq dk - (i + l) \quad &\Rightarrow \quad (A_{j - k}, k - l) \in \tilde{C}_l
+    \end{align*}
+    Clearly the $\tilde{C}_l$ are chains and disjoint.
+    Hence, we find a symmetric chain decomposition
+    \begin{equation*}
+        \tilde{\mathcal{C}} := \Bigl\{ \tilde{C}_l \ \Bigm| \ C \in \mathcal{C} \ \text{symmetric chain w.r.t. $i$}, \ 0 \leq l \leq \min\{ k, n - 2i - 1 \} \Bigr\}
+    \end{equation*}
+    of $\mathcal{P}_{k, d}$.
 \end{proof}
+Note that for $k = 1$, this is exactly the proof that was done in the lecture to show that $\powerset(d)$ has a symmetric chain decomposition.
+
+\section{Part VI}
+First of all, in Example~\ref{ex:partitions_have_no_lym} we have already shown that the poset $\Pi_m$ does not satisfy the conditions from Prop.~\ref{prop:characterization_lym}.
+Now we want to investigate whether $\mathcal{P}_{k, d}$ does. 
+\begin{lemma}
+    Let $A$ be a poset with two layers $L_0 = \{ u_1, ..., u_m \}, L_1 = \{ v_1, ..., v_n \}$.
+    Then any of the conditions of Prop.~\ref{prop:characterization_lym} is equivalent to the following:
+
+    There exists a matrix $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ such that for all $i, j$
+    \begin{equation*}
+        e_i^T A 1 = e_j^T A 1 \quad \text{and} \quad 1^T A e_i = 1^T A e_j
+    \end{equation*}
+    and $a_{ij} = 0$ whenever $u_i \not< v_j$.
+\end{lemma}
+This lemma does not seem super useful at first, but it gives us a way to check in time polynomial in $O(|P|)$ whether a given poset $P$ satisfies the conditions from Prop.~\ref{prop:characterization_lym}, by using an LP solver.
+Note that this is not easily possible when working directly with any of the three conditions defined before.
+
+Using this, I could check that $\mathcal{P}_{k, d}$ indeed satisfies the conditions for reasonably sized $|\mathcal{P}_{k, d}|$ (e.g. for $k, d \approx 6$).
+Note that already for these ``small'' numbers, we get quite huge posets $|\mathcal{P}_{k, d}|$.
+Hence, I believe that this is true for all $\mathcal{P}_{k, d}$.
+
+My successful-looking attempt is based on the observation that elements of $\mathcal{P}_{k, d}$ ``behave similarly'' (in the sense that there is an element of the automorphism group $\mathrm{Aut}(\mathcal{P}_{k, d})$ mapping one to the other) if the have the same number of equally sized entries.
+This looks promising, as the proof for $\powerset(n)$ and equivalently the proof of Prop.~\ref{prop:biregular_implies_lym} relies on the fact that all elements in one layer of $\powerset(n)$ ``behave similarly'' in this sense.
+
+This is formalized in the next definition.
+\begin{definition}
+    Let $P = \mathcal{P}_{k, d}$. Then define
+    \begin{equation*}
+        P(n_0, ..., n_k) := \{ x \in P \ | \ |\{i \ | \ x(i) = j\}| = n_j \}
+    \end{equation*}
+    Further, for any subset $F \subseteq P$ write
+    \begin{equation*}
+        F(n_0, ..., n_k) := F \cap P(n_0, ..., n_k)
+    \end{equation*}
+\end{definition}
+\begin{lemma}
+    \label{prop:properties_n_distribution_subsets}
+    Have
+    \begin{equation*}
+        |P(n_0, ..., n_k)| = { n_0 + ... + n_k \choose n_0 } { n_1 + ... + n_k \choose n_1 } ... {n_{k - 1} + n_k \choose n_{k - 1}} {n_k \choose n_k}
+    \end{equation*}
+    Further, for all $n_i \in \Z$ with $\sum n_i = d$ and all $a \in P(n_0, ..., n_k), 0 \leq \delta < k$ have
+    \begin{align*}
+        |\partial a \cap P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)| &= n_{\delta + 1}, \\
+        |\partial^+ a \cap P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)| &= n_\delta
+    \end{align*}
+    even if any of the $n_i$ are negative.
+\end{lemma}
+
+\begin{proposition}
+    $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
+\end{proposition}
+\textit{Proof Attempt.}
+Fix a layer $L_l$ with $0 < l \leq kd$.
+Further, consider any subset $F \subseteq L_l$.
+Now define
+\begin{equation*}
+    U := \{ (n_0, ..., n_k) \ | \ n_i \in \Z, \ n_0 + ... + n_k = d, \ \sum_i i n_i = l \}
+\end{equation*}
+and
+\begin{equation*}
+    V := \{ (n_0, ..., n_k) \ | \ n_i \in \Z, \ n_0 + ... + n_k = d, \ \sum_i i n_i = l - 1 \}
+\end{equation*}
+Note that now
+\begin{align*}
+    L_l = \bigsqcup_{(n_0, ..., n_k) \in U} P(n_0, ..., n_k) \quad \text{and} \quad L_{l - 1} = \bigsqcup_{(n_0, ..., n_k) \in V} P(n_0, ..., n_k)
+\end{align*}
+Now make $V \sqcup U$ into a bipartite graph $G = (V \sqcup U, E)$ by defining for $(m_0, ..., m_k) \in V, (n_0, ..., n_k) \in U$
+\begin{align*}
+    &\{ (m_0, ..., m_k), (n_0, ..., n_k) \} \in E \\
+    &\Leftrightarrow \ \exists 0 \leq \delta < k: \ (n_0, ..., n_k) = (m_0, ..., m_\delta - 1, m_{\delta + 1} + 1, ..., m_k)
+\end{align*}
+Observe that the resulting graph is now $(k - 1)$-regular.
+For $e = \{ (n_0, ..., n_k), (n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k) \} \in E$ define now
+\begin{align*}
+    v_F(e) := \ &\frac {|\partial \bigl(F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)\bigr)(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} \\
+    - &\frac {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} \\
+    \leq& \frac {|\partial F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} - \frac {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|}
+\end{align*}
+where we define $|\emptyset|/|\emptyset| := 1$.
+Now consider the graded poset $A := P(n_0, ..., n_k) \sqcup P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)$ with two layers.
+By Lemma~\ref{prop:properties_n_distribution_subsets} we see that
+\begin{itemize}
+    \item Each element in the bottom layer $v \in L_0(A)$ of $A$ is covered by $n_\delta$ elements
+    \item Each element in the top layer $u \in L_1(A)$ of $A$ covers $n_{\delta + 1} + 1$ elements
+\end{itemize}
+Hence we can apply Prop.~\ref{prop:biregular_implies_lym} and see that $v_F(e) \geq 0$.
+Define
+\begin{equation*}
+    p(n_0, ..., n_k) := \frac {|P(n_0, ..., n_k)|} {|L_{\sum in_i}|}
+\end{equation*}
+We know that all $v_F(e) \geq 0$ and by using the $(k - 1)$-regularity, we see
+\begin{align*}
+    0 \leq &\sum_{e \in E} v_F(e) p(n_0, ..., n_k) \\
+    \leq &\sum_{e \in E} \left( \frac {|\partial F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} - \frac {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} \right) p(n_0, ..., n_k) \\
+    = &(k - 1)\sum_{(n_0, ..., n_k) \in V} \frac {|\partial F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} p(n_0, ..., n_k) \\
+    - &\sum_{(n_0, ..., n_k) \in U} \frac {|F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} \sum_{0 \leq \delta < k} p(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k) \\
+    = &\frac {(k - 1) |\partial F|} {|L_{l - 1}|} - \sum_{(n_0, ..., n_k) \in U} \frac {|F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} \sum_{0 \leq \delta < k} p(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k) \\
+    = &\frac {(k - 1) |\partial F|} {|L_{l - 1}|} - \sum_{(n_0, ..., n_k) \in U} \frac {|F(n_0, ..., n_k)|} {|L_l|} \sum_{0 \leq \delta < k} \frac {(n_\delta + ... + n_k + 1)n_{\delta + 1}} {(n_\delta + 1)(n_{\delta + 1} + ... + n_k)}
+\end{align*}
+However, the sum
+\begin{equation*}
+    \sum_{0 \leq \delta < k} \frac {(n_\delta + ... + n_k + 1)n_{\delta + 1}} {(n_\delta + 1)(n_{\delta + 1} + ... + n_k)}
+\end{equation*}
+is not always $k - 1$, so this won't work out.
+
+On a higher level, everything I did was to reduce the problem to the case that $F$ is a disjoint union of the $P(n_0, ..., n_k)$ which is nice to see, but does not help too much.
+
+
 \begin{proposition}
     Let $M(k, d, n) := |\{ x \in \mathcal{P}_{k, d} \ | \ r(x) = n\}|$. Then for $k, d \geq 1$ we have the recurrence relation
     \begin{equation*}
@@ -481,35 +610,47 @@ Note that this definition is compatible with the definition of a symmetric chain
         \quad \text{and} \quad
         M(k, d, n) = \sum_{i = 0}^k M(k, d - 1, n - i)
     \end{equation*}
+
+    We also have the recurrence relation
+    \begin{equation*}
+        M(k, d, n) = \sum_{i = 0}^{\lfloor n/k \rfloor} {d \choose i} M(k - 1, d - i, n - ki)
+    \end{equation*}
 \end{proposition}
-\begin{corollary}
+\begin{lemma}
+    Let $R$ be a ring extension of $\Q$ (commutative with one). 
+    For a polynomial $f \in R[X]$ there exists a unique polynomial $\Sigma f \in R[X]$ such that for all $x \in \Z, x \geq 0$ we have
+    \begin{equation*}
+        \Sigma f(x) = \sum_{i = 0}^x f(i)
+    \end{equation*}
+    Furthermore, $\Sigma$ is linear and $\deg(\Sigma f) = \deg(f) + 1$ and $\mathrm{lc}(\Sigma f) = \mathrm{lc}(f) / (\deg(f) + 1)$.
+\end{lemma}
+\begin{proof}
+    Use induction on $\deg(f)$.
+    As everything is linear, it suffices to show the claim for the monomials $X^d$.
+    Define then
+    \begin{equation*}
+        \Sigma X^d := \frac 1 {d + 1} (X + 1)^{d + 1} - \frac 1 {d + 1} \sum_{k = 0}^{d - 1} {d + 1 \choose k} \left( \Sigma X^k \right)
+    \end{equation*}
+    It follows that for all $x \geq 0$ have
+    \begin{align*}
+        &\left( \Sigma X^d \right)(x + 1) - \left( \Sigma X^d \right)(x) \\
+        =& \frac 1 {d + 1} \left( (x + 2)^{d + 1} - x^{d + 1} \right) - \frac 1 {d + 1} \sum_{k = 0}^{d - 1} {d + 1 \choose k} \left( \left( \Sigma X^k \right)(x + 1) - \left( \Sigma X^k \right)(x) \right) \\
+        =& \frac 1 {d + 1} \left( -(x + 1)^{d + 1} + \sum_{k = 0}^{d + 1} {d + 1 \choose k} (x + 1)^k \right) - \frac 1 {d + 1} \sum_{k = 0}^{d - 1} {d + 1 \choose k} (x + 1)^k \\
+        =& \frac 1 {d + 1} \left( \sum_{k = 0}^d {d + 1 \choose k} (x + 1)^k - \sum_{k = 0}^{d - 1} {d + 1 \choose k} (x + 1)^k \right) \\
+        =& \frac 1 {d + 1} {d + 1 \choose d} (x + 1)^d = (x + 1)^d
+    \end{align*}
+    As this holds for infinitely many $x$, we see that $(\Sigma X^d)(X + 1) - \Sigma X^d = (X + 1)^d$ and the claim follows.
+\end{proof}
+\begin{example}
     Let $k, d \geq 1$. Then
     \begin{align*}
         M(k, 2, n) := \begin{cases}
             0 & \text{if $n > 2k$} \\
-            k + 1 & \text{if $k < n \leq 2k$} \\
+            2k - n + 1 & \text{if $k \leq n \leq 2k$} \\
             n + 1 & \text{if $0 \leq n \leq k$} \\
             0 & \text{if $n < 0$}
         \end{cases}
     \end{align*}
-    and
-    \begin{align*}
-        M(k, 3, n) := \begin{cases}
-            0 & \text{if $n > 3k$} \\
-            (k + 1)^2 & \text{if $2k < n \leq 3k$} \\
-            (k + 1)(2n + 2 - k) / 2 & \text{if $k < n \leq 2k$} \\
-            {n + 1 \choose 2} & \text{if $0 \leq n \leq k$} \\
-            0 & \text{if $n < 0$}
-        \end{cases}
-    \end{align*}
-\end{corollary}
-\begin{proof}
-    Just use the recurrence relation twice.
-    The only nontrivial computation is if $k < n \leq 2k$ and $d = 3$; We find
-    \begin{align*}
-        &\sum_{i = 0}^k M(k, 2, n) = \sum_{i = 0}^n M(k, 2, n) = \sum_{i = 0}^{n - 2k - 1} 0 + \sum_{i = n - 2k}^{n - k - 1} (k + 1) + \sum_{i = n - k}^n (i + 1) \\
-        =& (k + 1)(n - k - 1 - (n - 2k) + 1) + \frac {(n + 1)(n + 2)} 2 - \frac {(n - k)(n - k + 1)} 2 \\
-        =& k(k + 1) + kn + n + 1 - \frac {k^2} 2 + \frac k 2 = \frac {(k + 1)(2n + 2 - k)} 2
-    \end{align*}
-\end{proof}
+    Note that if two cases are applicable, they both yield the same value.
+\end{example}
 \end{document}

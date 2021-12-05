@@ -3,10 +3,11 @@
 \usepackage{graphicx}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[ngerman]{babel}
+\usepackage[english]{babel}
 \usepackage{amsmath}
 \usepackage{mathtools}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage{listings}
 \usepackage[style=english]{csquotes}
 \usepackage[language=english, backend=biber, style=alphabetic, sorting=nyt]{biblatex}
@@ -24,6 +25,12 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\I}{\mathbb{I}}
 \newcommand{\V}{\mathbb{V}}
+\newcommand{\sgn}{\mathrm{sgn}}
+\newcommand{\extpow}{\mathchoice{{\textstyle\bigwedge}}
+    {{\bigwedge}}
+    {{\textstyle\wedge}}
+    {{\scriptstyle\wedge}}}
+\newcommand{\vspan}{\mathrm{span}}
 \newcommand{\divides}{\ | \ }
 \newcommand\restr[2]{{
     \left.\kern-\nulldelimiterspace
@@ -32,10 +39,148 @@
     \right|_{#2}
 }}
 
+\newtheorem{definition}{Definition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{example}[definition]{Example}
+
 \begin{document}
 \maketitle
 
+\begin{definition}
+    Let $V$ be a vector space.
+    Then define the $d$-th exterior power as
+    \begin{equation*}
+        \extpow^d(V) := V^{\otimes d} \ / \ \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \bigl\{ v \otimes v' + v' \otimes v \ \bigm| \ v, v' \in V \bigr\} \otimes V^{\otimes (d - i - 1)}
+    \end{equation*}
+    Use the notation $v_1 \wedge ... \wedge v_d := \overline{v_1 \otimes ... \otimes v_d} \in \extpow^k(V)$.
+\end{definition}
 
+\begin{lemma}
+    \label{prop:basic_properties_exterior_product}
+    Let $v_1, ..., v_d \in V$. Have for $\pi \in S_d$ that
+    \begin{equation*}
+        v_{\pi(1)} \wedge ... \wedge v_{\pi(k)} = \sgn(\pi) (v_1 \wedge ... \wedge v_d)
+    \end{equation*}
+    Furthermore if $v_i = v_j$ for some $i \neq j$, then
+    \begin{equation*}
+        v_1 \wedge ... \wedge v_d = 0
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    Note that
+    \begin{equation*}
+        u \otimes v \otimes v' \otimes w = -(u \otimes v' \otimes v \otimes w)
+    \end{equation*}
+    for all $u \in \extpow^{i - 1}(V), w \in \extpow^{(d - i - 1)}(V), v, v' \in V$.
 
-\printbibliography
-\end{document}
+    Every $\pi \in S_d$ has a decomposition $\pi = \xi_1 ... \xi_n$ into transpositions $\xi_i$.
+    Applying this inductively, we find that
+    \begin{equation*}
+        v_1 \wedge ... \wedge v_d = \sgn(\xi_i ... \xi_n) (v_{(\xi_i ... \xi_n)(1)} \wedge ... v_{(\xi_i ... \xi_n)(k)})
+    \end{equation*}
+    and so
+    \begin{equation*}
+        v_1 \wedge ... \wedge v_d = \sgn(\pi) (v_{\pi(1)} \wedge ... \wedge v_{\pi(k)})
+    \end{equation*}
+
+    Furthermore, we find that
+    \begin{equation*}
+        u \otimes v \otimes v \otimes w = -(u \otimes v \otimes v \otimes w) = 0
+    \end{equation*}
+    must be zero.
+    Hence, if $v_1, ..., v_d \in V$ with $v_i = v_j$ for some $i \neq j$, then there is a permutation $\pi \in S_d$ with $\pi(1) = i, \pi(2) = j$ and
+    \begin{equation*}
+        v_1 \wedge ... \wedge v_d = (\sgn(\pi))(v_i \wedge v_j \wedge v_{\pi(3)} \wedge ... \wedge v_{\pi(k)}) = \sgn(\pi) 0 = 0
+    \end{equation*}
+\end{proof}
+
+\begin{lemma}[1a]
+    Let $\dim(V) \leq 3$. Then every element of $\extpow^k(V)$ is decomposable.
+\end{lemma}
+\begin{proof}
+    Now let $v_1, v_2, v_3$ be a set of generators of $V$.
+    Consider $u_1 = \sum \lambda_i v_i, u_2 = \sum_i \mu_i v_i, u_3 = \sum_i \rho_i v_i$.
+    Then by applying Lemma~\ref{prop:basic_properties_exterior_product}, we see that 
+    \begin{align*}
+        u_1 \wedge u_2 =& \sum_{i, j} \ \lambda_i \mu_j (\underbrace{v_i \wedge v_j}_{\mathclap{\text{$= 0$ if $i = j$}}}) = \sum_{i < j} \lambda_i \mu_j (v_i \wedge v_j) - \sum_{i > j} \lambda_i \mu_j (v_i \wedge v_j) \\
+        =& \sum_{i < j} (\lambda_i \mu_j - \lambda_j \mu_i)(v_i \wedge v_j) = \alpha (v_1 \wedge v_2) + \beta (v_1 \wedge v_3) + \gamma (v_2 \wedge v_3) \\
+        =& \begin{cases}
+            \beta v_1 + \gamma v_2 \wedge \frac \alpha \beta v_2 + v_3 & \text{if $\beta \neq 0$} \\
+            \alpha v_1 - \gamma v_3 \wedge v_2 & \text{otherwise}
+        \end{cases}
+    \end{align*}
+    and
+    \begin{align*}
+        u_1 \wedge u_2 \wedge u_3 =& \sum_{i, j, l} \ \lambda_i \mu_j \rho_l (\underbrace{v_i \wedge v_j \wedge v_l}_{\mathclap{\text{$= 0$ unless $i, j, l$ pairwise distinct}}}) \\
+        =& \sum_{\pi \in S_3} \lambda_{\pi(1)} \mu_{\pi(2)} \rho_{\pi(3)} (v_{\pi(1)} \wedge v_{\pi(2)} \wedge v_{\pi(3)}) \\
+        =& \sum_{\pi \in S_3} \lambda_{\pi(1)} \mu_{\pi(2)} \rho_{\pi(3)} \sgn(\pi) (v_1 \wedge v_2 \wedge v_3) \\
+        =& (v_1 \wedge v_2 \wedge v_3) \sum_{\pi \in S_3} \lambda_{\pi(1)} \mu_{\pi(2)} \rho_{\pi(3)} \sgn(\pi)
+    \end{align*}
+    are decomposable.
+    Further, it is easy to see from Lemma~\ref{prop:basic_properties_exterior_product} that $\extpow^k(V) = \{ 0 \}$ for $k \geq 4$, which is trivially decomposable.
+\end{proof}
+
+\begin{example}[1b]
+    Consider $V = k^4$. 
+    Then the element $w := (e_1 \wedge e_2) + (e_3 \wedge e_4) \in \extpow^2(V)$ is not decomposable. 
+\end{example}
+\begin{proof}
+    Assume it was, then there are $a, b \in k^4$ such that
+    \begin{equation*}
+        w = \sum_i a_i e_i \wedge \sum_j b_j e_j = \sum_{i < j} (a_i b_j - a_j b_i) (e_i \wedge e_j)
+    \end{equation*}
+    In other words
+    \begin{equation*}
+        a_1b_2 - a_2b_1 = 1, \ a_3b_4 - a_4b_3 = 1, \ a_i b_j - a_j b_i = 0 \ \text{for all $(i, j) \neq (1, 2), (3, 4)$}
+    \end{equation*}
+    Clearly $a_1 b_2 \neq 0$ or $a_2 b_1 \neq 0$.
+    Similarly, have $a_3 b_4 \neq 0$ or $a_4 b_3 \neq 0$.
+    As all expressions are symmetric w.r.t swapping $a_1, b_2$ with $a_2, b_1$ and $a_3, b_4$ with $a_4, b_3$, we may assume wlog that $a_1 b_2, a_3 b_4 \neq 0$.
+
+    Have $a_1 b_4 = a_4 b_1$ and $a_2 b_4 = a_4 b_2$.
+    We know that $a_1 b_4 \neq 0$ and so
+    \begin{equation*}
+        \frac {a_2} {a_1} = \frac {a_2 b_4} {a_1 b_4} = \frac {a_4 b_2} {a_4 b_1} = \frac {b_2} {b_1} \ \Rightarrow \ a_2 b_1 = a_1 b_2
+    \end{equation*}
+    This contradicts $a_1 b_2 - a_2 b_1 = 1$.
+\end{proof}
+
+\begin{lemma}[1c]
+    Let $d$ be even.
+    An element $\omega \in \extpow^d V$ is decomposable if and only if $\omega \wedge \omega \in \extpow^{2d} V$ is zero.
+\end{lemma}
+\begin{proof}
+    The direction $\Rightarrow$ even holds generally. Assume $\omega = v_1 \wedge ... \wedge v_d$.
+    Then
+    \begin{equation*}
+        \omega \wedge \omega = v_1 \wedge ... \wedge v_d \wedge v_1 \wedge ... \wedge v_d = 0
+    \end{equation*}
+    by Lemma~\ref{prop:basic_properties_exterior_product}. 
+    The other direction is more interesting.
+
+    Let $\omega = v_1 + ... + v_t$ for linearly independent decomposable vectors $v_i \in \extpow^2 V$.
+    Then
+    \begin{align*}
+        0 =& \omega \wedge \omega = \sum_{i, j} v_i \wedge v_j = \sum_{i < j} (v_i \wedge v_j) + (v_j \wedge v_i) \\
+        =& \sum_{i < j} 2(v_i \wedge v_j) = 2\sum_i v_i \wedge \Bigl( \sum_{j > i} v_j \Bigr)
+    \end{align*}
+    Here we used that the permutation $\bigl(1 \ 2d\bigr)\bigl(2 \ (2d - 1)\bigr)...\bigl(d \ (d + 1)\bigr) \in S_{2d}$ has always sign $1$ (since $d$ is even).
+
+    Note that for any nonzero decomposable vector
+    \begin{equation*}
+        u_1 \wedge u_2 \in \Bigl( \extpow^2 \vspan\{v_2, ..., v_t\} \Bigr) \setminus \{0\}
+    \end{equation*}
+    find
+    \begin{equation*}
+        u_1, u_2 \in \vspan\{v_2, ..., v_t\}
+    \end{equation*}
+    In particular, we know that
+    \begin{equation*}
+        v_1 \wedge \Bigl( \sum_{j > i} v_j \Bigr) \in \extpow^2 \vspan\{v_2, ..., v_t\}
+    \end{equation*}
+    and so $v_1 \in \vspan\{v_2, ..., v_t\}$ unless $\sum_{j > i} v_j = 0$.
+    We assumed that the $v_i$ are linearly independent, so the former would give a contradiction.
+    Hence $\sum_{j > i} v_j = 0$ and thus $t = 1$, i.e. $\omega = v_1$ is decomposable.
+\end{proof}
+
+\end{document}  
