@@ -50,11 +50,13 @@
 \begin{document}
 \maketitle
 
+\section{Part I}
+
 \begin{definition}
     Let $V$ be a vector space.
     Then define the $d$-th exterior power as
     \begin{equation*}
-        \extpow^d(V) := V^{\otimes d} \ / \ \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \bigl\{ v \otimes v' + v' \otimes v \ \bigm| \ v, v' \in V \bigr\} \otimes V^{\otimes (d - i - 1)}
+        \extpow^d(V) := V^{\otimes d} \ / \ \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \vspan\bigl\{ v \otimes v' + v' \otimes v \ \bigm| \ v, v' \in V \bigr\} \otimes V^{\otimes (d - i - 1)}
     \end{equation*}
     Use the notation $v_1 \wedge ... \wedge v_d := [v_1 \otimes ... \otimes v_d] \in \extpow^k(V)$.
 \end{definition}
@@ -149,6 +151,54 @@
     This contradicts $a_1 b_2 - a_2 b_1 = 1$.
 \end{proof}
 
+\begin{lemma}
+    \label{prop:linear_transform_extpow}
+    Let $A = (a_{ij}) \in \GL_d(k)$ and $v_1, ..., v_d \in V$.
+    Then
+    \begin{equation*}
+        \Bigl( \sum_j a_{1j}v_j \Bigl) \wedge ... \wedge \Bigl( \sum_{j} a_{dj} v_j \Bigr) = \det(A) (v_1 \wedge ... \wedge v_d)
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    By a direct computation using Lemma~\ref{prop:basic_properties_exterior_product}, we find
+    \begin{align*}
+        &\Bigl( \sum_j a_{ij} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) = \sum_{j_1, ..., j_d} a_{1j_1} ... a_{dj_d} (v_{j_1} \wedge ... \wedge v_{j_d}) \\
+        = &\sum_{\pi \in S_d} a_{1\pi(1)} ... a_{d\pi(d)} (v_{\pi(1)} \wedge ... \wedge v_{\pi(d)}) \\
+        = &\sum_{\pi \in S_d} a_{1\pi(1)} ... a_{d\pi(d)} \sgn(\pi) (v_1 \wedge ... \wedge v_d) \\
+        = &(v_1 \wedge ... \wedge v_d) \ \sum_{\pi \in S_d} \sgn(\pi) \prod_{j = 1}^d a_{j\pi(j)} = \det(A) (v_1 \wedge ... \wedge v_d)
+    \end{align*}
+    where the last equality holds due to the Leibniz determinant formula.
+\end{proof}
+\begin{lemma}
+    \label{prop:extpow_zero_iff_independent}
+    For $v_1, ..., v_d \in V$ have
+    \begin{equation*}
+        v_1 \wedge ... \wedge v_d = 0 \ \Leftrightarrow \ v_1, ..., v_d \ \text{linearly dependent}
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    For the direction $\Rightarrow$, assume that $v_1, ..., v_d$ are not independent. 
+    Then there is a nonzero vector $a_1 \in k^d$ with $\sum a_{1i} v_i = 0$.
+    Clearly, we can extend $a_1$ to a basis $a_1, ..., a_d$ of $k^d$, which gives a matrix $A = (a_{ij}) \in \GL_d(k)$.
+
+    However by Lemma~\ref{prop:linear_transform_extpow} we now get
+    \begin{align*}
+        0 =& 0 \wedge \Bigl( \sum_j a_{2j} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) = \Bigl( \sum_j a_{1j} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) \\
+        =& \det(A) (v_1 \wedge ... \wedge v_d)
+    \end{align*}
+    and so $v = v_1 \wedge ... \wedge v_d = 0$ as $\det(A) \neq 0$.
+
+    Direction $\Leftarrow$ TODO
+\end{proof}
+\begin{lemma}
+    \label{prop:subspace_closed}
+    Let $v \in V$ and $u \in \extpow^{d - 1} U$ for a linear subspace $U \leq V$. 
+    If $u \neq 0$ then $v \in U$.
+\end{lemma}
+\begin{proof}
+    TODO
+\end{proof}
+
 \begin{lemma}[1c]
     Let $d$ be even.
     An element $\omega \in \extpow^d V$ is decomposable if and only if $\omega \wedge \omega \in \extpow^{2d} V$ is zero.
@@ -182,34 +232,20 @@
     \begin{equation*}
         v_1 \wedge \Bigl( \sum_{j > i} v_j \Bigr) \in \extpow^2 \vspan\{v_2, ..., v_t\}
     \end{equation*}
-    and so $v_1 \in \vspan\{v_2, ..., v_t\}$ unless $\sum_{j > i} v_j = 0$.
+    and so $v_1 \in \vspan\{v_2, ..., v_t\}$ unless $\sum_{j > i} v_j = 0$ by Lemma~\ref{prop:subspace_closed}.
     We assumed that the $v_i$ are linearly independent, so the former would give a contradiction.
     Hence $\sum_{j > i} v_j = 0$ and thus $t = 1$, i.e. $\omega = v_1$ is decomposable.
 \end{proof}
 
-\begin{lemma}[2a]
-    \label{prop:linear_transform_extpow}
-    Let $A = (a_{ij}) \in \GL_d(k)$ and $v_1, ..., v_d \in V$.
-    Then
-    \begin{equation*}
-        \Bigl( \sum_j a_{1j}v_j \Bigl) \wedge ... \wedge \Bigl( \sum_{j} a_{dj} v_j \Bigr) = \det(A) (v_1 \wedge ... \wedge v_d)
-    \end{equation*}
-\end{lemma}
-\begin{proof}
-    By a direct computation using Lemma~\ref{prop:basic_properties_exterior_product}, we find
-    \begin{align*}
-        &\Bigl( \sum_j a_{ij} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) = \sum_{j_1, ..., j_d} a_{1j_1} ... a_{dj_d} (v_{j_1} \wedge ... \wedge v_{j_d}) \\
-        = &\sum_{\pi \in S_d} a_{1\pi(1)} ... a_{d\pi(d)} (v_{\pi(1)} \wedge ... \wedge v_{\pi(d)}) \\
-        = &\sum_{\pi \in S_d} a_{1\pi(1)} ... a_{d\pi(d)} \sgn(\pi) (v_1 \wedge ... \wedge v_d) \\
-        = &(v_1 \wedge ... \wedge v_d) \ \sum_{\pi \in S_d} \sgn(\pi) \prod_{j = 1}^d a_{j\pi(j)} = \det(A) (v_1 \wedge ... \wedge v_d)
-    \end{align*}
-    where the last equality holds due to the Leibniz determinant formula.
-\end{proof}
-We see that if there are two bases $v_1, ..., v_d$ and $u_1, ..., u_d$ of a $d$-dimensional vector space $U$, then there exists a basis change matrix $A = (a_{ij}) \in \GL_d(k)$ with
+\section{Part II}
+
+In this part, we want to consider the connection of external powers to the Grassmanian.
+First of all, assume there are two bases $v_1, ..., v_d$ and $u_1, ..., u_d$ of a $d$-dimensional vector space $U$. 
+Then there exists a basis change matrix $A = (a_{ij}) \in \GL_d(k)$ with
 \begin{equation*}
     u_i = \sum_j a_{ij} v_j
 \end{equation*}
-So by the Lemma, it follows that
+So by Lemma~\ref{prop:linear_transform_extpow}, it follows that
 \begin{equation*}
     u_1 \wedge ... \wedge u_d = \det(A) (v_1 \wedge ... \wedge v_d)
 \end{equation*}
@@ -217,6 +253,7 @@ As $v_1, ..., v_d$ resp. $u_1, ..., u_d$ are bases, they are linearly independen
 \begin{equation*}
     v_1 \wedge ... \wedge v_d \neq 0 \quad \text{and} \quad u_1 \wedge ... \wedge u_d \neq 0
 \end{equation*}
+by Lemma~\ref{prop:extpow_zero_iff_independent}.
 Hence they have well-defined images $[v_1 \wedge ... \wedge v_d]$ resp. $[u_1 \wedge ... \wedge u_d]$ in the projective space $\Proj(\extpow^d V)$.
 By the above, find
 \begin{equation*}
@@ -244,17 +281,7 @@ This allows us to study the Grassmanian $\Gr(d, V)$ of a fixed vector space $V$.
     As $v$ is decomposable, it follows that $v = v_1 \wedge ... \wedge v_d$ for $v_i \in V$.
     Not it suffices to show that the $v_i$ are linearly independent, then clearly $\vspan\{v_1, ..., v_d\}$ is a well-defined $d$-dimensional vector subspace of $V$, thus an element of $\Gr(d, V)$.
 
-    Assume not, then there is a nonzero vector $a_1 \in k^d$ with $\sum a_{1i} v_i = 0$.
-    Clearly, we can extend $a_1$ to a basis $a_1, ..., a_d$ of $k^d$, which gives a matrix $A = (a_{ij}) \in \GL_d(k)$.
-
-    However by Lemma~\ref{prop:linear_transform_extpow} we now get
-    \begin{align*}
-        0 =& 0 \wedge \Bigl( \sum_j a_{2j} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) = \Bigl( \sum_j a_{1j} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) \\
-        =& \det(A) (v_1 \wedge ... \wedge v_d)
-    \end{align*}
-    and so $v = v_1 \wedge ... \wedge v_d = 0$ as $\det(A) \neq 0$.
-    However, $v$ was a representative of a point in $\Proj(\extpow^d V)$, a contradiction.
-    The claim follows.
+    This follows directly from Lemma~\ref{prop:extpow_zero_iff_independent}.
 \end{proof}
 \begin{definition}
     Let $\Gr(d, n) := \Gr(d, k^n)$.
@@ -301,7 +328,7 @@ This corresponds to the following definition.
         & \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \lambda v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
         &- \lambda\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \ | \ i \leq d, v_j, v'_i \in V\}
     \end{align*}
-    where $v_1 \otimes ... \otimes v_d := \mathbb{1}_{(v_1, ..., v_d)}$.
+    where $v_1 \otimes ... \otimes v_d := \chi_{(v_1, ..., v_d)}$.
     Hence the external power can be described as
     \begin{align*}
         \extpow^d V := k^{V \times ... \times V} / \vspan\Bigl\{ &\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \bigl(v_i + v'_i\bigl) \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
@@ -328,5 +355,37 @@ This corresponds to the following definition.
     It follows that $f$ is indeed well-defined.
 
     It is clear by definition that $f$ is linear, so it is left to show that it is bijective. 
+    To show surjectivity, note that the $\pm e_I, I \in \{1, ..., n\}^{(d)}$ form a basis of $k^{\{1, ..., n\}^{(d)}}$.
+    Clearly for $I = \{i_1, ..., i_d\}, J \in \{1, ..., n\}^{(d)}$ we have that
+    \begin{equation*}
+        f(e_{i_1} \wedge ... \wedge e_{i_d})_J = \det(A_J(e_{i_1}, ..., e_{i_j})) = \begin{cases}
+            0 & \text{if $J \not\subseteq I$} \\
+            \pm 1 & \text{if $J \subseteq I$}
+        \end{cases}
+    \end{equation*}
+    so $f(e_{i_1} \wedge ... \wedge e_{i_d}) = e_I$ and we deduce that $\mathrm{im}f = \Proj^{\{1, ..., k\}^{(d)}}$.
+
+    Finally, note that
+    \begin{equation*}
+        e_{i_1} \wedge ... \wedge e_{i_d}
+    \end{equation*}
+    for $i_1 < ... < i_d$ form a basis of $\extpow^d k^n$.
+    Clearly, they span $\extpow^d k^n$, and the following argument shows that they are linearly independent.
+    Assume
+    \begin{equation*}
+        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} (e_{i_1} \wedge ... \wedge e_{i_d}) = 0
+    \end{equation*}
+    Then
+    \begin{equation*}
+        0 = e_1 \wedge \Bigl( \sum_{1 < i_2 < ... < i_d} \lambda_{1, i_2, ..., i_d} (e_{i_2} \wedge .. \wedge e_{i_d}) \Bigr) + \sum_{1 < i_1 < ... < i_d} \lambda_{i_1, ..., i_d} (e_{i_1} \wedge ... \wedge e_{i_d} )
+    \end{equation*}
+    Clearly $e_1 \notin \vspan\{e_2, ..., e_n\}$ and so by Lemma~\ref{prop:subspace_closed} we see that
+    \begin{equation*}
+        \sum_{1 < i_2 < ... < i_d} \lambda_{1, i_2, ..., i_d} (e_{i_2} \wedge ... \wedge e_{i_d}) = 0
+    \end{equation*}
+    Repeating this argument inductively shows that $\lambda_{1, 2, ..., d} = 0$.
+    As $k^n$ is symmetric w.r.t. permuting the $e_j$, we see that all $\lambda_{i_1, ..., i_d} = 0$ are zero.
+
+    It follows that $\dim(\extpow^d k^n) = \dim(\Proj^{\{1, ..., n\}^{(d)}})$ and we find that $f$ is also injective.
 \end{proof}
 \end{document}  
