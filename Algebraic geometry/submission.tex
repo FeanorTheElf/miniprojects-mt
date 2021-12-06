@@ -46,6 +46,8 @@
 \newtheorem{definition}{Definition}
 \newtheorem{lemma}[definition]{Lemma}
 \newtheorem{example}[definition]{Example}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{corollary}[definition]{Corollary}
 
 \begin{document}
 \maketitle
@@ -387,5 +389,20 @@ This corresponds to the following definition.
     As $k^n$ is symmetric w.r.t. permuting the $e_j$, we see that all $\lambda_{i_1, ..., i_d} = 0$ are zero.
 
     It follows that $\dim(\extpow^d k^n) = \dim(\Proj^{\{1, ..., n\}^{(d)}})$ and we find that $f$ is also injective.
+\end{proof}
+\begin{corollary}[2b]
+    Let $\bar{f}: \Proj(\extpow^d k^n) \to \Proj^{{n \choose d} - 1}$ be the map $f$ from before modulo $k^*$.
+    Then
+    \begin{equation*}
+        \rho = f \circ \phi
+    \end{equation*}
+    and in particular, we see that $\phi(Gr(d, n))$ is a projective variety and isomorphic to $\rho(\Gr(d, n))$.
+\end{corollary}
+\begin{proposition}[2c]
+    The map $\phi$ is injective.
+\end{proposition}
+\begin{proof}
+    Consider two subspaces $U = \vspan\{u_1, ..., u_d\}$ and $W = \vspan\{w_1, ..., w_d\}$.
+    Assume that $\phi(U) = \phi(W)$.
 \end{proof}
 \end{document}  
