@@ -256,4 +256,77 @@ This allows us to study the Grassmanian $\Gr(d, V)$ of a fixed vector space $V$.
     However, $v$ was a representative of a point in $\Proj(\extpow^d V)$, a contradiction.
     The claim follows.
 \end{proof}
+\begin{definition}
+    Let $\Gr(d, n) := \Gr(d, k^n)$.
+\end{definition}
+In the lecture, we considered an embedding of $\Gr(d, n)$ into projective space given by minors of the basis matrix.
+This corresponds to the following definition.
+\begin{definition}
+    Define the map
+    \begin{align*}
+        \rho: \Gr(d, n) &\to \Proj\Bigl(k^{\{1, ..., n\}^{(d)}}\Bigr) \cong \Proj^{{n \choose d} - 1}, \\
+        \vspan\{v_1, ..., v_d\} &\mapsto \Bigl[ \det\left(\begin{matrix}
+            v_{1i_1} & ... & v_{di_1} \\
+            \vdots & \ddots & \vdots \\
+            v_{1i_d} & ... & v_{di_d}
+        \end{matrix}\right) \Bigr]_{\{i_1, ..., i_d\} \in \{1, ..., n\}^{(d)}}
+    \end{align*}
+    where $\{1, ..., n\}^{(d)} := \{ I \subset \{1, ..., n\} \ | \ \#I = d \}$ is the set of all $d$-element subsets of $\{1, ..., n\}$.
+\end{definition}
+\begin{lemma}
+    There is a linear isomorphism
+    \begin{align*}
+        f: \extpow^d k^n &\to k^{\{1, ..., n\}^{(d)}}, \\
+        \sum_j v_1^{(j)} \wedge ... \wedge v_d^{(j)} &\mapsto \Bigl( \sum_j \det\left(\begin{matrix}
+            v_{1i_1}^{(j)} & ... & v_{di_1}^{(j)} \\
+            \vdots & \ddots & \vdots \\
+            v_{1i_d}^{(j)} & ... & v_{di_d}^{(j)}
+        \end{matrix}\right) \Bigr)_{\{i_1, ..., i_d\} \in \{1, ..., n\}^{(d)}}
+    \end{align*}
+\end{lemma}
+\begin{proof}
+    For vectors $v_1, ..., v_d$ and $I = \{i_1, ..., i_d\} \in \{1, ..., n\}^{(d)}$ write
+    \begin{equation*}
+        A_I(v_1, ..., v_d) := \left(\begin{matrix*}
+            v_{1i_1} & ... & v_{di_1} \\
+            \vdots & \ddots & \vdots \\
+            v_{1i_d} & ... & v_{di_d}
+        \end{matrix*}\right)
+    \end{equation*}
+    First of all, we show that $f$ is well-defined.
+    Note that the tensor product can be described as
+    \begin{align*}
+        V^{\otimes d} := k^{V \times ...\times V} / \vspan\{ &\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \bigl(v_i + v'_i\bigl) \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
+        &- \bigl(v_1 \otimes ... \otimes v_d\bigl) - \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v'_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl), \\
+        & \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \lambda v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
+        &- \lambda\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \ | \ i \leq d, v_j, v'_i \in V\}
+    \end{align*}
+    where $v_1 \otimes ... \otimes v_d := \mathbb{1}_{(v_1, ..., v_d)}$.
+    Hence the external power can be described as
+    \begin{align*}
+        \extpow^d V := k^{V \times ... \times V} / \vspan\Bigl\{ &\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \bigl(v_i + v'_i\bigl) \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
+        &- \bigl(v_1 \otimes ... \otimes v_d\bigl) - \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v'_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl), \\
+        & \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \lambda v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
+        &- \lambda\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl), \\
+        &v_1 \otimes ... v_{j - 1} \otimes (v_j \otimes v_{j + 1} + v_{j + 1} \otimes v_j) \otimes v_{j + 1} \otimes ... \otimes v_d \\
+        &\quad | \ i \leq d, \ j \leq d - 1, \ v_1, ..., v_d, v'_i \in V\Bigr\}
+    \end{align*}
+    So it suffices to show that for all $I \in \{1, ..., n\}^{(d)}$ and vectors $v_1, ..., v_d, v'_i \in V$
+    \begin{align*}
+        \det(A_I(v_1, ..., v_i + v'_i, ..., v_d)) = \det(A_I(v_1, ..., v_d)) + \det(A_I(v_1, ..., v'_i, ..., v_d))
+    \end{align*}
+    and
+    \begin{align*}
+        \det(A_I(v_1, ..., \lambda v_i, ..., v_d)) = \lambda\det(A_I(v_1, ..., v_d))
+    \end{align*}
+    and
+    \begin{equation*}
+        \det(A_I(v_1, ..., v_{j + 1}, v_j, ..., v_d)) = -\det(A_I(v_1, ..., v_d))
+    \end{equation*}
+    However, these properties follow from the well-known properties of the determinant.
+    In particular, $\det$ is linear in each column and swapping columns negates the determinant.
+    It follows that $f$ is indeed well-defined.
+
+    It is clear by definition that $f$ is linear, so it is left to show that it is bijective. 
+\end{proof}
 \end{document}  
