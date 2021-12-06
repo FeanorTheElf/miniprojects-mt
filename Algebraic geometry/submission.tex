@@ -25,6 +25,10 @@
 \newcommand{\C}{\mathbb{C}}
 \newcommand{\I}{\mathbb{I}}
 \newcommand{\V}{\mathbb{V}}
+\newcommand{\Proj}{\mathbb{P}}
+\newcommand{\Aff}{\mathbb{A}}
+\newcommand{\GL}{\mathrm{GL}}
+\newcommand{\Gr}{\mathrm{Gr}}
 \newcommand{\sgn}{\mathrm{sgn}}
 \newcommand{\extpow}{\mathchoice{{\textstyle\bigwedge}}
     {{\bigwedge}}
@@ -52,7 +56,7 @@
     \begin{equation*}
         \extpow^d(V) := V^{\otimes d} \ / \ \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \bigl\{ v \otimes v' + v' \otimes v \ \bigm| \ v, v' \in V \bigr\} \otimes V^{\otimes (d - i - 1)}
     \end{equation*}
-    Use the notation $v_1 \wedge ... \wedge v_d := \overline{v_1 \otimes ... \otimes v_d} \in \extpow^k(V)$.
+    Use the notation $v_1 \wedge ... \wedge v_d := [v_1 \otimes ... \otimes v_d] \in \extpow^k(V)$.
 \end{definition}
 
 \begin{lemma}
@@ -183,4 +187,73 @@
     Hence $\sum_{j > i} v_j = 0$ and thus $t = 1$, i.e. $\omega = v_1$ is decomposable.
 \end{proof}
 
+\begin{lemma}[2a]
+    \label{prop:linear_transform_extpow}
+    Let $A = (a_{ij}) \in \GL_d(k)$ and $v_1, ..., v_d \in V$.
+    Then
+    \begin{equation*}
+        \Bigl( \sum_j a_{1j}v_j \Bigl) \wedge ... \wedge \Bigl( \sum_{j} a_{dj} v_j \Bigr) = \det(A) (v_1 \wedge ... \wedge v_d)
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    By a direct computation using Lemma~\ref{prop:basic_properties_exterior_product}, we find
+    \begin{align*}
+        &\Bigl( \sum_j a_{ij} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) = \sum_{j_1, ..., j_d} a_{1j_1} ... a_{dj_d} (v_{j_1} \wedge ... \wedge v_{j_d}) \\
+        = &\sum_{\pi \in S_d} a_{1\pi(1)} ... a_{d\pi(d)} (v_{\pi(1)} \wedge ... \wedge v_{\pi(d)}) \\
+        = &\sum_{\pi \in S_d} a_{1\pi(1)} ... a_{d\pi(d)} \sgn(\pi) (v_1 \wedge ... \wedge v_d) \\
+        = &(v_1 \wedge ... \wedge v_d) \ \sum_{\pi \in S_d} \sgn(\pi) \prod_{j = 1}^d a_{j\pi(j)} = \det(A) (v_1 \wedge ... \wedge v_d)
+    \end{align*}
+    where the last equality holds due to the Leibniz determinant formula.
+\end{proof}
+We see that if there are two bases $v_1, ..., v_d$ and $u_1, ..., u_d$ of a $d$-dimensional vector space $U$, then there exists a basis change matrix $A = (a_{ij}) \in \GL_d(k)$ with
+\begin{equation*}
+    u_i = \sum_j a_{ij} v_j
+\end{equation*}
+So by the Lemma, it follows that
+\begin{equation*}
+    u_1 \wedge ... \wedge u_d = \det(A) (v_1 \wedge ... \wedge v_d)
+\end{equation*}
+As $v_1, ..., v_d$ resp. $u_1, ..., u_d$ are bases, they are linearly independent and in particular, we see that
+\begin{equation*}
+    v_1 \wedge ... \wedge v_d \neq 0 \quad \text{and} \quad u_1 \wedge ... \wedge u_d \neq 0
+\end{equation*}
+Hence they have well-defined images $[v_1 \wedge ... \wedge v_d]$ resp. $[u_1 \wedge ... \wedge u_d]$ in the projective space $\Proj(\extpow^d V)$.
+By the above, find
+\begin{equation*}
+    [v_1 \wedge ... \wedge v_d] = [u_1 \wedge ... \wedge u_d]
+\end{equation*}
+This allows us to study the Grassmanian $\Gr(d, V)$ of a fixed vector space $V$.
+\begin{definition}
+    Define the map
+    \begin{equation*}
+        \phi: \Gr(d, V) \to \Proj(\extpow^d V), \quad \vspan\{v_1, ..., v_d\} \mapsto [v_1 \wedge ... \wedge v_d]
+    \end{equation*}
+    which is well-defined by Lemma~\ref{prop:linear_transform_extpow} as described above.
+\end{definition}
+\begin{lemma}[1a]
+    We have
+    \begin{equation*}
+        \mathrm{im}\phi = D := \{ [v] \in \Proj(\extpow^d V) \ | \ \text{$v$ decomposable}\}
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    First of all, note that the set $D$ is well-defined, as $v$ is decomposable if and only if $\lambda v$ is decomposable, for all $\lambda \in k^*$.
+
+    By definition of $\phi$, we can directly observe that $\mathrm{im}\phi \subseteq D$.
+    So consider an element $[v] \in D$.
+    As $v$ is decomposable, it follows that $v = v_1 \wedge ... \wedge v_d$ for $v_i \in V$.
+    Not it suffices to show that the $v_i$ are linearly independent, then clearly $\vspan\{v_1, ..., v_d\}$ is a well-defined $d$-dimensional vector subspace of $V$, thus an element of $\Gr(d, V)$.
+
+    Assume not, then there is a nonzero vector $a_1 \in k^d$ with $\sum a_{1i} v_i = 0$.
+    Clearly, we can extend $a_1$ to a basis $a_1, ..., a_d$ of $k^d$, which gives a matrix $A = (a_{ij}) \in \GL_d(k)$.
+
+    However by Lemma~\ref{prop:linear_transform_extpow} we now get
+    \begin{align*}
+        0 =& 0 \wedge \Bigl( \sum_j a_{2j} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) = \Bigl( \sum_j a_{1j} v_j \Bigr) \wedge ... \wedge \Bigl( \sum_j a_{dj} v_j \Bigr) \\
+        =& \det(A) (v_1 \wedge ... \wedge v_d)
+    \end{align*}
+    and so $v = v_1 \wedge ... \wedge v_d = 0$ as $\det(A) \neq 0$.
+    However, $v$ was a representative of a point in $\Proj(\extpow^d V)$, a contradiction.
+    The claim follows.
+\end{proof}
 \end{document}  
