@@ -195,7 +195,7 @@
 \begin{lemma}
     \label{prop:subspace_closed}
     Let $v \in V$ and $u \in \extpow^{d - 1} U$ for a linear subspace $U \leq V$. 
-    If $u \neq 0$ then $v \in U$.
+    If $v \wedge u \in \extpow^d U$ then $v \in U$ or $u = 0$.
 \end{lemma}
 \begin{proof}
     TODO
@@ -402,7 +402,28 @@ This corresponds to the following definition.
     The map $\phi$ is injective.
 \end{proposition}
 \begin{proof}
-    Consider two subspaces $U = \vspan\{u_1, ..., u_d\}$ and $W = \vspan\{w_1, ..., w_d\}$.
-    Assume that $\phi(U) = \phi(W)$.
+    Consider two $d$-dimensional subspaces $U, W$ of $k^n$ with $\phi(U) = \phi(W)$.
+    Let $u_1, ..., u_l$ be a basis of $U \cap W$ and extend it to bases $u_1, ..., u_d$ of $U$ and $u_1, ..., u_l, w_{l + 1}, ..., w_d$ of $W$.
+    As $\phi(U) = \phi(W)$, we can assume that the $u_i, w_i$ are scaled such that
+    \begin{align*}
+        0 =& (u_1 \wedge ... \wedge u_d) - (u_1 \wedge ... \wedge u_l \wedge w_{l + 1} \wedge ... \wedge w_d) \\
+        =& u_1 \wedge ... \wedge u_l \wedge \bigl( (u_{l + 1} \wedge ... \wedge u_d) - (w_{l + 1} \wedge ... \wedge w_d) \bigr)
+    \end{align*}
+    By Lemma~\ref{prop:subspace_closed} we see that
+    \begin{equation*}
+        u_2 \wedge ... \wedge u_l \wedge \bigl( (u_{l + 1} \wedge ... \wedge u_d) - (w_{l + 1} \wedge ... \wedge w_d) \bigr) = 0
+    \end{equation*}
+    as $u_1 \notin \vspan\{u_2, ..., u_d, w_{l + 1}, ..., w_d\}$.
+    Inductively, this argument shows that
+    \begin{equation*}
+        (u_{l + 1} \wedge ... \wedge u_d) - (w_{l + 1} \wedge ... \wedge w_d) = 0
+    \end{equation*}
+    If $l < d$, we can now apply Lemma~\ref{prop:subspace_closed} again to see that
+    \begin{equation*}
+        u_{l + 1} \in \vspan\{ u_{l + 2}, ..., u_d, w_{l + 1}, ..., w_d \}
+    \end{equation*}
+    as $u_{l + 2} \wedge ... \wedge u_d \neq 0$ by Lemma~\ref{prop:extpow_zero_iff_independent}.
+    However, this contradicts the linear independence of $u_{l + 1}, ..., u_d, w_{l + 1}, ..., w_d$.
+    Hence it must be $l = d$ and so $U = W$.
 \end{proof}
-\end{document}  
+\end{document}
