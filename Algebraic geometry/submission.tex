@@ -77,7 +77,7 @@
 \begin{proof}
     Note that
     \begin{equation*}
-        u \otimes v \otimes v' \otimes w = -(u \otimes v' \otimes v \otimes w)
+        u \wedge v \wedge v' \wedge w = -(u \wedge v' \wedge v \wedge w)
     \end{equation*}
     for all $u \in \extpow^{i - 1}(V), w \in \extpow^{(d - i - 1)}(V), v, v' \in V$.
 
@@ -93,7 +93,7 @@
 
     Furthermore, we find that
     \begin{equation*}
-        u \otimes v \otimes v \otimes w = -(u \otimes v \otimes v \otimes w) = 0
+        u \wedge v \wedge v \wedge w = -(u \wedge v \wedge v \wedge w) = 0
     \end{equation*}
     must be zero.
     Hence, if $v_1, ..., v_d \in V$ with $v_i = v_j$ for some $i \neq j$, then there is a permutation $\pi \in S_d$ with $\pi(1) = i, \pi(2) = j$ and
@@ -179,7 +179,7 @@
     \end{equation*}
 \end{lemma}
 \begin{proof}
-    For the direction $\Rightarrow$, assume that $v_1, ..., v_d$ are not independent. 
+    For the direction $\Leftarrow$, assume that $v_1, ..., v_d$ are not independent. 
     Then there is a nonzero vector $a_1 \in k^d$ with $\sum a_{1i} v_i = 0$.
     Clearly, we can extend $a_1$ to a basis $a_1, ..., a_d$ of $k^d$, which gives a matrix $A = (a_{ij}) \in \GL_d(k)$.
 
@@ -190,7 +190,7 @@
     \end{align*}
     and so $v = v_1 \wedge ... \wedge v_d = 0$ as $\det(A) \neq 0$.
 
-    Direction $\Leftarrow$ TODO
+    Direction $\Rightarrow$ TODO
 \end{proof}
 \begin{lemma}
     \label{prop:subspace_closed}
@@ -397,7 +397,7 @@ This corresponds to the following definition.
     Let $\bar{f}: \Proj(\extpow^d k^n) \to \Proj^{{n \choose d} - 1}$ be the map $f$ from before modulo $k^*$.
     Then
     \begin{equation*}
-        \rho = f \circ \phi
+        \rho = \bar{f} \circ \phi
     \end{equation*}
     and in particular, we see that $\phi(Gr(d, n))$ is a projective variety and isomorphic to $\rho(\Gr(d, n))$.
 \end{corollary}
