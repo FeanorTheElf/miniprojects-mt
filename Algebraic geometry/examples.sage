@@ -1,5 +1,6 @@
 from itertools import combinations
 from math import factorial
+import numpy as np
 
 # build up the ring and group the variables nicely
 R = PolynomialRing(QQ, [
@@ -19,20 +20,21 @@ for seq in combinations([1, 2, 3, 4, 5], 4):
 
 I = R.ideal(polys)
 dimension = I.dimension() - 1
-codimension = 9 - dimension
-assert codimension == 3
+assert dimension == 6
 assert I.is_prime()
 
-unit_vector = lambda i: [1 if j == i else 0 for j in range(10)]
-hyperplane_vectors = [unit_vector(i) for i in range(10)]
-for vecs in combinations(hyperplane_vectors, codimension):
+hyperplane_vectors = [
+    np.random.randint(-4, 4, R.ngens(), int) 
+        for i in range(dimension + 1)
+]
+for vecs in combinations(hyperplane_vectors, dimension):
     eqs = [
         sum(map(lambda t: t[0] * t[1], zip(vec, R.gens())))
             for vec in vecs
     ]
     J = I + R.ideal(eqs)
-    print(J.hilbert_numerator())
+    # the number of intersection points is clearly equal to the
+    # dimension of S(X)_d for large enough d
     hp = J.hilbert_polynomial()
-    print(hp)
     degree = hp.leading_coefficient()
-    print(degree)
+    print(degree) # usually prints 5

@@ -123,7 +123,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
 \begin{proposition}
     For a Dirichlet character $\chi: \N \to \C$ and some $\epsilon > 0$, the series
     \begin{equation*}
-        L(s, f) := \sum_{n \geq 1} f(n) n^{-s}
+        L(s, \chi) := \sum_{n \geq 1} \chi(n) n^{-s}
     \end{equation*}
     converges uniformly on $\Re(s) \geq 1 + \epsilon$.
     We will call it the Dirichlet series of $\chi$.
@@ -144,7 +144,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
     \end{equation*}
     If this is the case, then
     \begin{equation*}
-        \lim_{s \to 1} L(s, \chi) = \sum_{n \geq 1} \frac {\chi(n)} n
+        \lim_{s \to 1^+} L(s, \chi) = \sum_{n \geq 1} \frac {\chi(n)} n
     \end{equation*}
     where the right-hand side converges (but not absolutely).
 \end{proposition}
@@ -161,6 +161,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
     which clearly has a pole at $s = 1$. Hence $\lim_{s \to 1^+} L(s, \chi_f)$ cannot exist.
 
     For the other direction, assume that $c = 0$.
+    We will only consider real $s$ now.
     Observe that by Bernoulli's inequality, have for $0 < s \leq 1$ that
     \begin{align*}
         (qn)^{-s} - (qn + k)^{-s} &= \frac {(qn + k)^s - (qn)^s} {(q^2n^2 + qnk)^s} = (qn)^{s} \frac {(1 + k(qn)^{-1})^s - 1} {(q^2n^2 + qnk)^s} \\
@@ -184,7 +185,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
     \end{equation*}
     as $X \to \infty$ (on $[\epsilon, \infty[$). 
     Thus the limit is continuous and extends $L(s, \chi_f)$ defined on $]1, \infty[$.
-    It follows that $\lim_{t \to s} L(t, \chi_f)$ exists and is equal to $\sum_{n \geq 1} \chi(n) n^{-s}$.
+    It follows that $\lim_{t \to s^+} L(t, \chi_f)$ exists and is equal to $\sum_{n \geq 1} \chi(n) n^{-s}$.
 \end{proof}
 Applied to our example, we find
 \begin{example}[Ex (ii)]
@@ -435,15 +436,16 @@ Using these basic results, we can now prove facts on the Dirichlet series of cha
     as infinite summation clearly commutes with finite sums.
 \end{proof}
 \begin{example}[Ex (v)]
+    \label{ex:nontrivial_dirichlet_characters_mod_5}
     We consider the Dirichlet characters mod 5.
     A (primitive) 5-th root of unity $\omega_5 \in \C$ is given by $\omega_5 = \exp(2\pi i/5)$.
     On the other hand, a primitive root modulo 5 is e.g. given by $r = 2$ since $2^2 \equiv -1 \mod 5$.
-    Thus we have $5 - 1 = 4$ Dirichlet characters mod 5, namely those given by
+    Thus we have the trivial Dirichlet character $\chi_0$ and $5 - 1 = 4$ nontrivial Dirichlet characters mod 5, namely those given by
     \begin{align*}
-        1 &\mapsto 1,\ 2 \mapsto \omega_5 = \exp(2\pi i/5),\ 3 \mapsto \omega_5^3 = \exp(6\pi i/5),\ 4 \mapsto \omega_5^2 = \exp(4\pi i/5),\ \\
-        1 &\mapsto 1,\ 2 \mapsto \omega_5^2 = \exp(4\pi i/5),\ 3 \mapsto \omega_5 = \exp(2\pi i/5),\ 4 \mapsto \omega_5^4 = \exp(8\pi i/5),\ \\
-        1 &\mapsto 1,\ 2 \mapsto \omega_5^3 = \exp(6\pi i/5),\ 3 \mapsto \omega_5^4 = \exp(8\pi i/5),\ 4 \mapsto \omega_5^1 = \exp(2\pi i/5),\ \\
-        1 &\mapsto 1,\ 2 \mapsto \omega_5^4 = \exp(8\pi i/5),\ 3 \mapsto \omega_5^2 = \exp(4\pi i/5),\ 4 \mapsto \omega_5^3 = \exp(6\pi i/5),\ \\
+        \chi_1: 1 &\mapsto 1,\ 2 \mapsto \omega_5 = \exp(2\pi i/5),\ 3 \mapsto \omega_5^3 = \exp(6\pi i/5),\ 4 \mapsto \omega_5^2 = \exp(4\pi i/5),\ \\
+        \chi_2: 1 &\mapsto 1,\ 2 \mapsto \omega_5^2 = \exp(4\pi i/5),\ 3 \mapsto \omega_5 = \exp(2\pi i/5),\ 4 \mapsto \omega_5^4 = \exp(8\pi i/5),\ \\
+        \chi_3: 1 &\mapsto 1,\ 2 \mapsto \omega_5^3 = \exp(6\pi i/5),\ 3 \mapsto \omega_5^4 = \exp(8\pi i/5),\ 4 \mapsto \omega_5^1 = \exp(2\pi i/5),\ \\
+        \chi_4: 1 &\mapsto 1,\ 2 \mapsto \omega_5^4 = \exp(8\pi i/5),\ 3 \mapsto \omega_5^2 = \exp(4\pi i/5),\ 4 \mapsto \omega_5^3 = \exp(6\pi i/5),\ \\
     \end{align*}
 \end{example}
 
@@ -677,6 +679,36 @@ We will prove two auxiliary lemmas before.
     \end{align*}
     However this function has no pole at $s = 1$, a contradiction to Lemma~\ref{prop:rho_pole_at_one}.
 \end{proof}
+\begin{example}[Ex (vi)]
+    For all the nontrivial Dirichlet characters $\chi_1, ..., \chi_4$ defined in Example~\ref{ex:nontrivial_dirichlet_characters_mod_5}, we have
+    \begin{equation*}
+        L(1, \chi_i) \neq 0
+    \end{equation*}
+    It follows that there are infinitely many primes $\equiv a \mod 5$, for all $a \perp 5$.
+\end{example}
+\begin{proof}
+    By Prop.~\ref{prop:dirichlet_series_at_one} we know that
+    \begin{equation*}
+        L(1, \chi_i) = \sum_{n \geq 1} \chi(n) n^{-s}
+    \end{equation*}
+    For the fifth root of unity $\omega \in \C$ such that $\chi_i(1) = \omega$, we thus find
+    \begin{align*}
+        L(1, \chi_i) =& \sum_{k \geq 0} \sum_{1 \leq n \leq 4} \frac {\chi(5k + n)} {(5k + n)^s} = \sum_{k \geq 0} \frac {\omega} {(5k + 1)^s} + \frac {\omega^2} {(5k + 2)^s} + \frac {\omega^3} {(5k + 3)^s} + \frac {\omega^4} {(5k + 4)^s} \\
+        =& \sum_{k \geq 0} \omega \Bigl( \underbrace{\frac 1 {(5k + 1)^s} - \frac 1 {(5k + 4)^s}}_{> 0} \Bigr) + \omega^2 \Bigl( \underbrace{\frac 1 {(5k + 2)^s} - \frac 1 {(5k + 3)^s}}_{> 0} \Bigr)
+    \end{align*}
+    Hence we have positive coefficients $a_k, b_k > 0$ with
+    \begin{equation*}
+        L(1, \chi_i) - \sum_{k \geq 0} a_k \omega + b_k \omega^2 = \omega \sum_{k \geq 0} a_k + b_k \omega
+    \end{equation*}
+    In particular,
+    \begin{equation*}
+        \Im\left( \frac {L(1, \chi_i)} {\omega} \right) = \sum_{k \geq 0} b_k \Im(\omega) = \Im(\omega) \underbrace{ \sum_{k \geq 0} b_k }_{> 0}
+    \end{equation*}
+    Since $\chi_i$ is a nontrivial Dirichlet character, we see that $\Im(\omega) \neq 0$ and so $\Im(L(1, \chi_i)/\omega) \neq 0$, thus $L(1, \chi_i) \neq 0$.
+\end{proof}
+\begin{remark}[Ex (vii)]
+    TODO
+\end{remark}
 
 \printbibliography
 \end{document}
