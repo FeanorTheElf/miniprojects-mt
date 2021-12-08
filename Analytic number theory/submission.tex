@@ -207,11 +207,35 @@ Applied to our example, we find
     \end{equation*}
     which seems to be $\frac 1 4$.
 \end{example}
-Now we want to study the series
+Interestingly, we can also study the series
 \begin{equation*}
     \sum_p f(p) p^{-s}
 \end{equation*}
-For this, we are first interested in how many primes $\equiv 1, 3 \mod 4$ there are.
+using Euler Products.
+\begin{example}[Ex (ii)]
+    \label{ex:dirichlet_sum_over_primes}
+    Have for $\Re(s) > 1$ that
+    \begin{equation*}
+        \sum_p \frac {f(p)} {p^s} = \log( L(f, s) ) + O( \zeta(2\Re(s)) )
+    \end{equation*}
+    In particular, we see that
+    \begin{equation*}
+        \lim_{s \to 1^+} \sum_p \frac {f(p)} {p^s}
+    \end{equation*}
+    exists.
+\end{example}
+\begin{proof}
+    By Taylor series expansion, see that
+    \begin{equation*}
+        \log(1 - x) = -x + O(|x|^2)
+    \end{equation*}
+    Hence for $\Re(s) > 1$ we can consider the logarithm of the Euler Product to find
+    \begin{align*}
+        \log( L(f, s) ) =& \log\Bigl( \prod_p \sum_{k \geq 0} \frac {f(p^k)} {p^{ks}} \Bigr) = \log\Bigl( \prod_p \frac 1 {1 - f(p)/p^s} \Bigr) \\
+        =& \sum_p -\log\Bigl( 1 - \frac {f(p)} {p^s} \Bigr) = \sum_p \frac {f(p)} {p^s} + O\Bigl( \frac {f(p)^2} {p^{2\Re(s)}} \Bigr) \\
+        = & \sum_p \frac {f(p)} {p^s} + O\Bigl( \underbrace{\sum_p \frac {f(p)} {p^{2\Re(s)}}}_{\leq \zeta(2\Re(s))} \Bigr) = \sum_p \frac {f(p)} {p^s} + O(\zeta(2\Re(s)))
+    \end{align*}
+\end{proof}
 \begin{lemma}
     \label{prop:prime_factor_3_mod_4}
     Let $n \equiv 3 \mod 4$. Then $n$ has a prime factor $p \equiv 3 \mod 4$.
@@ -280,7 +304,7 @@ The book also mentions that the general case can be proven by using L-series in 
 \end{proof}
 \begin{example}[Ex (iii)]
     Using a computer, we can also study the actual frequency of prime numbers $\equiv 1, 3 \mod 4$ among e.g. the first $10^8$ integers.
-    This seems to indicate that both numbers are asymptotically equal.
+    This seems to indicate that both numbers are asymptotically equal, which seems natural, given the result of Example~\ref{ex:dirichlet_sum_over_primes}.
     For example, there are 332180 primes $\equiv 1 \mod 4$ and 332398 primes $\equiv 3 \mod 4$ smaller than $10^8$.
     To find these numbers, the following python code was used.
     \lstinputlisting[language = python]{./primes.py}

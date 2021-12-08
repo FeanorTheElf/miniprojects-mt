@@ -31,7 +31,7 @@
 \newcommand{\GL}{\mathrm{GL}}
 \newcommand{\Gr}{\mathrm{Gr}}
 \newcommand{\sgn}{\mathrm{sgn}}
-\newcommand{\contradiction}{\lightning}
+\newcommand{\contradiction}{\text{contradiction}}
 \newcommand{\extpow}{\mathchoice{{\textstyle\bigwedge}}
     {{\bigwedge}}
     {{\textstyle\wedge}}
@@ -533,9 +533,9 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
     It follows that $J \subseteq \mathrm{lt}(I)$.
 
     For the other direction, we use a quite lengthy degree argument.
-    Sadly, the argument I found is quite full of technical detail.
-    I try to present it as clearly as possible, at the cost of being not always completely formal. 
-    But honestly, the proof contains enough indices already.
+    Sadly, the only argument I came up with is extremely technical.
+    We try to present it as clearly as possible, at the cost of only sketching some parts.
+    In the end, I checked it using Computer Algebra, and everything fits together.
 
     Consider homogeneous polynomials $f_{i, j, u, v} \in R$ and
     \begin{equation*}
@@ -595,7 +595,7 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
         j < u < b < c \ &\Rightarrow \ x_{j, v} x_{b, c} \in J \\
         j < b < u < c \ &\Rightarrow \ x_{j, v} x_{b, c} \in J \\
         j < b < c < u \ &\Rightarrow \ x_{i, u} x_{b, c} \in J \\
-        b < j < u < c \ &\Rightarrow \ f_{i, b, c, v} \ x_{i, c} \ x_{b, v} \succ f_{i, j, u, v} \ x_{i, u} \ x_{j, v} \ \contradiction \\
+        b < j < u < c \ &\Rightarrow \ f_{i, b, c, v} \ x_{i, c} \ x_{b, v} \succ f_{i, j, u, v} \ x_{i, u} \ x_{j, v}, \ \contradiction \\
         b < j < c < u \ &\Rightarrow \ x_{i, u} x_{b, c} \in J \\
         b < c < j < u \ &\Rightarrow \ x_{i, u} x_{b, c} \in J \\
     \end{align*}
@@ -610,7 +610,26 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
         \mathrm{lt}(F) = \epsilon \ x_{i, j} \ x_{u, v} \ f_{i, j, u, v} 
     \end{equation*}
     Again, you can do this similarly as before, but now two monomials ``cancel out''.
-    I will not present this here either.
+    We will not present this here as well.
+\end{proof}
+
+\begin{lemma}
+    Let $n \geq 4$ and
+    \begin{equation*}
+        J := \{ \{ A, B \} \ | \ A, B \in X, \ A \cap B = \emptyset \} \subseteq X^{(2)}
+    \end{equation*}
+    be a set, where
+    \begin{equation*}
+        X := \{ 1, ..., n \}^{(2)}
+    \end{equation*}
+    Then for $k \geq 3$ have
+    \begin{equation*}
+        |\{ A \in X^{(k)} \ | \ J \subseteq A \}| = 
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    Use induction on $n$.
+    In the base case $n = 4$ have that
 \end{proof}
 
 \printbibliography
