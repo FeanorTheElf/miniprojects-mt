@@ -545,8 +545,8 @@ First of all, we consider $\chi_0$.
     as all products converge absolutely.
 \end{proof}
 For the other Dirichlet characters, the situation is slightly more complicated.
-First, we will bound the value of the partial sums of the Dirichlet series for $0 < \Re(s) \leq 1$.
-\begin{lemma}
+First, we will bound the value of the partial sums of a Dirichlet character.
+\begin{lemma}[Ex (iii)]
     \label{prop:bound_partsums_character}
     Let $\chi \neq \chi_0$ be a Dirichlet character mod $q$ and consider the sum function
     \begin{equation*}
@@ -563,31 +563,6 @@ First, we will bound the value of the partial sums of the Dirichlet series for $
     \end{align*}
     for all $n \in \N$.
 \end{proof}
-\begin{lemma}[Ex (iii)]
-    \label{prop:character_partsums_bounded}
-    Let $\chi \neq \chi_0$ be a Dirichlet character.
-    Then for $\Re(s) > 0$ have
-    \begin{equation*}
-        \Bigl| \sum_{1 \leq n \leq X} \chi(n) n^{-s} \Bigr| \leq q + \frac {q|s|} {\Re(s)} = O\left( \frac {q|s|} {\Re(s)} \right)
-    \end{equation*}
-    and in particular, this does not depend on $X$.
-\end{lemma}
-\begin{proof}
-    Using partial summation yields
-    \begin{align*}
-        \sum_{1 \leq n \leq X} \chi(n) n^{-s} =& \sum_{1 - \epsilon < n \leq X} \chi(n) n^{-s} \\
-        =& \underbrace{A(1 - \epsilon)}_{= 0} (1 - \epsilon)^{-s} - A(X) X^{-s} + s\int_{1 - \epsilon}^X A(t) t^{-(s + 1)} dt \\
-        =& -A(X) X^{-s} + s\int_1^X A(t) t^{-(s + 1)} dt
-    \end{align*}
-    So
-    \begin{align*}
-        \Bigl| \sum_{1 \leq n \leq X} \chi(n) n^{-s} \Bigr| \leq& \ |A(X) X^{-s}| + |s| \int_1^X |A(t) t^{-(s + 1)}| dt \\
-        \leq& \ q X^{-\Re(s)} + |s| \int_1^X q t^{-\Re(s) - 1} dt \\
-        =& \ q X^{-\Re(s)} + q|s| \left( \frac 1 {\Re(s)} - \frac 1 {X^{\Re(s)}\Re(s)} \right) \\
-        \leq& \ q + q \frac {|s|} {\Re(s)} = O\left( \frac {q|s|} {\Re(s)} \right)
-    \end{align*}
-    for $\Re(s) > 0$.
-\end{proof}
 Now we can show the analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
 \begin{proposition}[Ex (iv)]
     Let $\chi \neq \chi_0$ be a Dirichlet character mod $q$.
@@ -599,11 +574,11 @@ Now we can show the analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
     Further, the right-hand side is a holomorphic function on $\Re(s) > 0$ and thus provides an analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
 \end{proposition}
 \begin{proof}
-    Similar to the proof of Lemma~\ref{prop:character_partsums_bounded}, partial summation yields
+    Using partial summation, we find for some $0 < \epsilon < 1$ that
     \begin{align*}
-        \sum_{n \geq 1} \chi(n) n^{-s} = s \int_1^\infty A(t) t^{-(s + 1)} dt
+        \sum_{n \geq 1} \chi(n) n^{-s} =& A(1 - \epsilon) (1 - \epsilon)^{-s} - (-s) \int_{1 - \epsilon}^\infty A(t) t^{-(s + 1)} dt \\
+        =& s \int_1^\infty A(t) t^{-(s + 1)} dt
     \end{align*}
-    By Lemma~\ref{prop:character_partsums_bounded}, this is bounded and hence well-defined and finite for $\Re(s) > 0$.
     Further, the integral converges absolutely by Lemma~\ref{prop:bound_partsums_character}, and thus is holomorphic on $\Re(s) > 0$.
 \end{proof}
 \begin{corollary}[Ex (iv)]
