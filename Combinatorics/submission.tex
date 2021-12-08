@@ -528,17 +528,84 @@ This is formalized in the next definition.
 \end{definition}
 \begin{lemma}
     \label{prop:properties_n_distribution_subsets}
-    Have
+    The size of $|P(n_0, ..., n_k)|$ is given by the multinomial coefficient
     \begin{equation*}
-        |P(n_0, ..., n_k)| = { n_0 + ... + n_k \choose n_0 } { n_1 + ... + n_k \choose n_1 } ... {n_{k - 1} + n_k \choose n_{k - 1}} {n_k \choose n_k}
+        |P(n_0, ..., n_k)| = { d \choose n_0, ..., n_k } =  \frac {n!} {n_0! ... n_k!}
     \end{equation*}
-    Further, for all $n_i \in \Z$ with $\sum n_i = d$ and all $a \in P(n_0, ..., n_k), 0 \leq \delta < k$ have
+    if $n_0 + ... + n_k = d$ (otherwise, it is clearly zero).
+
+    Further, for all $n_0, ..., n_k \in \Z$ with $\sum n_i = d$ and all $a \in P(n_0, ..., n_k), 0 \leq \delta < k$ have
     \begin{align*}
         |\partial a \cap P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)| &= n_{\delta + 1}, \\
         |\partial^+ a \cap P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)| &= n_\delta
     \end{align*}
     even if any of the $n_i$ are negative.
 \end{lemma}
+\begin{definition}
+    Define the \emph{core} of $\mathcal{P}_{k, d}$ as the poset
+    \begin{equation*}
+        \mathcal{C}_{k, d} := \{ (n_0, ..., n_k) \ | \ n_0 + ... + n_k = d \}
+    \end{equation*}
+    whose partial order is the transitive closure of the relation $\prec$ defined by
+    \begin{align*}
+        (n_0, ..., n_k) \prec (m_0, ..., m_k) \ :\Leftrightarrow \ \exists 0 \leq \delta < k: \ &m_\delta = n_\delta - 1, \ m_{\delta + 1} = n_{\delta + 1} - 1, \\
+        &\forall i \neq \delta, \delta + 1: m_i = n_i 
+    \end{align*}
+\end{definition}
+\begin{lemma}
+    The layers of $\mathcal{C}_{k, d}$ are
+    \begin{equation*}
+        L_i = \{ (n_0, ..., n_k) \ | \ \sum_j j n_j = i \}
+    \end{equation*}
+    Further, we have a surjective map
+    \begin{equation*}
+        R: \mathcal{P}_{k, d} \to \mathcal{C}_{k, d}, \quad A \mapsto \bigl( |\{j \ | \ A(j) = i\}| \bigr)_{0 \leq i \leq k}
+    \end{equation*}
+    that preserves the ordering and the fiber of a point $(n_0, ..., n_k)$ is exactly $P(n_0, ..., n_k)$.
+\end{lemma}
+
+\begin{proposition}
+    Assume that $\mathcal{C}_{k, d}$ satisfies a ``scaled variant'' of condition (3) of Prop.~\ref{prop:characterization_lym}, namely:
+    There exists a (finite) sequence $C'_1, ..., C'_t$ of maximal chains such that for a chain $C'$ chosen uniformly at random among them, we have
+    \begin{equation*}
+        \Pr[ (n_0, ..., n_k) \in C' ] = \frac {|P(n_0, ..., n_k)|} {|L_{\sum_i i n_i}|}
+    \end{equation*}
+    Then $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
+\end{proposition}
+\begin{proof}
+    Denote the two layers of $\mathcal{P}_{k, d}$ by $L_k$ and the two layers of $\mathcal{C}_{k, d}$ by $L'_k$.
+
+    Now consider a chain $C'_i$ from the assumption.
+    Note that by Lemma~\ref{prop:properties_n_distribution_subsets}, we see that for $(n_0, ..., n_k) \in C'_i$ have
+    \begin{itemize}
+        \item Every element in $P(n_0, ..., n_k)$ is covered by $n_\delta$ elements
+        \item Every element in $P(n_0, ..., n_k)$ covers $n_{\delta + 1}$ elements
+    \end{itemize}
+    The $P(n_0, ..., n_k)$ are exactly the layers of the poset $P'_i := \bigcup_{c \in C'_i} P(c)$.
+    Hence Prop.~\ref{prop:biregular_implies_lym} yields that there is a sequence of maximal chains
+    \begin{equation*}
+        C_{i, 1}, ..., C_{i, t_i}
+    \end{equation*}
+    in the poset $P'_i$ such that each element in $P(n_0, ..., n_k)$ is contained in $t_i/|P(n_0, ..., n_k)|$ of them.
+    Note that $R(C_{i, j}) := \{ R(x) \ | \ x \in C_{i, j} \} = C'_i$ holds.
+
+    Now consider a sequence $(\tilde{C}_i)_{i \in I}$ of maximal chains in the poset $A'$ that consists of the $C_{i, j}$ such that one $C_{i, j}$ occurs $\frac 1 {t t_i} |I|$ times.
+    Let $C$ be a chain chosen from them uniformly at random.
+    Observe that then $R(C)$ is a random variable uniformly distributed on the sequence $C'_1, ..., C'_t$.
+
+    Let $x \in L_k$ with $x \in P(n_0, ..., n_k)$.
+    Then
+    \begin{align*}
+        \Pr[x \in C] =& \sum_{1 \leq i \leq t} \Pr[x \in C \ | \ R(C) = C'_i] \ \Pr[R(C) = C'_i] \\
+        =& \sum_{1 \leq i \leq t} \underbrace{\Pr[x \in C \ | \ R(C) = C'_i]}_{ = 1 / |P(n_0, ..., n_k)| \ \text{if $(n_0, ..., n_k) \in C'_i$}} \frac 1 t \\
+        =& \sum_{\substack{1 \leq i \leq t\\(n_0, ..., n_k) \in C'_i}} \frac 1 {|P(n_0, ..., n_k)| t} \\
+        =& \frac t {|P(n_0, ..., n_k)| t} \underbrace{\Pr[(n_0, ..., n_k) \in R(C)]}_{= |P(n_0, ..., n_k)| / |L_k| \ \text{by assumption}} = \frac 1 {|L_k|}
+    \end{align*}
+    where the condition $R(C) = C'_i$ means equality in the index, not as sets 
+    (this makes a difference if the set $C'_i$ occurs more than once in the sequence $C'_1, ..., C'_t$).
+
+    Clearly, this shows that condition (3) of Prop.~\ref{prop:characterization_lym} is satisfied by $(\tilde{C}_i)_{i \in I}$ for $\mathcal{P}_{k, d}$.
+\end{proof}
 
 \begin{proposition}
     $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
@@ -563,96 +630,51 @@ Now make $V \sqcup U$ into a bipartite graph $G = (V \sqcup U, E)$ by defining f
     &\{ (m_0, ..., m_k), (n_0, ..., n_k) \} \in E \\
     &\Leftrightarrow \ \exists 0 \leq \delta < k: \ (n_0, ..., n_k) = (m_0, ..., m_\delta - 1, m_{\delta + 1} + 1, ..., m_k)
 \end{align*}
-Observe that the resulting graph is now $(k - 1)$-regular.
-For $e = \{ (n_0, ..., n_k), (n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k) \} \in E$ define now
-\begin{align*}
-    v_F(e) := \ &\frac {|\partial \bigl(F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)\bigr)(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} \\
-    - &\frac {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} \\
-    \leq& \frac {|\partial F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} - \frac {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|}
-\end{align*}
-where we define $|\emptyset|/|\emptyset| := 1$.
+Observe that the resulting graph is now $k$-regular.
 Now consider the graded poset $A := P(n_0, ..., n_k) \sqcup P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)$ with two layers.
 By Lemma~\ref{prop:properties_n_distribution_subsets} we see that
 \begin{itemize}
     \item Each element in the bottom layer $v \in L_0(A)$ of $A$ is covered by $n_\delta$ elements
     \item Each element in the top layer $u \in L_1(A)$ of $A$ covers $n_{\delta + 1} + 1$ elements
 \end{itemize}
-Hence we can apply Prop.~\ref{prop:biregular_implies_lym} and see that $v_F(e) \geq 0$.
+Hence we can apply Prop.~\ref{prop:biregular_implies_lym} and see that
+\begin{align*}
+    &{|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|\partial \bigl(F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)\bigr)(n_0, ..., n_k)|} \\
+    \geq &{|P(n_0, ..., n_k)|} {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|}
+\end{align*}
+for each edge $e = \{ (n_0, ..., n_k), (n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k) \} \in E$.
+
 Define
 \begin{equation*}
-    p(n_0, ..., n_k) := \frac {|P(n_0, ..., n_k)|} {|L_{\sum in_i}|}
+    p(n_0, ..., n_k) := \frac {|L_{\sum in_i}|} {|P(n_0, ..., n_k)|} \quad \text{if $|P(n_0, ..., n_k)| \neq 0$}
 \end{equation*}
-We know that all $v_F(e) \geq 0$ and by using the $(k - 1)$-regularity, we see
+and $p(n_0, ..., n_k) = 1$ otherwise.
+
+By summing over all vertices and all adjacent edges, we then find
 \begin{align*}
-    0 \leq &\sum_{e \in E} v_F(e) p(n_0, ..., n_k) \\
-    \leq &\sum_{e \in E} \left( \frac {|\partial F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} - \frac {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} \right) p(n_0, ..., n_k) \\
-    = &(k - 1)\sum_{(n_0, ..., n_k) \in V} \frac {|\partial F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} p(n_0, ..., n_k) \\
-    - &\sum_{(n_0, ..., n_k) \in U} \frac {|F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} \sum_{0 \leq \delta < k} p(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k) \\
-    = &\frac {(k - 1) |\partial F|} {|L_{l - 1}|} - \sum_{(n_0, ..., n_k) \in U} \frac {|F(n_0, ..., n_k)|} {|P(n_0, ..., n_k)|} \sum_{0 \leq \delta < k} p(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k) \\
-    = &\frac {(k - 1) |\partial F|} {|L_{l - 1}|} - \sum_{(n_0, ..., n_k) \in U} \frac {|F(n_0, ..., n_k)|} {|L_l|} \sum_{0 \leq \delta < k} \frac {(n_\delta + ... + n_k + 1)n_{\delta + 1}} {(n_\delta + 1)(n_{\delta + 1} + ... + n_k)}
+    \sum_{(n_0, ..., n_k) \in V}& \sum_{0 \leq \delta < k} \underbrace{|\partial \bigl(F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)\bigr)(n_0, ..., n_k)|}_{\leq |\partial F(n_0, ..., n_k)|} \cdot \\
+    &\underbrace{|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)| \ p(n_0, .., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)}_{\text{$= 0$ if $P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k) = \emptyset$ and $|L_l|$ otherwise}} \\
+    \geq \sum_{(n_0, ..., n_k) \in V}& \sum_{0 \leq \delta < k} {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|P(n_0, ..., n_k)|} \cdot \\
+    &p(n_0, .., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)
 \end{align*}
-However, the sum
+It follows that
+\begin{align*}
+    &\sum_{(n_0, ..., n_k) \in V} {|\partial F(n_0, ..., n_k)|} \sum_{0 \leq \delta < k} {|L_l|} \\
+    \geq& \sum_{\substack{(n_0, ..., n_k) \in U\\P(n_0, ..., n_k) \neq \emptyset}} {|F(n_0, ..., n_k)|} p(n_0, ..., n_k) \sum_{0 \leq \delta < k} {|P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)|}
+\end{align*}
+and so
+\begin{align*}
+    k |L_l| |\partial F| \geq \ \sum_{\mathclap{\substack{(n_0, ..., n_k) \in U\\P(n_0, ..., n_k) \neq \emptyset}}} \ |F(n_0, ..., n_k)| |L_{l - 1}| \sum_{0 \leq \delta < k} \frac {|P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)| |L_l|} {|P(n_0, ..., n_k)| |L_{l - 1}|}
+\end{align*}
+However for $|P(n_0, ..., n_k)| \neq 0, \sum i n_i = l$, the expression
 \begin{equation*}
-    \sum_{0 \leq \delta < k} \frac {(n_\delta + ... + n_k + 1)n_{\delta + 1}} {(n_\delta + 1)(n_{\delta + 1} + ... + n_k)}
+    \sum_{0 \leq \delta < k} \frac {|P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)| \cdot |L_l|} {|P(n_0, ..., n_k)| \cdot |L_{l - 1}|} = \frac {|L_l|} {|L_{l - 1}|} \sum_{0 \leq \delta < k} \frac {n_{\delta + 1}} {n_\delta + 1}
 \end{equation*}
-is not always $k - 1$, so this won't work out.
+is not always $\geq k$, so this won't work out.
 
 On a higher level, everything I did was to reduce the problem to the case that $F$ is a disjoint union of the $P(n_0, ..., n_k)$ which is nice to see, but does not help too much.
 \begin{proof}
     TODO
 \end{proof}
 
-\begin{proposition}
-    Let $M(k, d, n) := |\{ x \in \mathcal{P}_{k, d} \ | \ r(x) = n\}|$. Then for $k, d \geq 1$ we have the recurrence relation
-    \begin{equation*}
-        M(k, 1, n) = \begin{cases}
-            1 & \text{if $0 \leq n \leq k$} \\
-            0 & \text{otherwise}
-        \end{cases}
-        \quad \text{and} \quad
-        M(k, d, n) = \sum_{i = 0}^k M(k, d - 1, n - i)
-    \end{equation*}
-
-    We also have the recurrence relation
-    \begin{equation*}
-        M(k, d, n) = \sum_{i = 0}^{\lfloor n/k \rfloor} {d \choose i} M(k - 1, d - i, n - ki)
-    \end{equation*}
-\end{proposition}
-\begin{lemma}
-    Let $R$ be a ring extension of $\Q$ (commutative with one). 
-    For a polynomial $f \in R[X]$ there exists a unique polynomial $\Sigma f \in R[X]$ such that for all $x \in \Z, x \geq 0$ we have
-    \begin{equation*}
-        \Sigma f(x) = \sum_{i = 0}^x f(i)
-    \end{equation*}
-    Furthermore, $\Sigma$ is linear and $\deg(\Sigma f) = \deg(f) + 1$ and $\mathrm{lc}(\Sigma f) = \mathrm{lc}(f) / (\deg(f) + 1)$.
-\end{lemma}
-\begin{proof}
-    Use induction on $\deg(f)$.
-    As everything is linear, it suffices to show the claim for the monomials $X^d$.
-    Define then
-    \begin{equation*}
-        \Sigma X^d := \frac 1 {d + 1} (X + 1)^{d + 1} - \frac 1 {d + 1} \sum_{k = 0}^{d - 1} {d + 1 \choose k} \left( \Sigma X^k \right)
-    \end{equation*}
-    It follows that for all $x \geq 0$ have
-    \begin{align*}
-        &\left( \Sigma X^d \right)(x + 1) - \left( \Sigma X^d \right)(x) \\
-        =& \frac 1 {d + 1} \left( (x + 2)^{d + 1} - x^{d + 1} \right) - \frac 1 {d + 1} \sum_{k = 0}^{d - 1} {d + 1 \choose k} \left( \left( \Sigma X^k \right)(x + 1) - \left( \Sigma X^k \right)(x) \right) \\
-        =& \frac 1 {d + 1} \left( -(x + 1)^{d + 1} + \sum_{k = 0}^{d + 1} {d + 1 \choose k} (x + 1)^k \right) - \frac 1 {d + 1} \sum_{k = 0}^{d - 1} {d + 1 \choose k} (x + 1)^k \\
-        =& \frac 1 {d + 1} \left( \sum_{k = 0}^d {d + 1 \choose k} (x + 1)^k - \sum_{k = 0}^{d - 1} {d + 1 \choose k} (x + 1)^k \right) \\
-        =& \frac 1 {d + 1} {d + 1 \choose d} (x + 1)^d = (x + 1)^d
-    \end{align*}
-    As this holds for infinitely many $x$, we see that $(\Sigma X^d)(X + 1) - \Sigma X^d = (X + 1)^d$ and the claim follows.
-\end{proof}
-\begin{example}
-    Let $k, d \geq 1$. Then
-    \begin{align*}
-        M(k, 2, n) := \begin{cases}
-            0 & \text{if $n > 2k$} \\
-            2k - n + 1 & \text{if $k \leq n \leq 2k$} \\
-            n + 1 & \text{if $0 \leq n \leq k$} \\
-            0 & \text{if $n < 0$}
-        \end{cases}
-    \end{align*}
-    Note that if two cases are applicable, they both yield the same value.
-\end{example}
 \end{document}
