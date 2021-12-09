@@ -19,3 +19,5 @@ for seq in combinations([1, 2, 3, 4, 5, 6], 4):
     polys.append(p)
 
 I = R.ideal(polys)
+print(I.hilbert_polynomial()) 
+# 1/2880*t^8 + 1/120*t^7 + 41/480*t^6 + 39/80*t^5 + 541/320*t^4 + 291/80*t^3 + 3401/720*t^2 + 101/30*t + 1

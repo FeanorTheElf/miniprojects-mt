@@ -51,6 +51,7 @@
 \newtheorem{example}[definition]{Example}
 \newtheorem{proposition}[definition]{Proposition}
 \newtheorem{corollary}[definition]{Corollary}
+\newtheorem{theorem}[definition]{Theorem}
 
 \begin{document}
 \maketitle
@@ -620,5 +621,28 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
     We will not present this here as well.
 \end{proof}
 
+\paragraph{Another idea} Let
+\begin{equation*}
+    m_n(d) := |\{ x^\alpha \ \text{monomial} \ | \ \deg(x^\alpha) = d, \ x_{iv}x_{ju} \ \not| \ x^\alpha \}|
+\end{equation*}
+and
+\begin{equation*}
+    s_n(d) := |\{ x^\alpha \ \text{multilinear monomial} \ | \ \deg(x^\alpha) = d, \ x_{iv}x_{ju} \ \not| \ x^\alpha \}|
+\end{equation*}
+Then for sufficiently large $d$ have
+\begin{equation*}
+    m_n(d) = \sum_{i = 0}^n s_n(i) \left(\!\!{i \choose d - i}\!\!\right) = \sum_{i = 0}^n s_n(i) {d - 1 \choose i - 1}
+\end{equation*}
+Note now that we are only interested in the leading term of the polynomial, which is (more or less) given by the largest $i \leq n$ such that $s_n(i) \neq 0$.
+So in fact, it suffices to find this.
+
+For example, the dimension of $\Gr(2, n)$ is the size of the largest independent set $- 1$ in this strange graph I have been considering.
+
+For example, I claim:
+\begin{theorem}
+    \begin{equation*}
+        \dim(\Gr(2, n)) = 2n - 4
+    \end{equation*}
+\end{theorem}
 \printbibliography
 \end{document}
