@@ -498,7 +498,14 @@ First of all, we introduce coordinates on $\Proj(\extpow^d k^n)$.
     \end{align*}
     Using the following Sage-code, we can compute the number of intersection points of $\Gr(2, 5)$ with 3-dimensional hyperplanes, and find a probable value for its degree.
     \lstinputlisting[language = python]{./examples.sage}
-    This shows that the degree of $\Gr(2, 5)$ is indeed 5, as expected.
+    This shows that the degree of $\Gr(2, 5)$ is indeed 5, as expected from the degree formula mentioned in the lecture.
+    \begin{equation*}
+        \deg(\Gr(d, n)) = (d(n - d))! \frac {1! \cdot 2! \cdot ... \cdot (d - 1)!} {(n - d)! \cdot (n - d + 1)! \cdot ... \cdot (n - 1)!}
+    \end{equation*}
+    which yields
+    \begin{equation*}
+        \deg(\Gr(2, 5)) = 6! \frac {1!} {3! \cdot 4!} = \frac {6 \cdot 5} {3!} = 5
+    \end{equation*}
 \end{example}
 To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one tool I encountered during an earlier course on Computational Commutative Algebra and Algebraic Geometry.
 \begin{proposition}[Macaulay Basis Theorem]
@@ -611,25 +618,6 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
     \end{equation*}
     Again, you can do this similarly as before, but now two monomials ``cancel out''.
     We will not present this here as well.
-\end{proof}
-
-\begin{lemma}
-    Let $n \geq 4$ and
-    \begin{equation*}
-        J := \{ \{ A, B \} \ | \ A, B \in X, \ A \cap B = \emptyset \} \subseteq X^{(2)}
-    \end{equation*}
-    be a set, where
-    \begin{equation*}
-        X := \{ 1, ..., n \}^{(2)}
-    \end{equation*}
-    Then for $k \geq 3$ have
-    \begin{equation*}
-        |\{ A \in X^{(k)} \ | \ J \subseteq A \}| = 
-    \end{equation*}
-\end{lemma}
-\begin{proof}
-    Use induction on $n$.
-    In the base case $n = 4$ have that
 \end{proof}
 
 \printbibliography
