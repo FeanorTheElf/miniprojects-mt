@@ -496,19 +496,45 @@ Note that for $k = 1$, this is exactly the proof that was done in the lecture to
 First of all, in Example~\ref{ex:partitions_have_no_lym} we have already shown that the poset $\Pi_m$ does not satisfy the conditions from Prop.~\ref{prop:characterization_lym}.
 Now we want to investigate whether $\mathcal{P}_{k, d}$ does. 
 \begin{lemma}
-    Let $A$ be a poset with two layers $L_0 = \{ u_1, ..., u_m \}, L_1 = \{ v_1, ..., v_n \}$.
-    Then any of the conditions of Prop.~\ref{prop:characterization_lym} is equivalent to the following:
+    \label{prop:lp_algorithm}
+    Let $P$ be a poset with layers $L_0, ..., L_d$.
+    Fix $0 < l \leq d$ and let $L_{l - 1} = \{ u_1, ..., u_m \}, L_l = \{ v_1, ..., v_n \}$.
 
-    There exists a matrix $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ such that for all $i, j$
+    Assume there exists a matrix $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ such that
+    \footnote{We use $1 = (1, ..., 1)^T$ as the vector consisting of $1$ only here.}
     \begin{equation*}
-        e_i^T A 1 = e_j^T A 1 \quad \text{and} \quad 1^T A e_i = 1^T A e_j
+        1^T A 1 = 1
     \end{equation*}
-    and $a_{ij} = 0$ whenever $u_i \not< v_j$.
+    and for all $i, j$
+    \begin{equation*}
+        e_i^T A 1 = \frac 1 {|L_0|} \quad \text{and} \quad 1^T A e_j = \frac 1 {|L_1|}
+    \end{equation*}
+    and $a_{ij} = 0$ whenever $u_i \not< v_j$ holds.
+
+    Then the conditions of Prop.~\ref{prop:characterization_lym} hold for the poset $L_{l - 1} \cup L_l$.
+    In particular, if the assumption holds for all $0 < l \leq d$, then the conditions of Prop.~\ref{prop:characterization_lym} hold for $P$.
 \end{lemma}
+\begin{proof}
+    Let $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ be this matrix.
+    Note that a maximal chain in $L_{l - 1} \cup L_l$ corresponds to a pair $u_i < v_j$.
+
+    Now consider a (finite) sequence of maximal chains $(C_k)_{k \in I}$ such that the chain corresponding to $u_i < v_j$ occurs $a_{ij} |I|$ times.
+    By the assumption, we know that for each $i$
+    \begin{equation*}
+        |\{k \ | \ u_i \in C_k\}| = \sum_{u_i < v_j} a_{ij}|I| = \frac 1 {|L_0|} |I|
+    \end{equation*}
+    and so each element $u_i \in L_{l - 1}$ is contained in the same number $|I| / |L_0|$ of chains $C_k$.
+
+    Similarly, for each $J$ have
+    \begin{equation*}
+        |\{k \ | \ v_j \in C_k\}| = \sum_{v_j > u_i} a_{ij}|I| = \frac 1 {|L_1|} |I|
+    \end{equation*}
+    The claim follows.
+\end{proof}
 This lemma does not seem super useful at first, but it gives us a way to check in time polynomial in $O(|P|)$ whether a given poset $P$ satisfies the conditions from Prop.~\ref{prop:characterization_lym}, by using an LP solver.
 Note that this is not easily possible when working directly with any of the three conditions defined before.
 
-Using this, I could check that $\mathcal{P}_{k, d}$ indeed satisfies the conditions for reasonably sized $|\mathcal{P}_{k, d}|$ (e.g. for $k, d \approx 6$).
+Using this, I could check that $\mathcal{P}_{k, d}$ indeed satisfies the conditions for reasonably sized $|\mathcal{P}_{k, d}|$ (up to $k = d = 6$).
 Note that already for these ``small'' numbers, we get quite huge posets $|\mathcal{P}_{k, d}|$.
 Hence, I believe that this is true for all $\mathcal{P}_{k, d}$.
 
@@ -565,6 +591,7 @@ This is formalized in the next definition.
 \end{lemma}
 
 \begin{proposition}
+    \label{prop:core_of_multisets}
     Assume that $\mathcal{C}_{k, d}$ satisfies a ``scaled variant'' of condition (3) of Prop.~\ref{prop:characterization_lym}, namely:
     There exists a (finite) sequence $C'_1, ..., C'_t$ of maximal chains such that for a chain $C'$ chosen uniformly at random among them, we have
     \begin{equation*}
@@ -573,7 +600,7 @@ This is formalized in the next definition.
     Then $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
 \end{proposition}
 \begin{proof}
-    Denote the two layers of $\mathcal{P}_{k, d}$ by $L_k$ and the two layers of $\mathcal{C}_{k, d}$ by $L'_k$.
+    Denote the layers of $\mathcal{P}_{k, d}$ by $L_k$ and the layers of $\mathcal{C}_{k, d}$ by $L'_k$.
 
     Now consider a chain $C'_i$ from the assumption.
     Note that by Lemma~\ref{prop:properties_n_distribution_subsets}, we see that for $(n_0, ..., n_k) \in C'_i$ have
@@ -589,92 +616,83 @@ This is formalized in the next definition.
     in the poset $P'_i$ such that each element in $P(n_0, ..., n_k)$ is contained in $t_i/|P(n_0, ..., n_k)|$ of them.
     Note that $R(C_{i, j}) := \{ R(x) \ | \ x \in C_{i, j} \} = C'_i$ holds.
 
-    Now consider a sequence $(\tilde{C}_i)_{i \in I}$ of maximal chains in the poset $A'$ that consists of the $C_{i, j}$ such that one $C_{i, j}$ occurs $\frac 1 {t t_i} |I|$ times.
-    Let $C$ be a chain chosen from them uniformly at random.
-    Observe that then $R(C)$ is a random variable uniformly distributed on the sequence $C'_1, ..., C'_t$.
+    Now consider a sequence $(C_{i_h, j_h})_{h \in I}$ of maximal chains in the poset $A'$ that consists of the $C_{i, j}$ such that one $C_{i, j}$ occurs $\frac 1 {t t_i} |I|$ times.
+    Let $H$ be a random variable distributed uniformly on $I$.
+    Observe that then $i_H$ is a random variable distributed uniformly on $1, ..., t$.
 
     Let $x \in L_k$ with $x \in P(n_0, ..., n_k)$.
     Then
     \begin{align*}
-        \Pr[x \in C] =& \sum_{1 \leq i \leq t} \Pr[x \in C \ | \ R(C) = C'_i] \ \Pr[R(C) = C'_i] \\
-        =& \sum_{1 \leq i \leq t} \underbrace{\Pr[x \in C \ | \ R(C) = C'_i]}_{ = 1 / |P(n_0, ..., n_k)| \ \text{if $(n_0, ..., n_k) \in C'_i$}} \frac 1 t \\
+        \Pr[x \in C_{i_H, j_H}] =& \sum_{1 \leq i \leq t} \Pr[x \in C_{i_H, j_H} \ | \ i_H = i] \ \Pr[i_H = i] \\
+        =& \sum_{1 \leq i \leq t} \underbrace{\Pr[x \in C_{i_H, j_H} \ | \ i_H = i]}_{ = 1 / |P(n_0, ..., n_k)| \ \text{if $(n_0, ..., n_k) \in C'_i$}} \frac 1 t \\
         =& \sum_{\substack{1 \leq i \leq t\\(n_0, ..., n_k) \in C'_i}} \frac 1 {|P(n_0, ..., n_k)| t} \\
-        =& \frac t {|P(n_0, ..., n_k)| t} \underbrace{\Pr[(n_0, ..., n_k) \in R(C)]}_{= |P(n_0, ..., n_k)| / |L_k| \ \text{by assumption}} = \frac 1 {|L_k|}
+        =& \frac t {|P(n_0, ..., n_k)| t} \underbrace{\Pr[(n_0, ..., n_k) \in C'_{i_H}]}_{= |P(n_0, ..., n_k)| / |L_k| \ \text{by assumption}} = \frac 1 {|L_k|}
     \end{align*}
-    where the condition $R(C) = C'_i$ means equality in the index, not as sets 
-    (this makes a difference if the set $C'_i$ occurs more than once in the sequence $C'_1, ..., C'_t$).
 
-    Clearly, this shows that condition (3) of Prop.~\ref{prop:characterization_lym} is satisfied by $(\tilde{C}_i)_{i \in I}$ for $\mathcal{P}_{k, d}$.
+    Clearly, this shows that condition (3) of Prop.~\ref{prop:characterization_lym} is satisfied by $(C_{i_h, j_h})_{h \in I}$ for $\mathcal{P}_{k, d}$.
 \end{proof}
+After some reflection, one can observe that we did not really use any properties of $\mathcal{P}_{k, d}$.
+The fact that all elements in $P(n_0, ..., n_k)$ cover resp. are covered by the same number of elements requires only that $P(n_0, ..., n_k)$ is an orbit under the action of $\mathrm{Aut}(P)$, i.e. $P(n_0, ..., n_k) = \mathrm{Aut}(P).a$ for any $a \in P(n_0, ..., n_k)$
+(where the dot $.$ denotes the group action of $\mathrm{Aut}(P)$ on $P$).
 
+Hence, we get the following statement.
 \begin{proposition}
-    $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
+    Let $P$ be a graded poset. Define the \emph{core} $\mathcal{C}(P)$ of $P$ as the set of orbits under the action of $\mathrm{Aut}(P)$ 
+    \begin{equation*}
+        \mathcal{C}(P) := \{ \mathrm{Aut}(P).x \ | \ x \in P \}
+    \end{equation*}
+    with the induced partial ordering from the elements of each orbit, i.e.
+    \begin{equation*}
+        A < B \ :\Leftrightarrow \ \exists a \in A, b \in B: a < b
+    \end{equation*}
+    for $A, B \in \mathcal{C}(P)$.
+    
+    If there exists a sequence of maximal chains $C'_1, ..., C'_t$ in $\mathcal{C}(P)$ such that for a chain $C$ chosen uniformly at random from among them, have
+    \begin{equation*}
+        \Pr[A \in C] = \frac {|A|} {|L_{r(A)}|}
+    \end{equation*}
+    for all $A \in \mathcal{C}(P)$, then $P$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
 \end{proposition}
-\textit{Proof Attempt.}
-Fix a layer $L_l$ with $0 < l \leq kd$.
-Further, consider any subset $F \subseteq L_l$.
-Now define
-\begin{equation*}
-    U := \{ (n_0, ..., n_k) \ | \ n_i \in \Z, \ n_0 + ... + n_k = d, \ \sum_i i n_i = l \}
-\end{equation*}
-and
-\begin{equation*}
-    V := \{ (n_0, ..., n_k) \ | \ n_i \in \Z, \ n_0 + ... + n_k = d, \ \sum_i i n_i = l - 1 \}
-\end{equation*}
-Note that now
-\begin{align*}
-    L_l = \bigsqcup_{(n_0, ..., n_k) \in U} P(n_0, ..., n_k) \quad \text{and} \quad L_{l - 1} = \bigsqcup_{(n_0, ..., n_k) \in V} P(n_0, ..., n_k)
-\end{align*}
-Now make $V \sqcup U$ into a bipartite graph $G = (V \sqcup U, E)$ by defining for $(m_0, ..., m_k) \in V, (n_0, ..., n_k) \in U$
-\begin{align*}
-    &\{ (m_0, ..., m_k), (n_0, ..., n_k) \} \in E \\
-    &\Leftrightarrow \ \exists 0 \leq \delta < k: \ (n_0, ..., n_k) = (m_0, ..., m_\delta - 1, m_{\delta + 1} + 1, ..., m_k)
-\end{align*}
-Observe that the resulting graph is now $k$-regular.
-Now consider the graded poset $A := P(n_0, ..., n_k) \sqcup P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)$ with two layers.
-By Lemma~\ref{prop:properties_n_distribution_subsets} we see that
-\begin{itemize}
-    \item Each element in the bottom layer $v \in L_0(A)$ of $A$ is covered by $n_\delta$ elements
-    \item Each element in the top layer $u \in L_1(A)$ of $A$ covers $n_{\delta + 1} + 1$ elements
-\end{itemize}
-Hence we can apply Prop.~\ref{prop:biregular_implies_lym} and see that
-\begin{align*}
-    &{|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|\partial \bigl(F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)\bigr)(n_0, ..., n_k)|} \\
-    \geq &{|P(n_0, ..., n_k)|} {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|}
-\end{align*}
-for each edge $e = \{ (n_0, ..., n_k), (n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k) \} \in E$.
-
-Define
-\begin{equation*}
-    p(n_0, ..., n_k) := \frac {|L_{\sum in_i}|} {|P(n_0, ..., n_k)|} \quad \text{if $|P(n_0, ..., n_k)| \neq 0$}
-\end{equation*}
-and $p(n_0, ..., n_k) = 1$ otherwise.
-
-By summing over all vertices and all adjacent edges, we then find
-\begin{align*}
-    \sum_{(n_0, ..., n_k) \in V}& \sum_{0 \leq \delta < k} \underbrace{|\partial \bigl(F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)\bigr)(n_0, ..., n_k)|}_{\leq |\partial F(n_0, ..., n_k)|} \cdot \\
-    &\underbrace{|P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)| \ p(n_0, .., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)}_{\text{$= 0$ if $P(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k) = \emptyset$ and $|L_l|$ otherwise}} \\
-    \geq \sum_{(n_0, ..., n_k) \in V}& \sum_{0 \leq \delta < k} {|F(n_0, ..., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)|} {|P(n_0, ..., n_k)|} \cdot \\
-    &p(n_0, .., n_\delta - 1, n_{\delta + 1} + 1, ..., n_k)
-\end{align*}
-It follows that
-\begin{align*}
-    &\sum_{(n_0, ..., n_k) \in V} {|\partial F(n_0, ..., n_k)|} \sum_{0 \leq \delta < k} {|L_l|} \\
-    \geq& \sum_{\substack{(n_0, ..., n_k) \in U\\P(n_0, ..., n_k) \neq \emptyset}} {|F(n_0, ..., n_k)|} p(n_0, ..., n_k) \sum_{0 \leq \delta < k} {|P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)|}
-\end{align*}
-and so
-\begin{align*}
-    k |L_l| |\partial F| \geq \ \sum_{\mathclap{\substack{(n_0, ..., n_k) \in U\\P(n_0, ..., n_k) \neq \emptyset}}} \ |F(n_0, ..., n_k)| |L_{l - 1}| \sum_{0 \leq \delta < k} \frac {|P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)| |L_l|} {|P(n_0, ..., n_k)| |L_{l - 1}|}
-\end{align*}
-However for $|P(n_0, ..., n_k)| \neq 0, \sum i n_i = l$, the expression
-\begin{equation*}
-    \sum_{0 \leq \delta < k} \frac {|P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)| \cdot |L_l|} {|P(n_0, ..., n_k)| \cdot |L_{l - 1}|} = \frac {|L_l|} {|L_{l - 1}|} \sum_{0 \leq \delta < k} \frac {n_{\delta + 1}} {n_\delta + 1}
-\end{equation*}
-is not always $\geq k$, so this won't work out.
-
-On a higher level, everything I did was to reduce the problem to the case that $F$ is a disjoint union of the $P(n_0, ..., n_k)$ which is nice to see, but does not help too much.
 \begin{proof}
-    TODO
+    Exactly as above.
 \end{proof}
+I still do not know how to use this to prove that $\mathcal{P}_{k, d}$ does indeed satisfy Prop.~\ref{prop:characterization_lym}, but at least it provides a way for an even faster algorithm to test it for specific $k, d$.
+The idea is just that we can adjust the LP algorithm from Lemma~\ref{prop:lp_algorithm} to check the scaled variant, and so we get a polynomial time algorithm in $|\mathcal{C}_{k, d}|$.
+In particular, we have the following.
+\begin{lemma}
+    Let $L_{l - 1} = \{u_1, ..., u_m\}$ and $L_l = \{v_1, ..., v_n\}$ be two consecutive layers of $\mathcal{C}_{k, d}$.
+    Assume there exists a matrix $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ such that 
+    \begin{equation*}
+        1^T A 1 = 1
+    \end{equation*}
+    and for all $i, j$
+    \begin{equation*}
+        e_i^T A 1 = \frac {|P(u_i)|} {\sum_{u \in L_{l - 1}} |P(u)|} \quad \text{and} \quad 1^T A e_j = \frac {|P(v_j)|} {\sum_{v \in L_l} |P(v)|}
+    \end{equation*}
+    and $a_{ij} = 0$ whenever $u_i \not< v_j$ holds.
 
+    Then the assumption of Prop.~\ref{prop:core_of_multisets} is fulfilled for $L_{l - 1} \cup L_l$.
+    In particular, if this holds for all $0 < l \leq kd$ then the assumption is fulfilled for the whole of $\mathcal{C}_{k, d}$ and it follows that $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
+\end{lemma}
+\begin{proof}
+    Exactly as in Lemma~\ref{prop:lp_algorithm}.
+\end{proof}
+Using a simple implementation of this approach, I could check that for some arbitrarily chosen values of $k, d$ up to $(k, d) = (8, 9)$, the poset $\mathcal{P}_{k, d}$ indeed satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
+
+\section{Appendix (Code described in Part VI)}
+To find the computational results mentioned above, I have implemented the described algorithm in Rust.
+For this, I use my own library containing a collection of math functions as well as Mosek LP solver \cite{mosek} and its rust binding library.
+After installing the Mosek binaries manually, it therefore suffices to add
+\begin{lstlisting}
+    feanor_la = { 
+        git = "https://github.com/feanorTheElf/FeanorLA.git"  
+    }
+    mosek = "0.2"
+\end{lstlisting}
+to the dependencies of your \texttt{Cargo.toml} file.
+
+After all dependencies are present, the following code will yield the result.
+\lstinputlisting{./src/main.rs}
+
+\printbibliography
 \end{document}
