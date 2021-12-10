@@ -695,12 +695,38 @@ Now we want to study how the independent sets in $G_n$ look like.
     \\\includegraphics[width = \textwidth]{graph6.pdf}
 \end{example}
 \begin{lemma}
-    The largest independent set in $G_n$ is of size $2n - 4$.
+    The largest independent set in $G_n$ is of size $2n - 3$.
 \end{lemma}
 \begin{proof}
     The idea is to write the graph in layers (or as a kind of ``pyramid'') as displayed in Example~\ref{ex:Gn}.
     Then we can ``push'' an independent set onto the bottom layer, by repeatedly taking vertices in the set that are maximally high up and on the outside, and replacing them by their ``child''. 
-    This shows the claim, as the bottom layer (plus the 4 unconnected vertices) has size $2n - 4$.
+    This shows the claim, as the bottom layer (plus the 4 unconnected vertices) has size $2n - 3$.
 \end{proof}
+
+\begin{corollary}
+    Have $\dim(\Gr(2, n)) = 2n - 4$.
+\end{corollary}
+\begin{proof}
+    Follows directly from the previous two statements.
+\end{proof}
+
+\begin{corollary}
+    Have $\dim(\Gr(2, 6)) = 8$ and $\deg(\Gr(2, 6)) = 14$.
+\end{corollary}
+\begin{proof}
+    The dimension follows directly from the previous general case.
+    For the degree, just count the maximal independent sets in $G_6$, as displayed in Example~\ref{ex:Gn}.
+    This is slightly tricky, but it is not too hard to see that there are exactly 15 of them.
+\end{proof}
+Of course, the above statement on $\Gr(2, 6)$ can also easily be found using Computer Algebra.
+For example, the following Sage script shows that
+\begin{equation*}
+    p_{\Gr(2, 6)} = \frac 1 {2880} t^8 + \frac 1 {120} t^7 + \frac {41} {480} t^6 + \frac {39} {80} t^5 + \frac {541} {320} t^4 + \frac {291} {80} t^3 + \frac {3401} {720} t^2 + \frac {101} {30} t + 1
+\end{equation*}
+from which we easily deduce that
+\begin{equation*}
+    \dim(\Gr(2, 6)) = 8 \quad \text{and} \quad \deg(\Gr(2, 6)) = \frac 1 {2880} \cdot 8! = 14
+\end{equation*}
+\lstinputlisting[language = python]{./gr26.sage}
 \printbibliography
 \end{document}
