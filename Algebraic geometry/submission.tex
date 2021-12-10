@@ -12,6 +12,7 @@
 \usepackage{stmaryrd}
 \usepackage[style=english]{csquotes}
 \usepackage[language=english, backend=biber, style=alphabetic, sorting=nyt]{biblatex}
+\usepackage{tikz}
 
 \addbibresource{bibliography.bib}
 
@@ -519,6 +520,8 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
 \begin{proof}
     See \cite{kreuzer}.
 \end{proof}
+To apply this, first of all we have to collect information about the leading term ideal of $\I(\Gr(2, n))$.
+This is done in the following lemma.
 \begin{lemma}
     \label{prop:leading_term_ideal_grassmanian}
     Define the graded reverse monomial ordering $\preceq$ on $R := k[x_{i, j} \ | \ i < j]$ where the variables $x_{i, j}$ are ordered co-lexicographically w.r.t. $(i, j)$, i.e.
@@ -646,6 +649,12 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
     \end{equation*}
 \end{proposition}
 \begin{proof}
+    The idea is to apply Macaulay's basis theorem to get information about the Hilbert function of $\Gr(2, n)$.
+    To this end, observe that all the monomials generating $\mathrm{lt}(\I(\Gr(2, n)))$ are square-free.
+    Hence, we can partition all monomials not in $\mathrm{lt}(\I(\Gr(2, n)))$ into sets depending on which variables occur in them.
+    Doing this shows that leading coefficient of the Hilbert polynomial depends only on the groups with the maximal count of monomials.
+    These monomials then form a maximal independent set in $G_n$, which allows us to relate degree and dimension of $\Gr(2, n)$ to $s_n(d)$. 
+
     By Lemma~\ref{prop:leading_term_ideal_grassmanian} we know
     \begin{equation*}
         J = \mathrm{lt}(\I(\Gr(2, n))) = \langle x_{i, v} x_{j, u} \ | \ i < j < u < v \rangle \leq R := k[x_{i, j} \ | \ i < j]
@@ -675,8 +684,23 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
     and in particular, it has the leading term $s_n(d) {m - 1 \choose d - 1}$.
     The claim follows by the characterization of degree and dimension using the Hilbert polynomial that we did in the lecture.
 \end{proof}
+Now we want to study how the independent sets in $G_n$ look like.
+\begin{example}
+    \label{ex:Gn}
+    The graph $G_4$ is the following
+    \\\includegraphics[width = \textwidth]{graph4.pdf}
+    The graph $G_5$ is the following
+    \\\includegraphics[width = \textwidth]{graph5.pdf}
+    The graph $G_6$ is the following
+    \\\includegraphics[width = \textwidth]{graph6.pdf}
+\end{example}
 \begin{lemma}
     The largest independent set in $G_n$ is of size $2n - 4$.
 \end{lemma}
+\begin{proof}
+    The idea is to write the graph in layers (or as a kind of ``pyramid'') as displayed in Example~\ref{ex:Gn}.
+    Then we can ``push'' an independent set onto the bottom layer, by repeatedly taking vertices in the set that are maximally high up and on the outside, and replacing them by their ``child''. 
+    This shows the claim, as the bottom layer (plus the 4 unconnected vertices) has size $2n - 4$.
+\end{proof}
 \printbibliography
 \end{document}
