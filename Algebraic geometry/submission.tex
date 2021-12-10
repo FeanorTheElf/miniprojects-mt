@@ -178,6 +178,51 @@
     where the last equality holds due to the Leibniz determinant formula.
 \end{proof}
 \begin{lemma}
+    \label{prop:subspace_closed}
+    Let $v \in V$ and $u \in \extpow^{d - 1} U$ for a linear subspace $U \leq V$. 
+    If $v \wedge u \in \extpow^d U$ then $v \in U$ or $u = 0$.
+\end{lemma}
+\begin{proof}
+    wlog $U$ is finite-dimensional, so there is a basis $u_1, ..., u_m$ of $U$.
+    Then
+    \begin{equation*}
+        u = \sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_{d - 1}} (u_{i_1} \wedge ... \wedge u_{i_{d - 1}})
+    \end{equation*}
+    So
+    \begin{equation*}
+        v \wedge u = \sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_{d - 1}} (v \wedge u_{i_1} \wedge ... \wedge u_{i_{d - 1}}) \in \extpow^d U
+    \end{equation*}
+    It follows that
+    \begin{align*}
+        w := &\sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_{d - 1}} (v \otimes u_{i_1} \otimes ... \otimes u_{i_{d - 1}}) \\
+        &\in U^{\otimes d} + \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \vspan\bigl\{ v \otimes v' + v' \otimes v \ \bigm| \ v, v' \in V \bigr\} \otimes V^{\otimes (d - i - 1)}
+    \end{align*}
+    hence $w$ is contained in
+    \begin{equation*}
+        \bigl( V \otimes U^{\otimes(d - 1)}\bigr) \cap \Bigl( U^{\otimes d} + \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \vspan\bigl\{ v \otimes v' + v' \otimes v \bigr\} \otimes V^{\otimes (d - i - 1)} \Bigr)
+    \end{equation*}
+    However
+    \begin{equation*}
+        \bigl( V \otimes U^{\otimes(d - 1)}\bigr) \cap \Bigl( U^{\otimes d} + \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \vspan\bigl\{ v \otimes v' + v' \otimes v \bigr\} \otimes V^{\otimes (d - i - 1)} \Bigr) = U^{\otimes d}
+    \end{equation*}
+    and so $w \in U^{\otimes d}$.
+
+    Furthermore, we know by definition of $w$ that
+    \begin{equation*}
+        w \in \vspan\{v\} \otimes U^{\otimes(d - 1)}
+    \end{equation*}
+    However, if $v \notin U$ then $(\vspan\{v\} \otimes U^{\otimes(d - 1)}) \cap U^{\otimes d} = \{ 0 \}$ and we see that $w = 0$.
+    We have that
+    \begin{equation*}
+        w = v \otimes \sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_d} (u_{i_1} \otimes ... \otimes u_{i_{d - 1}})
+    \end{equation*}
+    As $v \neq 0$ (otherwise $v \in U$), we see that thus
+    \begin{equation*}
+        \sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_d} (u_{i_1} \otimes ... \otimes u_{i_{d - 1}}) = 0
+    \end{equation*}
+    and so $u = 0$.
+\end{proof}
+\begin{lemma}
     \label{prop:extpow_zero_iff_independent}
     For $v_1, ..., v_d \in V$ have
     \begin{equation*}
@@ -196,15 +241,11 @@
     \end{align*}
     and so $v = v_1 \wedge ... \wedge v_d = 0$ as $\det(A) \neq 0$.
 
-    Direction $\Rightarrow$ TODO
-\end{proof}
-\begin{lemma}
-    \label{prop:subspace_closed}
-    Let $v \in V$ and $u \in \extpow^{d - 1} U$ for a linear subspace $U \leq V$. 
-    If $v \wedge u \in \extpow^d U$ then $v \in U$ or $u = 0$.
-\end{lemma}
-\begin{proof}
-    TODO
+    For the other direction, let $v_1, ..., v_d$ be linearly independent.
+    Assume that $v_1 \wedge ... \wedge v_d = 0$, i.e.
+    \begin{equation*}
+        v_1 \otimes ... \otimes v_d = \sum_{i = 0} u^{(i)}_1 \otimes ... \otimes u^{(i)}_d
+    \end{equation*}
 \end{proof}
 
 \begin{lemma}[Question (c)]
