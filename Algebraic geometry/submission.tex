@@ -47,12 +47,13 @@
 }}
 
 \theoremstyle{definition}
-\newtheorem{definition}{Definition}
-\newtheorem{lemma}[definition]{Lemma}
-\newtheorem{example}[definition]{Example}
-\newtheorem{proposition}[definition]{Proposition}
-\newtheorem{corollary}[definition]{Corollary}
-\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{definition}[subsection]{Definition}
+\newtheorem{remark}[subsection]{Remark}
+\newtheorem{lemma}[subsection]{Lemma}
+\newtheorem{example}[subsection]{Example}
+\newtheorem{proposition}[subsection]{Proposition}
+\newtheorem{corollary}[subsection]{Corollary}
+\newtheorem{theorem}[subsection]{Theorem}
 
 \begin{document}
 \maketitle
@@ -107,7 +108,7 @@
     \end{equation*}
 \end{proof}
 
-\begin{lemma}[1a]
+\begin{lemma}[Question (a)]
     Let $\dim(V) \leq 3$. Then every element of $\extpow^k(V)$ is decomposable.
 \end{lemma}
 \begin{proof}
@@ -133,7 +134,7 @@
     Further, it is easy to see from Lemma~\ref{prop:basic_properties_exterior_product} that $\extpow^k(V) = \{ 0 \}$ for $k \geq 4$, which is trivially decomposable.
 \end{proof}
 
-\begin{example}[1b]
+\begin{example}[Question (b)]
     Consider $V = k^4$. 
     Then the element $w := (e_1 \wedge e_2) + (e_3 \wedge e_4) \in \extpow^2(V)$ is not decomposable. 
 \end{example}
@@ -206,7 +207,7 @@
     TODO
 \end{proof}
 
-\begin{lemma}[1c]
+\begin{lemma}[Question (c)]
     \label{prop:characterization_decomposable_d_even}
     Let $d$ be even.
     An element $\omega \in \extpow^d V$ is decomposable if and only if $\omega \wedge \omega \in \extpow^{2d} V$ is zero.
@@ -248,25 +249,27 @@
 \section{Part II}
 
 In this part, we want to consider the connection of external powers to the Grassmanian.
-First of all, assume there are two bases $v_1, ..., v_d$ and $u_1, ..., u_d$ of a $d$-dimensional vector space $U$. 
-Then there exists a basis change matrix $A = (a_{ij}) \in \GL_d(k)$ with
-\begin{equation*}
-    u_i = \sum_j a_{ij} v_j
-\end{equation*}
-So by Lemma~\ref{prop:linear_transform_extpow}, it follows that
-\begin{equation*}
-    u_1 \wedge ... \wedge u_d = \det(A) (v_1 \wedge ... \wedge v_d)
-\end{equation*}
-As $v_1, ..., v_d$ resp. $u_1, ..., u_d$ are bases, they are linearly independent and in particular, we see that
-\begin{equation*}
-    v_1 \wedge ... \wedge v_d \neq 0 \quad \text{and} \quad u_1 \wedge ... \wedge u_d \neq 0
-\end{equation*}
-by Lemma~\ref{prop:extpow_zero_iff_independent}.
-Hence they have well-defined images $[v_1 \wedge ... \wedge v_d]$ resp. $[u_1 \wedge ... \wedge u_d]$ in the projective space $\Proj(\extpow^d V)$.
-By the above, find
-\begin{equation*}
-    [v_1 \wedge ... \wedge v_d] = [u_1 \wedge ... \wedge u_d]
-\end{equation*}
+\begin{remark}[Question (a)]
+    First of all, assume there are two bases $v_1, ..., v_d$ and $u_1, ..., u_d$ of a $d$-dimensional vector space $U$. 
+    Then there exists a basis change matrix $A = (a_{ij}) \in \GL_d(k)$ with
+    \begin{equation*}
+        u_i = \sum_j a_{ij} v_j
+    \end{equation*}
+    So by Lemma~\ref{prop:linear_transform_extpow}, it follows that
+    \begin{equation*}
+        u_1 \wedge ... \wedge u_d = \det(A) (v_1 \wedge ... \wedge v_d)
+    \end{equation*}
+    As $v_1, ..., v_d$ resp. $u_1, ..., u_d$ are bases, they are linearly independent and in particular, we see that
+    \begin{equation*}
+        v_1 \wedge ... \wedge v_d \neq 0 \quad \text{and} \quad u_1 \wedge ... \wedge u_d \neq 0
+    \end{equation*}
+    by Lemma~\ref{prop:extpow_zero_iff_independent}.
+    Hence they have well-defined images $[v_1 \wedge ... \wedge v_d]$ resp. $[u_1 \wedge ... \wedge u_d]$ in the projective space $\Proj(\extpow^d V)$.
+    By the above, find
+    \begin{equation*}
+        [v_1 \wedge ... \wedge v_d] = [u_1 \wedge ... \wedge u_d]
+    \end{equation*}
+\end{remark}
 This allows us to study the Grassmanian $\Gr(d, V)$ of a fixed vector space $V$.
 \begin{definition}
     Define the map
@@ -397,7 +400,7 @@ This corresponds to the following definition.
 
     It follows that $\dim(\extpow^d k^n) = \dim(\Proj^{\{1, ..., n\}^{(d)}})$ and we find that $f$ is also injective.
 \end{proof}
-\begin{corollary}[2b]
+\begin{corollary}[Question (b)]
     \label{prop:image_phi}
     Let $\bar{f}: \Proj(\extpow^d k^n) \to \Proj^{{n \choose d} - 1}$ be the map $f$ from before modulo $k^*$.
     Then
@@ -406,7 +409,7 @@ This corresponds to the following definition.
     \end{equation*}
     and in particular, we see that $\phi(Gr(d, n))$ is a projective variety and isomorphic to $\rho(\Gr(d, n))$.
 \end{corollary}
-\begin{proposition}[2c]
+\begin{proposition}[Question (c)]
     The map $\phi$ is injective.
 \end{proposition}
 \begin{proof}
@@ -447,7 +450,7 @@ First of all, we introduce coordinates on $\Proj(\extpow^d k^n)$.
     \end{align*}
     The individual coordinates will be denoted by $x_I$ for some $I \in \{1, ..., n\}^{(d)}$ or $x_{i_1, ..., i_d}$ for $i_1 < ... < i_d$.
 \end{definition}
-\begin{proposition}[3a]
+\begin{proposition}[Question (a)]
     \label{prop:equations_grassmanian_2}
     For the embedding $\phi: \Gr(2, V) \to \extpow^2 V$ we have
     \begin{equation*}
@@ -480,7 +483,7 @@ First of all, we introduce coordinates on $\Proj(\extpow^d k^n)$.
     \end{equation*}
     Hence $\mathrm{im}\phi = \V(I)$.
 \end{proof}
-\begin{example}[2b]
+\begin{example}[Question (b)]
     For $n = 4$, Prop.~\ref{prop:equations_grassmanian_2} yields that $\Gr(2, 4) \cong \mathrm{im}\phi = \V(I)$ where
     \begin{equation*}
         I = \langle x_{1, 2} x_{3, 4} + x_{1, 4} x_{2, 3} - x_{1, 3} x_{2, 4} \rangle \in k[x_{1, 2}, x_{1, 3}, x_{1, 4}, x_{2, 3}, x_{2, 4}, x_{3, 4}]
@@ -491,7 +494,7 @@ First of all, we introduce coordinates on $\Proj(\extpow^d k^n)$.
     \end{equation*}
     which is exactly what we found in the lecture.
 \end{example}
-\begin{example}[2c]
+\begin{example}[Question (c), (d)]
     For $n = 5$, Prop.~\ref{prop:equations_grassmanian_2} yields that $\Gr(2, 5) \cong \mathrm{im}\phi = \V(I)$ where
     \begin{align*}
         I = \langle &x_{1, 2} x_{3, 4} + x_{1, 4} x_{2, 3} - x_{1, 3} x_{2, 4}, \quad x_{1, 2} x_{3, 5} + x_{1, 5} x_{2, 3} - x_{1, 3} x_{2, 5}, \\
@@ -759,7 +762,7 @@ which then shows the degree formula for the case $d = 2$.
 However, this is not a lecture on graph theory or combinatorics, and I already spent a lot of hours on this problem (and there are other mini projects as well :)).
 So I will not do the proof here, but I think it is already very interesting to see those graphs and the connection of $\deg(\Gr(2, n))$ to combinatorial problems.
 Finally, in the case of $n = 6$ we can simply count the independent sets by hand, and find the following result.
-\begin{corollary}
+\begin{corollary}[Question (e)]
     Have $\dim(\Gr(2, 6)) = 8$ and $\deg(\Gr(2, 6)) = 15$.
 \end{corollary}
 \begin{proof}
