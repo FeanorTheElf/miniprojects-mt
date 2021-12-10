@@ -700,18 +700,67 @@ Now we want to study how the independent sets in $G_n$ look like.
 \begin{proof}
     The idea is to write the graph in layers (or as a kind of ``pyramid'') as displayed in Example~\ref{ex:Gn}.
     Then we can ``push'' an independent set onto the bottom layer, by repeatedly taking vertices in the set that are maximally high up and on the outside, and replacing them by their ``child''. 
-    This shows the claim, as the bottom layer (plus the 4 unconnected vertices) has size $2n - 3$.
-\end{proof}
+    This shows the claim, as the bottom layer (plus the 4 unconnected vertices, which we also define to be in the bottom layer) has size $2n - 3$.
 
+    Define the ``layer function''
+    \begin{equation*}
+        l: V \to \N, \quad (i, j) \mapsto \min\{i - 1, n - j\}
+    \end{equation*}
+    and the ``width function''
+    \begin{equation*}
+        w: V \to \N, \quad (i, j) \mapsto j - i - 1
+    \end{equation*}
+    Let $I$ be an independent set that is not contained in the lower layer (i.e. there exists $(i, j) \in I$ with $l((i, j)) > 0$). 
+    Define now the compression $C(I) := (I \setminus \{(i, j)\}) \cup \{(i - 1, j + 1)\}$ where $(i, j) \in I$ is a vertex with
+    \begin{equation*}
+        l((i, j)) = \max_{(a, b) \in I} l((a, b)) \quad \text{and} \quad w((i, j)) = \min_{(a, b) \in I, l((u, v)) = l((i, v))} w((a, b))
+    \end{equation*}
+    Then clearly $\sum_{\alpha \in C(I)} l(\alpha) < \sum_{\alpha \in I} l(\alpha)$ and we claim that $C(I)$ is an independent set.
+
+    Assume not, i.e. there is $(a, b) \in I \cap C(I)$ such that $\{(i - 1, j + 1), (a, b)\} \in E$.
+    As $I$ is independent, find that we cannot have $a < i < j < b$.
+    Thus in particular, we have not $a < i - 1 < j - 1 < b$ and so
+    \begin{equation*}
+        i - 1 < a < b < j + 1
+    \end{equation*}
+    Since $(a, b) \neq (i, j)$, we either have $a = i, b < j$ or $b = j, a > i$.
+    
+    In the first case, see that $l((a, b)) = \min\{a - 1, n - b\} \geq \min\{i - 1, n - j\} = l((i, j))$.
+    By choice of $(i, j)$, it follows that we must have equality $l((a, b)) = l((i, j))$.
+    Since $b < j$ we see that $\min\{a - 1, n - b\} > \min\{i - 1, n - j\}$ unless $\min\{i - 1, n - j\} = i - 1$, so $n - j \geq i - 1$.
+    In particular, also $\min\{a - 1, n - b\} = i - 1$ and so $a - 1 = i - 1$.
+    It follows that
+    \begin{equation*}
+        w((i, j)) = j - i - 1 = j - a - 1 > b - a - 1 = w((a, b))
+    \end{equation*}
+    which is a contradiction to the choice of $(i, j) \in I$ as $l((a, b)) = l((i, j))$.
+    The second case can be handled in the same way.
+
+    Now we know that $C(I)$ is an independent set with $\sum_{\alpha \in C(I)} l(\alpha) < \sum_{\alpha \in I} l(\alpha)$.
+    Since these sums take values in $\N$ which is well-ordered, we cannot have an infinite sequence
+    \begin{equation*}
+        I, C(I), C^2(I), C^3(I), ...
+    \end{equation*}
+    and thus at some point, we find $C^k(I)$ is contained in layer 0.
+    Now note that $C$ does not decrease the size, i.e. $|C(I)| = |I|$ and so $|C^k(I)| = |I|$.
+    However, there are only $(n - 2) + (n - 2) + 1 = 2n - 3$ elements in layer 0 and the claim follows.
+\end{proof}
 \begin{corollary}
     Have $\dim(\Gr(2, n)) = 2n - 4$.
 \end{corollary}
 \begin{proof}
     Follows directly from the previous two statements.
 \end{proof}
-
+I also think that it is not too difficult to show that
+\begin{equation*}
+    s_n(2n - 3) = \frac {(2(n - 2))!} {(n - 2)! (n - 1)!}
+\end{equation*}
+which then shows the degree formula for the case $d = 2$.
+However, this is not a lecture on graph theory or combinatorics, and I already spent a lot of hours on this problem (and there are other mini projects as well :)).
+So I will not do the proof here, but I think it is already very interesting to see those graphs and the connection of $\deg(\Gr(2, n))$ to combinatorial problems.
+Finally, in the case of $n = 6$ we can simply count the independent sets by hand, and find the following result.
 \begin{corollary}
-    Have $\dim(\Gr(2, 6)) = 8$ and $\deg(\Gr(2, 6)) = 14$.
+    Have $\dim(\Gr(2, 6)) = 8$ and $\deg(\Gr(2, 6)) = 15$.
 \end{corollary}
 \begin{proof}
     The dimension follows directly from the previous general case.
