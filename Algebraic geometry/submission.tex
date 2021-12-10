@@ -510,6 +510,7 @@ First of all, we introduce coordinates on $\Proj(\extpow^d k^n)$.
 \end{example}
 To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one tool I encountered during an earlier course on Computational Commutative Algebra and Algebraic Geometry.
 \begin{proposition}[Macaulay Basis Theorem]
+    \label{prop:macaulay_basis_theorem}
     Let $\preceq$ be a graded monomial ordering on $R = k[x_0, ..., x_n]$.
     Then for an ideal $I \leq R$ have that the monomials $x_0^{\alpha_0} ... x_n^{\alpha_n} \notin \mathrm{lt}(I)$ are a $k$-vector space basis of $R/I$.
 
@@ -519,6 +520,7 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
     See \cite{kreuzer}.
 \end{proof}
 \begin{lemma}
+    \label{prop:leading_term_ideal_grassmanian}
     Define the graded reverse monomial ordering $\preceq$ on $R := k[x_{i, j} \ | \ i < j]$ where the variables $x_{i, j}$ are ordered co-lexicographically w.r.t. $(i, j)$, i.e.
     \begin{equation*}
         x_{i, j} \leq x_{u, v} \ :\Leftrightarrow \ (i, j) \leq_{\text{colex}} (u, v)
@@ -621,28 +623,60 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
     We will not present this here as well.
 \end{proof}
 
-\paragraph{Another idea} Let
-\begin{equation*}
-    m_n(d) := |\{ x^\alpha \ \text{monomial} \ | \ \deg(x^\alpha) = d, \ x_{iv}x_{ju} \ \not| \ x^\alpha \}|
-\end{equation*}
-and
-\begin{equation*}
-    s_n(d) := |\{ x^\alpha \ \text{multilinear monomial} \ | \ \deg(x^\alpha) = d, \ x_{iv}x_{ju} \ \not| \ x^\alpha \}|
-\end{equation*}
-Then for sufficiently large $d$ have
-\begin{equation*}
-    m_n(d) = \sum_{i = 0}^n s_n(i) \left(\!\!{i \choose d - i}\!\!\right) = \sum_{i = 0}^n s_n(i) {d - 1 \choose i - 1}
-\end{equation*}
-Note now that we are only interested in the leading term of the polynomial, which is (more or less) given by the largest $i \leq n$ such that $s_n(i) \neq 0$.
-So in fact, it suffices to find this.
-
-For example, the dimension of $\Gr(2, n)$ is the size of the largest independent set $- 1$ in this strange graph I have been considering.
-
-For example, I claim:
-\begin{theorem}
+\begin{definition}
+    Consider the graph $G_n = (V_n, E_n)$ where $V_n = \{ (i, j) \ | \ 0 \leq i < j \leq n \}$ and
     \begin{equation*}
-        \dim(\Gr(2, n)) = 2n - 4
+        E_n = \{ \{ (i, v), (j, u) \} \ | \ 0 \leq i < j < u < v \leq n \}
     \end{equation*}
-\end{theorem}
+    Let further
+    \begin{equation*}
+        s_n(d) := |\{ I \subseteq V_n \ | \ I \ \text{independent set of size $d$}\}|
+    \end{equation*}
+\end{definition}
+
+\begin{proposition}
+    Let $d$ be the largest integer such that $s_n(d) \neq 0$, i.e. the size of the largest independent set in $G_n$.
+    Then
+    \begin{equation*}
+        \dim(\Gr(2, n)) = d - 1
+    \end{equation*}
+    and
+    \begin{equation*}
+        \deg(\Gr(2, n)) = s_n(d)
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    By Lemma~\ref{prop:leading_term_ideal_grassmanian} we know
+    \begin{equation*}
+        J = \mathrm{lt}(\I(\Gr(2, n))) = \langle x_{i, v} x_{j, u} \ | \ i < j < u < v \rangle \leq R := k[x_{i, j} \ | \ i < j]
+    \end{equation*}
+    Let $N = {n \choose 2}$ be the number of variables in $R$, i.e. $\{x_1, ..., x_N\} = \{ x_{i, j} \ | \ i < j \}$. Now we find for sufficiently large $m$ that
+    \begin{align*}
+        &|\{ x^\alpha \ \text{monomial in $R$} \ | \ \deg(x^\alpha) = m, \ \forall i < j < u < v: x_{iv} x_{ju} \ \nmid \ x^\alpha \}| \\
+        =\ &|\{ x^\alpha \ \text{monomial in $R$} \ | \ \deg(x^\alpha) = m, \ \forall i < j < u < v: x_{iv} x_{ju} \ \nmid \ \mathrm{sqfr}(x^\alpha) \}| \\
+        =\ &\Bigl| \bigcup_{\substack{\alpha \in \{0, 1\}^N\\x_{iv} x_ju \ \nmid \ x^\alpha}} \{ x^\alpha x^\beta \ | \ \deg(x^\beta) = m - \deg(x^\alpha), \ \forall i: \alpha_i = 0 \Rightarrow \beta_i = 0 \} \Bigr| \\
+        =& \sum_{\substack{\alpha \in \{0, 1\}^N\\x_{iv} x_ju \ \nmid \ x^\alpha}} \left(\!\!{\deg(x^\alpha) \choose m - \deg(x^\alpha)}\!\!\right) = \sum_{l = 0}^N \sum_{\substack{\alpha \in \{0, 1\}^N\\\sum_j \alpha_j = l\\x_{i, v} x_{j, u} \ \nmid \ x^\alpha}} \left(\!\!{ l \choose m - l }\!\!\right) \\
+        =& \sum_{l = 0}^N s_n(l) \left(\!\!{ l \choose m - l }\!\!\right) = \sum_{l = 0}^N s_n(l) {m - 1 \choose l - 1}
+    \end{align*}
+    where $\mathrm{sqrf}(f)$ denotes the square-free part of $f$.
+    This holds, as by definition of $s_n$ and $E_n$ we find
+    \begin{equation*}
+        s_n(l) = |\bigl\{ I \subseteq \{ x_{i, j} \} \ \bigm| \ \forall i < j < u < v: x_{i, v} x_{j, u} \ \nmid \ xy \ \text{for all} \ x, y \in I \bigr\}|
+    \end{equation*}
+    Now Macaulay's basis theorem~\ref{prop:macaulay_basis_theorem} yields that for sufficiently large $m$ have
+    \begin{align*}
+        \dim_k (R/\I(\Gr(2, n))) =& |\bigl\{ x^\alpha \ \text{monomial in $R$} \ \bigm| \ \deg(x^\alpha) = m, \ x^\alpha \notin \mathrm{lt}(\I(\Gr(2, n))) \bigr\}| \\
+        =& \sum_{l = 0}^N s_n(l) {m - 1 \choose l - 1}
+    \end{align*}
+    Hence we find for the Hilbert polynomial that
+    \begin{equation*}
+        p_{\Gr(2, n)} = \sum_{l = 0}^N s_n(l) {m - 1 \choose l - 1}
+    \end{equation*}
+    and in particular, it has the leading term $s_n(d) {m - 1 \choose d - 1}$.
+    The claim follows by the characterization of degree and dimension using the Hilbert polynomial that we did in the lecture.
+\end{proof}
+\begin{lemma}
+    The largest independent set in $G_n$ is of size $2n - 4$.
+\end{lemma}
 \printbibliography
 \end{document}
