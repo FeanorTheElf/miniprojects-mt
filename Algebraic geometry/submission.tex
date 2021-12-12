@@ -308,7 +308,7 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
             0 & \text{otherwise}
         \end{cases}
     \end{equation*}
-    So in particular find for all $i_2, ..., i_d \leq m < i_1 \leq n$ that
+    So in particular find for all $i_2 < ... < i_d \leq m < i_1 \leq n$ that
     \begin{equation*}
         \mu_{i_1} \lambda_{i_2, ..., i_d} = 0
     \end{equation*}
@@ -334,7 +334,13 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
     and so $v = v_1 \wedge ... \wedge v_d = 0$ as $\det(A) \neq 0$.
 
     For the other direction, let $v_1, ..., v_d$ be linearly independent.
-    TODO
+    Clearly, we can extend them to a basis $v_1, ..., v_n$ of $V$.
+    We then see that there is a matrix $A = (a_{ij}) \in \GL_n(k)$ with $v_i = \sum_j a_{ij} b_j$.
+    So by Lemma~\ref{prop:linear_transform_extpow} have
+    \begin{equation*}
+        v_1 \wedge ... \wedge v_n = \underbrace{\det(A)}_{\neq 0} (b_1 \wedge ... \wedge b_n) \neq 0
+    \end{equation*}
+    So clearly $v_1 \wedge ... \wedge v_d \neq 0$ as $0 \wedge (v_{d + 1} \wedge ... \wedge v_n) = 0$ for all $v_{d + 1}, ..., v_n \in V$.
 \end{proof}
 
 \begin{lemma}[Question (c)]
@@ -357,28 +363,20 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
         0 =& \omega \wedge \omega = \sum_{i, j} v_i \wedge v_j = \sum_{i < j} (v_i \wedge v_j) + (v_j \wedge v_i) \\
         =& \sum_{i < j} 2(v_i \wedge v_j) = 2\sum_i v_i \wedge \Bigl( \sum_{j > i} v_j \Bigr)
     \end{align*}
-    Here we used that the permutation $\bigl(1 \ 2d\bigr)\bigl(2 \ (2d - 1)\bigr)...\bigl(d \ (d + 1)\bigr) \in S_{2d}$ has always sign $1$ (since $d$ is even).
+    Here we used that the reversing permutation $\bigl(1 \ 2d\bigr)\bigl(2 \ (2d - 1)\bigr)...\bigl(d \ (d + 1)\bigr) \in S_{2d}$ has even parity, i.e. $\sgn(\cdot) = 1$ (since $d$ is even).
 
-    Note that for any nonzero decomposable vector
+    Now note that
     \begin{equation*}
-        u_1 \wedge u_2 \in \Bigl( \extpow^2 \vspan\{v_2, ..., v_t\} \Bigr) \setminus \{0\}
+        v_1 \wedge \Bigl( \sum_{j > 1} v_j \Bigr) = 0 \in \extpow^2 \vspan\{v_2, ..., v_t\}
     \end{equation*}
-    find
-    \begin{equation*}
-        u_1, u_2 \in \vspan\{v_2, ..., v_t\}
-    \end{equation*}
-    In particular, we know that
-    \begin{equation*}
-        v_1 \wedge \Bigl( \sum_{j > i} v_j \Bigr) \in \extpow^2 \vspan\{v_2, ..., v_t\}
-    \end{equation*}
-    and so $v_1 \in \vspan\{v_2, ..., v_t\}$ unless $\sum_{j > i} v_j = 0$ by Lemma~\ref{prop:subspace_closed}.
+    and so $v_1 \in \vspan\{v_2, ..., v_t\}$ unless $\sum_{j > 1} v_j = 0$ by Lemma~\ref{prop:subspace_closed}.
     We assumed that the $v_i$ are linearly independent, so the former would give a contradiction.
-    Hence $\sum_{j > i} v_j = 0$ and thus $t = 1$, i.e. $\omega = v_1$ is decomposable.
+    Hence $\sum_{j > 1} v_j = 0$ and thus $t = 1$, i.e. $\omega = v_1$ is decomposable.
 \end{proof}
 
 \section{Part II}
 
-In this part, we want to consider the connection of external powers to the Grassmanian.
+In this part, we want to consider the connection of exterior powers to the Grassmanian.
 \begin{remark}[Question (a)]
     First of all, assume there are two bases $v_1, ..., v_d$ and $u_1, ..., u_d$ of a $d$-dimensional vector space $U$. 
     Then there exists a basis change matrix $A = (a_{ij}) \in \GL_d(k)$ with
@@ -463,24 +461,47 @@ This corresponds to the following definition.
         \end{matrix*}\right)
     \end{equation*}
     First of all, we show that $f$ is well-defined.
-    Note that the tensor product can be described as
+    Clearly $f$ is well-defined on the decomposable vectors, as the determinant is negated by swapping columns.
+
+    Now we have to show that $f$ yields the same value for different sum representations of an element of $\extpow^d V$.
+    The idea is just that the determinant is linear in each column, but the details will be slightly technical.
+
+    Assume
+    \begin{equation*}
+        \sum_l v_1^{(l)} \wedge ... \wedge v_d^{(l)} = \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} (e_{i_1} \wedge ... \wedge e_{i_d})
+    \end{equation*}
+    Then clearly
     \begin{align*}
-        V^{\otimes d} := k^{V \times ...\times V} / \vspan\{ &\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \bigl(v_i + v'_i\bigl) \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
-        &- \bigl(v_1 \otimes ... \otimes v_d\bigl) - \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v'_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl), \\
-        & \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \lambda v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
-        &- \lambda\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \ | \ i \leq d, v_j, v'_i \in V\}
+        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} \det(A_I(e_{i_1}, ..., e_{i_d})) = \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} \begin{cases}
+            1 & \text{if $I = \{i_1, ..., i_d\}$} \\
+            0 & \text{otherwise}
+        \end{cases} = \lambda_I
     \end{align*}
-    where $v_1 \otimes ... \otimes v_d := \chi_{(v_1, ..., v_d)}$.
-    Hence the external power can be described as
+    So it suffices to show that for all $I = \{i_1, ..., i_d\} \in \{1, ..., n\}^{(d)}$ have
+    \begin{equation*}
+        \sum_l \det(A_I(v_1^{(l)}, ..., v_d^{(l)})) = \lambda_I
+    \end{equation*}
+    Assume that $v_j^{(l)} = \sum_i \mu_{l, j, i} e_i$. Since the determinant is linear in each column, find
     \begin{align*}
-        \extpow^d V := k^{V \times ... \times V} / \vspan\Bigl\{ &\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \bigl(v_i + v'_i\bigl) \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
-        &- \bigl(v_1 \otimes ... \otimes v_d\bigl) - \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v'_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl), \\
-        & \bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes \lambda v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl) \\
-        &- \lambda\bigl(v_1 \otimes ... \otimes v_{i - 1} \otimes v_i \otimes v_{i + 1} \otimes ... \otimes v_d\bigl), \\
-        &v_1 \otimes ... v_{j - 1} \otimes (v_j \otimes v_{j + 1} + v_{j + 1} \otimes v_j) \otimes v_{j + 1} \otimes ... \otimes v_d \\
-        &\quad | \ i \leq d, \ j \leq d - 1, \ v_1, ..., v_d, v'_i \in V\Bigr\}
+        &\sum_l \det(A_I(v_1^{(l)}, ..., v_d^{(l)})) = \sum_l \sum_{1 \leq j_1, ..., j_d \leq n} \mu_{l, 1, j_1} \cdot ... \cdot \mu_{l, d, j_d} \det(A_I(e_{j_1}, ..., e_{j_d})) \\
+        =& \sum_l \sum_{j_1, ..., j_d \ \text{distinct}} \mu_{l, 1, j_1} \cdot ... \cdot \mu_{l, d, j_d} \cdot \begin{cases}
+            \pm 1 & \text{if $\{j_1, ..., j_d\} = I$} \\
+            0 & \text{otherwise}
+        \end{cases} \\
+        =& \sum_l \sum_{\pi \in S_d} \sgn(\pi) \mu_{l, 1, i_{\pi(1)}} \cdot ... \cdot \mu_{l, d, i_{\pi(d)}}
     \end{align*}
-    So it suffices to show that for all $I \in \{1, ..., n\}^{(d)}$ and vectors $v_1, ..., v_d, v'_i \in V$
+    On the other hand, observe that also $\wedge$ is multilinear (i.e. linear in each component), so
+    \begin{align*}
+        &\sum_l v_1^{(l)} \wedge ... \wedge v_d^{(l)} = \sum_l \sum_{1 \leq j_1, ..., j_d \leq n} \mu_{l, 1, j_1} \cdot ... \cdot \mu_{l, d, j_d} \bigl( e_{i_1} \wedge ... \wedge e_{i_d} \bigr) \\
+        =& \sum_l \sum_{j_1, ..., j_d \ \text{distinct}} \mu_{l, 1, j_1} \cdot ... \cdot \mu_{l, d, j_d} \bigl( e_{i_1} \wedge ... \wedge e_{i_d} \bigr) \\
+        =& \sum_l \sum_{i_1 < ... < i_d} (e_{i_1} \wedge ... \wedge e_{i_d}) \sum_{\pi \in S_d} \sgn(\pi) \mu_{l, 1, i_{\pi(1)}} \cdot ... \cdot \mu_{l, d, i_{\pi(d)}}
+    \end{align*}
+    By Lemma~\ref{prop:basis_product_independence} the $e_{i_1} \wedge ... \wedge e_{i_d}$ are a basis, and so we must already have that
+    \begin{equation*}
+        \lambda_{i_1, ..., i_d} = \sum_l \sum_{\pi \in S_d} \sgn(\pi) \mu_{l, 1, i_{\pi(1)}} \cdot ... \cdot \mu_{l, d, i_{\pi(d)}}
+    \end{equation*}
+    This shows the well-definedness.
+
     \begin{align*}
         \det(A_I(v_1, ..., v_i + v'_i, ..., v_d)) = \det(A_I(v_1, ..., v_d)) + \det(A_I(v_1, ..., v'_i, ..., v_d))
     \end{align*}
