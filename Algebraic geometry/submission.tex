@@ -58,17 +58,28 @@
 \begin{document}
 \maketitle
 
+For this document, let $V$ be a finitely dimensional vector space with basis $B = (b_1, ..., b_n)$.
+
 \section{Part I}
-
+First of all, I will include here a more formal definition of the exterior product, which is required for rigorous proofs later on.
 \begin{definition}
-    Let $V$ be a vector space.
-    Then define the $d$-th exterior power as
+    Define the $d$-th exterior power of $V$ as a quotient of the free vector space of $B \times ... \times B$ as follows
+    \begin{align*}
+        \extpow^d V := \mathrm{Fr}\Bigl(\bigtimes_{i = 1}^d B\Bigr) \ \bigm/ \ U
+    \end{align*}
+    where
+    \begin{align*}
+        U = \vspan \bigl\{ (v_1, ..., v_d) + (v_1, ..., v_{i - 1}, v_{i + 1}, v_i, v_{i + 2}, ..., v_d) \ \bigm| \ v_1, ..., v_d \in B, 1 \leq i < d \bigr\}
+    \end{align*}
+    Consider also the map
     \begin{equation*}
-        \extpow^d(V) := V^{\otimes d} \ / \ \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \vspan\bigl\{ v \otimes v' + v' \otimes v \ \bigm| \ v, v' \in V \bigr\} \otimes V^{\otimes (d - i - 1)}
+        \wedge: \bigtimes_{i = 1}^d V \to \extpow^d V, \quad \Bigl( \sum_{i = 1}^n \lambda_{1i} b_i, ..., \sum_{i = 1}^n \lambda_{di} b_i \Bigr) \mapsto \sum_{1 \leq i_1, ..., i_d \leq n} \lambda_{1i_1} ... \lambda_{di_d} (b_{i_1}, ..., b_{i_d})
     \end{equation*}
-    Use the notation $v_1 \wedge ... \wedge v_d := [v_1 \otimes ... \otimes v_d] \in \extpow^k(V)$.
+    and use the notation $v_1 \wedge ... \wedge v_d$ to denote the image of $(v_1, ..., v_d)$ under this map.
 \end{definition}
-
+First of all, we show some basic properties of the exterior product.
+It is straightforward to see that the exterior product is multilinear, i.e. $v_1 \wedge ... \wedge (v_i + v'_i) \wedge ... \wedge v_d = (v_1 \wedge ... \wedge v_d) + (v_1 \wedge ... \wedge v'_i \wedge ... \wedge v_d)$.
+More interesting are the following properties.
 \begin{lemma}
     \label{prop:basic_properties_exterior_product}
     Let $v_1, ..., v_d \in V$. Have for $\pi \in S_d$ that
@@ -81,11 +92,23 @@
     \end{equation*}
 \end{lemma}
 \begin{proof}
-    Note that
+    Clearly the vectors $b_{i_1} \wedge ... \wedge b_{i_d}$ span $\extpow^d V$.
+    So let
+    \begin{equation*}
+        u = \sum_{i_1, ..., i_{j - 1}} \lambda_{i_1, ..., i_{j - 1}} (b_1 \wedge ... \wedge b_{j - 1}), \quad w = \sum_{i_1, ..., i_{d - j - 1}} \mu_{i_1, ..., i_d} (b_{i_1} \wedge ... \wedge b_{d - j - 1})
+    \end{equation*}
+    be arbitrary vectors in $\extpow^{j - 1} V$ resp. $\extpow^{d - j - 1} V$ for some $1 \leq j \leq d - 1$.
+    Note that for $v = \sum \tau_i b_i, v' = \sum \tau'_i b_i \in V$ have then
+    \begin{align*}
+        &(u \wedge v \wedge v' \wedge w) + (u \wedge v' \wedge v \wedge w) = \sum_{i_1, ..., i_{j - 1}, i_{j + 2}, ..., i_d} \quad \sum_{0 \leq i, i' \leq n} \lambda_{i_1, ..., i_{j - 1}} \mu_{i_{j + 2}, ..., i_d} \tau_i \tau'_{i'} \\
+        &\Bigl(\underbrace{\bigl( b_{i_1} \wedge ... \wedge b_{i_j} \wedge b_{i_{j + 1}} \wedge ... \wedge b_{i_d}\bigr) + \bigl( b_{i_1} \wedge ... \wedge b_{i_{j - 1}} \wedge b_{i_{j + 1}} \wedge b_{i_j} \wedge b_{i_{j + 2}} \wedge ... \wedge b_{i_d} \bigr)}_{= 0 \ \text{as it is an element of the space $U$}} \Bigl) \\
+        &= 0
+    \end{align*}
+    for all $u \in \extpow^{i - 1}(V), w \in \extpow^{(d - i - 1)}(V)$.
+    Hence
     \begin{equation*}
         u \wedge v \wedge v' \wedge w = -(u \wedge v' \wedge v \wedge w)
     \end{equation*}
-    for all $u \in \extpow^{i - 1}(V), w \in \extpow^{(d - i - 1)}(V), v, v' \in V$.
 
     Every $\pi \in S_d$ has a decomposition $\pi = \xi_1 ... \xi_n$ into transpositions $\xi_i$.
     Applying this inductively, we find that
@@ -177,50 +200,119 @@
     \end{align*}
     where the last equality holds due to the Leibniz determinant formula.
 \end{proof}
+The next two lemmas are quite fundamental, as they can be used as a basic tool to prove linear independence in the exterior product.
 \begin{lemma}
-    \label{prop:subspace_closed}
-    Let $v \in V$ and $u \in \extpow^{d - 1} U$ for a linear subspace $U \leq V$. 
-    If $v \wedge u \in \extpow^d U$ then $v \in U$ or $u = 0$.
+    \label{prop:basis_product_independence}
+    The vectors $b_{i_1} \wedge ... \wedge b_{i_d}$ for $i_1 < ... < i_d$ form a basis of $\extpow^d V$.
 \end{lemma}
 \begin{proof}
-    wlog $U$ is finite-dimensional, so there is a basis $u_1, ..., u_m$ of $U$.
+    This proof is slightly technical, as I wanted to provide a rigorous proof using only the definition of $\extpow^d V$ and some properties of the symmetric group $S_d$.
+    The core idea is to show the linear independence by going to down to the free product underlying $\extpow^d V$, and then show that we cannot use the vectors $(b_{i_1}, ..., b_{i_d}) + (b_{i_1}, ..., b_{i_{j + 1}}, b_{i_j}, ..., i_d)$ to create a nontrivial linear combination.
+    Namely, assuming we have such a nontrivial linear combination, we can group it into the part where the order of the $i_1, ..., i_d$ has even/odd parity.
+    The vectors with $i_1 < ... < i_d$ clearly are all on one side, and from this we can derive the claim.
+
+    Note that by definition, the vectors $b_{i_1} \wedge ... \wedge b_{i_d}$ for any $1 \leq i_1, ..., i_d \leq n$ span $\extpow^d V$.
+    By Lemma~\ref{prop:basic_properties_exterior_product}, we can rewrite any of them (that is nonzero) to be of the above form, so clearly the $b_{i_1} \wedge ... \wedge b_{i_d}$ for $i_1 < ... < i_d$ span $\extpow^d V$.
+
+    It is left to show that they are linearly independent.
+    Assume
+    \begin{equation*}
+        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} \bigl( b_{i_1} \wedge ... \wedge b_{i_d} \bigr) = 0
+    \end{equation*}
+    Then clearly
+    \begin{equation*}
+        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} \bigl( b_{i_1}, ..., b_{i_d} \bigr) \in U
+    \end{equation*}
+    where $U$ is the vector space from the definition of $\extpow^d V$.
+    So
+    \begin{align*}
+        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} \bigl( b_{i_1}, ..., b_{i_d} \bigr) = &\sum_{j, \ i_1, ..., i_d} \mu_{j, i_1, ..., i_d} \\
+        &\Bigl( \bigl( b_{i_1}, ..., b_{i_d} \bigr) + \bigl( b_{i_1}, ..., b_{i_{j - 1}}, b_{i_{j + 1}}, b_{i_j}, b_{i_{j + 2}}, ..., b_{i_d} \bigr) \Bigr)
+    \end{align*}
+    Note that we can assume wlog that the sum on the right-hand side goes only over $i_1, ..., i_d$ distinct.
+    The reason is that the other vectors on the right-hand side are contained in
+    \begin{equation*}
+       \vspan \{ (b_{i_1}, ..., b_{i_d}) \ | \ \text{$i_1, ..., i_d$ not distinct} \}
+    \end{equation*}
+    which only trivially intersects the space
+    \begin{equation*}
+        \vspan\{ (b_{i_1}, ..., b_{i_d}) \ | \ \text{$i_1, ..., i_d$ distinct} \}
+    \end{equation*}
+    due to the properties of the free product (the spaces share now basis vectors).
+
+    Now consider for $i_1, ..., i_d$ distinct the ``sorting permutation'' $\sigma_i \in S_d$, which is the unique permutation such that $i_{\sigma(1)} < ... < i_{\sigma(d)}$.
+    Then
+    \begin{align*}
+        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} \underbrace{\bigl( b_{i_1}, ..., b_{i_d} \bigr)}_{\sgn(\sigma_i) = 1 \ \text{as} \ \sigma_i = \mathrm{id}} = &\sum_{\substack{j, \ i_1, ..., i_d\\\sgn(\sigma_i) = 1}} \underbrace{\sgn(\sigma_i) \bigl( \mu_{j, i_1, ..., i_d} - \mu_{j, i_1, ..., i_{j + 1}, i_j, ..., i_d} \bigr)}_{=: \mu'_{j, i_1, ..., i_d}} \\
+        &\Bigl( \bigl( b_{i_1}, ..., b_{i_d} \bigr) + \bigl( b_{i_1}, ..., b_{i_{j - 1}}, b_{i_{j + 1}}, b_{i_j}, b_{i_{j + 2}}, ..., b_{i_d} \bigr) \Bigr)
+    \end{align*}
+    This yields
+    \begin{align*}
+        &-\sum_{\substack{j, \ i_1, ..., i_d\\\sgn(\sigma_i) = 1}} \Bigl( \mu'_{j, i_1, ..., i_d} - \begin{cases}
+            \lambda_{i_1, ..., i_d} & \text{if $i_1 < ... < i_d, j = 0$} \\
+            0 & \text{otherwise}
+        \end{cases} \Bigr) (b_{i_1}, ..., b_{i_d}) \\
+        =& \sum_{\substack{j, \ i_1, ..., i_d\\\sgn(\sigma_i) = -1}} \mu'_{j, i_1, ..., i_{j + 1}, i_j, ..., i_d} (b_{i_1}, ..., b_{i_d})
+    \end{align*}
+    However, all vectors on the left-hand side are contained in
+    \begin{equation*}
+        \vspan \{(b_{i_1}, ..., b_{i_d}) \ | \ \sgn(\sigma_i) = 1 \}
+    \end{equation*}
+    and all vectors on the right-hand side are contained in
+    \begin{equation*}
+        \vspan \{(b_{i_1}, ..., b_{i_d}) \ | \ \sgn(\sigma_i) = -1 \}
+    \end{equation*}
+    These two spaces intersect trivially, and so find
+    \begin{equation*}
+        \sum_{\substack{j, \ i_1, ..., i_d\\\sgn(\sigma_i) = -1}} \mu'_{j, i_1, ..., i_{j + 1}, i_j, ..., i_d} (b_{i_1}, ..., b_{i_d}) = 0
+    \end{equation*}
+    Clearly the different $(b_{i_1}, ..., b_{i_d})$ are linearly independent, so find that all $\mu'_{j, i_1, ..., i_d} = 0$.
+    Observe now that thus all $\lambda_{i_1, ..., i_d} = 0$ and the claim is shown.
+\end{proof}
+\begin{lemma}
+    \label{prop:subspace_closed}
+    Let $v \in V$ and $w \in \extpow^{d - 1} W$ for a linear subspace $W \leq V$. 
+    If $v \wedge w \in \extpow^d W$ then $v \in W$ or $w = 0$.
+    Here
+    \begin{equation*}
+        \extpow^d W := \{ w_1 \wedge ... \wedge w_d \ | \ w_i \in W \} \leq \extpow^d V
+    \end{equation*}
+    is a subspace of $\extpow^d V$.
+\end{lemma}
+\begin{proof}
+    wlog assume that $b_1, ..., b_m$ are a basis of $U$.
     Then
     \begin{equation*}
-        u = \sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_{d - 1}} (u_{i_1} \wedge ... \wedge u_{i_{d - 1}})
+        w = \sum_{i_1 < ... < i_{d - 1} < m} \lambda_{i_1, ..., i_{d - 1} \leq m} (b_{i_1} \wedge ... \wedge b_{i_{d - 1}})
     \end{equation*}
-    So
-    \begin{equation*}
-        v \wedge u = \sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_{d - 1}} (v \wedge u_{i_1} \wedge ... \wedge u_{i_{d - 1}}) \in \extpow^d U
-    \end{equation*}
-    It follows that
+    So with $v = \sum_i \mu_i b_i$ get
     \begin{align*}
-        w := &\sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_{d - 1}} (v \otimes u_{i_1} \otimes ... \otimes u_{i_{d - 1}}) \\
-        &\in U^{\otimes d} + \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \vspan\bigl\{ v \otimes v' + v' \otimes v \ \bigm| \ v, v' \in V \bigr\} \otimes V^{\otimes (d - i - 1)}
+        v \wedge w =& \sum_{i_1 < ... < i_{d - 1} \leq m} \lambda_{i_1, ..., i_{d - 1}} (v \wedge b_{i_1} \wedge ... \wedge b_{i_{d - 1}}) \\
+        =& \sum_{i_1 \leq n, \ i_1 < ... < i_{d - 1} \leq m} \mu_{i_1} \lambda_{i_2, ..., i_d} (b_{i_1} \wedge ... \wedge b_{i_d})
     \end{align*}
-    hence $w$ is contained in
+    By assumption, we also find
+    \begin{align*}
+        v \wedge w =& \sum_{i_1 < ... < i_d \leq m} \tau_{i_1, ..., i_d} (b_{i_1} \wedge ... \wedge b_{i_d})
+    \end{align*}
+    Both representations are equal, hence
     \begin{equation*}
-        \bigl( V \otimes U^{\otimes(d - 1)}\bigr) \cap \Bigl( U^{\otimes d} + \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \vspan\bigl\{ v \otimes v' + v' \otimes v \bigr\} \otimes V^{\otimes (d - i - 1)} \Bigr)
+        \sum_{i_1 \leq n, \ i_2 < ... < i_d \leq m} \Bigl( \mu_{i_1}\lambda_{i_2, ..., i_d} - \begin{cases}
+            \tau_{i_1, ..., i_d} & \text{if $i_1 \leq m$} \\
+            0 & \text{otherwise}
+        \end{cases} \Bigr) (b_{i_1} \wedge ... \wedge b_{i_d}) = 0
     \end{equation*}
-    However
+    Hence by the previous Lemma~\ref{prop:basis_product_independence}, we see that for all $i_2 < ... < i_d \leq m < i_1 \leq n$ have
     \begin{equation*}
-        \bigl( V \otimes U^{\otimes(d - 1)}\bigr) \cap \Bigl( U^{\otimes d} + \sum_{i = 1}^{d - 1} V^{\otimes (i - 1)} \otimes \vspan\bigl\{ v \otimes v' + v' \otimes v \bigr\} \otimes V^{\otimes (d - i - 1)} \Bigr) = U^{\otimes d}
+        0 = \mu_{i_1}\lambda_{i_2, ..., i_d} - \begin{cases}
+            \tau_{i_1, ..., i_d} & \text{if $i_1 \leq m$} \\
+            0 & \text{otherwise}
+        \end{cases}
     \end{equation*}
-    and so $w \in U^{\otimes d}$.
-
-    Furthermore, we know by definition of $w$ that
+    So in particular find for all $i_2, ..., i_d \leq m < i_1 \leq n$ that
     \begin{equation*}
-        w \in \vspan\{v\} \otimes U^{\otimes(d - 1)}
+        \mu_{i_1} \lambda_{i_2, ..., i_d} = 0
     \end{equation*}
-    However, if $v \notin U$ then $(\vspan\{v\} \otimes U^{\otimes(d - 1)}) \cap U^{\otimes d} = \{ 0 \}$ and we see that $w = 0$.
-    We have that
-    \begin{equation*}
-        w = v \otimes \sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_d} (u_{i_1} \otimes ... \otimes u_{i_{d - 1}})
-    \end{equation*}
-    As $v \neq 0$ (otherwise $v \in U$), we see that thus
-    \begin{equation*}
-        \sum_{\{i_1, ..., i_{d - 1}\} \in \{1, ..., m\}^{(d - 1)}} \lambda_{i_1, ..., i_d} (u_{i_1} \otimes ... \otimes u_{i_{d - 1}}) = 0
-    \end{equation*}
-    and so $u = 0$.
+    Hence either $\mu_{i_1} = 0$ for all $i_1 > m$ and so $v \in U$, or all $\lambda_{i_2, ..., i_d} = 0$ (for $i_2 < ... < i_d \leq m$) and so $w = 0$.
 \end{proof}
 \begin{lemma}
     \label{prop:extpow_zero_iff_independent}
@@ -242,10 +334,7 @@
     and so $v = v_1 \wedge ... \wedge v_d = 0$ as $\det(A) \neq 0$.
 
     For the other direction, let $v_1, ..., v_d$ be linearly independent.
-    Assume that $v_1 \wedge ... \wedge v_d = 0$, i.e.
-    \begin{equation*}
-        v_1 \otimes ... \otimes v_d = \sum_{i = 0} u^{(i)}_1 \otimes ... \otimes u^{(i)}_d
-    \end{equation*}
+    TODO
 \end{proof}
 
 \begin{lemma}[Question (c)]
