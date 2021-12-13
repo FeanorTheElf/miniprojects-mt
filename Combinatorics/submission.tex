@@ -9,6 +9,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{listings}
+\usepackage{listings-rust}
 \usepackage[style=english]{csquotes}
 \usepackage[language=english, backend=biber, style=alphabetic, sorting=nyt]{biblatex}
 
@@ -692,7 +693,7 @@ After installing the Mosek binaries manually, it therefore suffices to add
 to the dependencies of your \texttt{Cargo.toml} file.
 
 After all dependencies are present, the following code will yield the result.
-\lstinputlisting{./src/main.rs}
+\lstinputlisting[language = rust]{./src/main.rs}
 
 \printbibliography
 \end{document}

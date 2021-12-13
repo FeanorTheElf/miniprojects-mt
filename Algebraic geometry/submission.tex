@@ -181,7 +181,7 @@ More interesting are the following properties.
     \end{equation*}
     This contradicts $a_1 b_2 - a_2 b_1 = 1$.
 \end{proof}
-
+For the next parts of the mini project, we first need more basic properties of the exterior product.
 \begin{lemma}
     \label{prop:linear_transform_extpow}
     Let $A = (a_{ij}) \in \GL_d(k)$ and $v_1, ..., v_d \in V$.
@@ -342,7 +342,7 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
     \end{equation*}
     So clearly $v_1 \wedge ... \wedge v_d \neq 0$ as $0 \wedge (v_{d + 1} \wedge ... \wedge v_n) = 0$ for all $v_{d + 1}, ..., v_n \in V$.
 \end{proof}
-
+Now we can see that in general, the exterior product contains not decomposable elements.
 \begin{lemma}[Question (c)]
     \label{prop:characterization_decomposable_d_even}
     Let $d$ be even.
@@ -406,7 +406,7 @@ This allows us to study the Grassmanian $\Gr(d, V)$ of a fixed vector space $V$.
     \end{equation*}
     which is well-defined by Lemma~\ref{prop:linear_transform_extpow} as described above.
 \end{definition}
-\begin{lemma}[1a]
+\begin{lemma}[Question (a)]
     We have
     \begin{equation*}
         \mathrm{im}\phi = D := \{ [v] \in \Proj(\extpow^d V) \ | \ \text{$v$ decomposable}\}
@@ -502,21 +502,6 @@ This corresponds to the following definition.
     \end{equation*}
     This shows the well-definedness.
 
-    \begin{align*}
-        \det(A_I(v_1, ..., v_i + v'_i, ..., v_d)) = \det(A_I(v_1, ..., v_d)) + \det(A_I(v_1, ..., v'_i, ..., v_d))
-    \end{align*}
-    and
-    \begin{align*}
-        \det(A_I(v_1, ..., \lambda v_i, ..., v_d)) = \lambda\det(A_I(v_1, ..., v_d))
-    \end{align*}
-    and
-    \begin{equation*}
-        \det(A_I(v_1, ..., v_{j + 1}, v_j, ..., v_d)) = -\det(A_I(v_1, ..., v_d))
-    \end{equation*}
-    However, these properties follow from the well-known properties of the determinant.
-    In particular, $\det$ is linear in each column and swapping columns negates the determinant.
-    It follows that $f$ is indeed well-defined.
-
     It is clear by definition that $f$ is linear, so it is left to show that it is bijective. 
     To show surjectivity, note that the $\pm e_I, I \in \{1, ..., n\}^{(d)}$ form a basis of $k^{\{1, ..., n\}^{(d)}}$.
     Clearly for $I = \{i_1, ..., i_d\}, J \in \{1, ..., n\}^{(d)}$ we have that
@@ -526,29 +511,13 @@ This corresponds to the following definition.
             \pm 1 & \text{if $J \subseteq I$}
         \end{cases}
     \end{equation*}
-    so $f(e_{i_1} \wedge ... \wedge e_{i_d}) = e_I$ and we deduce that $\mathrm{im}f = \Proj^{\{1, ..., k\}^{(d)}}$.
+    so $f(e_{i_1} \wedge ... \wedge e_{i_d}) = e_I$ and we deduce that $\mathrm{im}f = k^{\{1, ..., k\}^{(d)}}$.
 
     Finally, note that
     \begin{equation*}
         e_{i_1} \wedge ... \wedge e_{i_d}
     \end{equation*}
-    for $i_1 < ... < i_d$ form a basis of $\extpow^d k^n$.
-    Clearly, they span $\extpow^d k^n$, and the following argument shows that they are linearly independent.
-    Assume
-    \begin{equation*}
-        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} (e_{i_1} \wedge ... \wedge e_{i_d}) = 0
-    \end{equation*}
-    Then
-    \begin{equation*}
-        0 = e_1 \wedge \Bigl( \sum_{1 < i_2 < ... < i_d} \lambda_{1, i_2, ..., i_d} (e_{i_2} \wedge .. \wedge e_{i_d}) \Bigr) + \sum_{1 < i_1 < ... < i_d} \lambda_{i_1, ..., i_d} (e_{i_1} \wedge ... \wedge e_{i_d} )
-    \end{equation*}
-    Clearly $e_1 \notin \vspan\{e_2, ..., e_n\}$ and so by Lemma~\ref{prop:subspace_closed} we see that
-    \begin{equation*}
-        \sum_{1 < i_2 < ... < i_d} \lambda_{1, i_2, ..., i_d} (e_{i_2} \wedge ... \wedge e_{i_d}) = 0
-    \end{equation*}
-    Repeating this argument inductively shows that $\lambda_{1, 2, ..., d} = 0$.
-    As $k^n$ is symmetric w.r.t. permuting the $e_j$, we see that all $\lambda_{i_1, ..., i_d} = 0$ are zero.
-
+    for $i_1 < ... < i_d$ form a basis of $\extpow^d k^n$ by Lemma~\ref{prop:basis_product_independence}.
     It follows that $\dim(\extpow^d k^n) = \dim(\Proj^{\{1, ..., n\}^{(d)}})$ and we find that $f$ is also injective.
 \end{proof}
 \begin{corollary}[Question (b)]
@@ -576,7 +545,11 @@ This corresponds to the following definition.
         u_2 \wedge ... \wedge u_l \wedge \bigl( (u_{l + 1} \wedge ... \wedge u_d) - (w_{l + 1} \wedge ... \wedge w_d) \bigr) = 0
     \end{equation*}
     as $u_1 \notin \vspan\{u_2, ..., u_d, w_{l + 1}, ..., w_d\}$.
-    Inductively, this argument shows that
+    Inductively, this argument shows that for all $2 \leq j \leq l + 1$
+    \begin{equation*}
+        u_j \wedge ... \wedge u_l \wedge (u_{l + 1} \wedge ... \wedge u_d) - (w_{l + 1} \wedge ... \wedge w_d) = 0
+    \end{equation*}
+    Hence
     \begin{equation*}
         (u_{l + 1} \wedge ... \wedge u_d) - (w_{l + 1} \wedge ... \wedge w_d) = 0
     \end{equation*}
@@ -591,9 +564,10 @@ This corresponds to the following definition.
 
 \section{Part III}
 In this part, we want to investigate the geometric properties of the Grassmanian resp. the image of $\phi$.
-First of all, we introduce coordinates on $\Proj(\extpow^d k^n)$.
+In particular, we focus on the case $d = 2$, i.e. examine the variety $\Gr(2, V)$ for different finite-dimensional $V$.
+To use our standard methods of Algebraic Geometry, we first introduce coordinates on $\Proj(\extpow^d k^n)$.
 \begin{definition}
-    Note that in the proof of Lemma~\ref{prop:isomorphism_extpow_det} it was shown that $v_{i_1} \wedge ... \wedge v_{i_d}$ for $i_1 < ... < i_d$ is a basis of $\extpow^d k^n$ if $v_1, ..., v_n$ is a basis of $V$.
+    Note that in the proof of Lemma~\ref{prop:basis_product_independence} it was shown that $v_{i_1} \wedge ... \wedge v_{i_d}$ for $i_1 < ... < i_d$ is a basis of $\extpow^d k^n$ if $v_1, ..., v_n$ is a basis of $V$.
     We introduce the homogeneous coordinates w.r.t. that basis, namely
     \begin{align*}
         x: \Proj(\extpow^d k^n) &\to \Proj_k^{\{1, ..., n\}^{(d)}} \cong \Proj_k^{{n \choose d} - 1}, \\
@@ -619,9 +593,9 @@ First of all, we introduce coordinates on $\Proj(\extpow^d k^n)$.
     \end{equation*}
     and so by Lemma~\ref{prop:characterization_decomposable_d_even}
     \begin{equation*}
-        \omega \in \mathrm{im}\phi \ \Leftrightarrow \ \omega \wedge \omega = 0
+        [\omega] \in \mathrm{im}\phi \ \Leftrightarrow \ \omega \wedge \omega = 0
     \end{equation*}
-    In $\Proj(\extpow^d V)$ we find that
+    We find that
     \begin{align*}
         &\Bigl( \sum_{i < j} x_{i, j} (e_i \wedge e_j) \Bigr) \wedge \Bigl( \sum_{u < v} x_{u, v} (e_u \wedge e_v) \Bigr) = \sum_{\substack{i < j\\u < v}} x_{i, j} x_{u, v} (e_i \wedge e_j \wedge e_u \wedge e_v) \\
         =& \ 2\sum_{\substack{i < j < u < v}} x_{i, j} x_{u, v} (e_i \wedge e_j \wedge e_u \wedge e_v) + 2\sum_{\substack{i < u < j < v}} x_{i, j} x_{u, v} (e_i \wedge e_j \wedge e_u \wedge e_v) \\
@@ -638,10 +612,6 @@ First of all, we introduce coordinates on $\Proj(\extpow^d k^n)$.
     For $n = 4$, Prop.~\ref{prop:equations_grassmanian_2} yields that $\Gr(2, 4) \cong \mathrm{im}\phi = \V(I)$ where
     \begin{equation*}
         I = \langle x_{1, 2} x_{3, 4} + x_{1, 4} x_{2, 3} - x_{1, 3} x_{2, 4} \rangle \in k[x_{1, 2}, x_{1, 3}, x_{1, 4}, x_{2, 3}, x_{2, 4}, x_{3, 4}]
-    \end{equation*}
-    Changing the indices used for the coordinates, we find
-    \begin{equation*}
-        \Gr(2, 4) = \V(x_0 x_5 + x_2 x_3 - x_2 x_4)
     \end{equation*}
     which is exactly what we found in the lecture.
 \end{example}
@@ -667,7 +637,7 @@ To investigate the properties of $\phi(\Gr(2, n))$ for larger $n$, we use one to
 \begin{proposition}[Macaulay Basis Theorem]
     \label{prop:macaulay_basis_theorem}
     Let $\preceq$ be a graded monomial ordering on $R = k[x_0, ..., x_n]$.
-    Then for an ideal $I \leq R$ have that the monomials $x_0^{\alpha_0} ... x_n^{\alpha_n} \notin \mathrm{lt}(I)$ are a $k$-vector space basis of $R/I$.
+    Then for an ideal $I \leq R$ have that the list of all monomials $x_0^{\alpha_0}, ..., x_n^{\alpha_n} \notin \mathrm{lt}(I)$ not contained in $\mathrm{lt}(I)$ are a $k$-vector space basis of $R/I$.
 
     Here $\mathrm{lt}(I)$ is the leading term ideal of $I$, i.e. the ideal generated by the leading terms of all $f \in I$, w.r.t. $\preceq$.
 \end{proposition}
@@ -704,7 +674,7 @@ This is done in the following lemma.
     We try to present it as clearly as possible, at the cost of only sketching some parts.
     In the end, I checked it using Computer Algebra, and everything fits together.
 
-    Consider homogeneous polynomials $f_{i, j, u, v} \in R$ and
+    Consider an arbitrary element $F$ of $I$, given by homogeneous polynomials $f_{i, j, u, v} \in R$ via
     \begin{equation*}
         F = \sum_{i < j < u < v} f_{i, j, u, v} \ (x_{i, v} x_{j, u} - x_{i, u} x_{j, v} + x_{i, j} x_{u, v})
     \end{equation*}
@@ -738,7 +708,7 @@ This is done in the following lemma.
     Since $x_{i, v} \ x_{j, u} \ f_{i, j, u, v} \succ x_{i, u} \ x_{j, v} \ f_{i, j, u, v}$, we see that the term $x_{i, v} \ x_{j, u} \ f_{i, j, u, v}$ cannot occur in $F$, i.e. must ``cancel out''.
     Hence the monomial $\epsilon \ x_{i, v} \ x_{j, u} \ f_{i, j, u, v}$ has a nonzero coefficient in
     \begin{equation*}
-        F - f_{i, j, u, v} x_{i, v} x_{j, u} = \sum_{\substack{a < b < c < d\\(a, b, c, d) \neq (i, j, u, v)}} f_{a, b, c, d} \ (x_{a, d} x_{b, c} - x_{a, c} x_{b, d} + x_{a, b} x_{c, d})
+        F - f_{i, j, u, v} \ x_{i, v} \ x_{j, u} = \sum_{\substack{a < b < c < d\\(a, b, c, d) \neq (i, j, u, v)}} f_{a, b, c, d} \ (x_{a, d} x_{b, c} - x_{a, c} x_{b, d} + x_{a, b} x_{c, d})
     \end{equation*}
     and so for $(a, b, c, d) \neq (i, j, u, v), \epsilon' \in k^*$ have that
     \begin{align*}
@@ -747,7 +717,7 @@ This is done in the following lemma.
         f_{i, j, u, v} \ x_{i, v} \ x_{j, u} &= \epsilon' f_{a, b, c, d} \ x_{a, b} \ x_{c, d}
     \end{align*}
     However, the second and third case imply that $f_{a, b, c, d} \ x_{a, d} \ x_{b, c} \succ f_{i, j, u, v} \ x_{i, v} \ x_{j, u}$.
-    Hence, the ``new'' monomial $f_{a, b, c, d} \ x_{a, d} \ x_{b, c}$ also has to ``cancel out'' in the sum representation of $F$, as comes after $\mathrm{lt}(F) = \epsilon x_{i, u} \ x_{j, v} \ f_{i, j, u, v}$ in the order $\preceq$.
+    Hence, the ``new'' monomial $f_{a, b, c, d} \ x_{a, d} \ x_{b, c}$ also has to ``cancel out'' in the sum representation of $F$, as it is greater than $\mathrm{lt}(F) = \epsilon x_{i, u} \ x_{j, v} \ f_{i, j, u, v}$ in the order $\preceq$.
     So applying the whole argument inductively (induction on the number of monomials $\succ f_{i, j, u, v} \ x_{i, v} \ x_{j, u}$ that occur in any of the polynomials we work with), we end up in the first case
     \footnote{There is a small argument missing here, namely that we apply the next argument on each step of the induction, to show the claim for $f_{i, j, u, v} \ x_{i, v} \ x_{j, u}$. However, it should be easy to see that this is possible.}.
 
@@ -818,7 +788,7 @@ This is done in the following lemma.
         &|\{ x^\alpha \ \text{monomial in $R$} \ | \ \deg(x^\alpha) = m, \ \forall i < j < u < v: x_{iv} x_{ju} \ \nmid \ x^\alpha \}| \\
         =\ &|\{ x^\alpha \ \text{monomial in $R$} \ | \ \deg(x^\alpha) = m, \ \forall i < j < u < v: x_{iv} x_{ju} \ \nmid \ \mathrm{sqfr}(x^\alpha) \}| \\
         =\ &\Bigl| \bigcup_{\substack{\alpha \in \{0, 1\}^N\\x_{iv} x_ju \ \nmid \ x^\alpha}} \{ x^\alpha x^\beta \ | \ \deg(x^\beta) = m - \deg(x^\alpha), \ \forall i: \alpha_i = 0 \Rightarrow \beta_i = 0 \} \Bigr| \\
-        =& \sum_{\substack{\alpha \in \{0, 1\}^N\\x_{iv} x_ju \ \nmid \ x^\alpha}} \left(\!\!{\deg(x^\alpha) \choose m - \deg(x^\alpha)}\!\!\right) = \sum_{l = 0}^N \sum_{\substack{\alpha \in \{0, 1\}^N\\\sum_j \alpha_j = l\\x_{i, v} x_{j, u} \ \nmid \ x^\alpha}} \left(\!\!{ l \choose m - l }\!\!\right) \\
+        =& \sum_{\substack{\alpha \in \{0, 1\}^N\\x_{iv} x_{ju} \ \nmid \ x^\alpha}} \left(\!\!{\deg(x^\alpha) \choose m - \deg(x^\alpha)}\!\!\right) = \sum_{l = 0}^N \sum_{\substack{\alpha \in \{0, 1\}^N\\\sum_j \alpha_j = l\\x_{i, v} x_{j, u} \ \nmid \ x^\alpha}} \left(\!\!{ l \choose m - l }\!\!\right) \\
         =& \sum_{l = 0}^N s_n(l) \left(\!\!{ l \choose m - l }\!\!\right) = \sum_{l = 0}^N s_n(l) {m - 1 \choose l - 1}
     \end{align*}
     where $\mathrm{sqrf}(f)$ denotes the square-free part of $f$.
@@ -897,7 +867,13 @@ Now we want to study how the independent sets in $G_n$ look like.
     \end{equation*}
     and thus at some point, we find $C^k(I)$ is contained in layer 0.
     Now note that $C$ does not decrease the size, i.e. $|C(I)| = |I|$ and so $|C^k(I)| = |I|$.
-    However, there are only $(n - 2) + (n - 2) + 1 = 2n - 3$ elements in layer 0 and the claim follows.
+    However, there are only $(n - 2) + (n - 2) + 1 = 2n - 3$ elements in layer 0 and we see that there is no independent set of size $> 2n - 3$.
+
+    On the other hand, it is easy to observe that the 0-th layer
+    \begin{equation*}
+        I = \{ v \in V \ | \ l(v) = 0 \}
+    \end{equation*}
+    is indeed an independent set, as for all elements $(i, j) \in I$ have either $i = 1$ or $j = n$.
 \end{proof}
 \begin{corollary}
     Have $\dim(\Gr(2, n)) = 2n - 4$.
@@ -914,12 +890,12 @@ However, this is not a lecture on graph theory or combinatorics, and I already s
 So I will not do the proof here, but I think it is already very interesting to see those graphs and the connection of $\deg(\Gr(2, n))$ to combinatorial problems.
 Finally, in the case of $n = 6$ we can simply count the independent sets by hand, and find the following result.
 \begin{corollary}[Question (e)]
-    Have $\dim(\Gr(2, 6)) = 8$ and $\deg(\Gr(2, 6)) = 15$.
+    Have $\dim(\Gr(2, 6)) = 8$ and $\deg(\Gr(2, 6)) = 14$.
 \end{corollary}
 \begin{proof}
     The dimension follows directly from the previous general case.
     For the degree, just count the maximal independent sets in $G_6$, as displayed in Example~\ref{ex:Gn}.
-    This is slightly tricky, but it is not too hard to see that there are exactly 15 of them.
+    This is slightly tricky, but it is not too hard to see that there are exactly 14 of them.
 \end{proof}
 Of course, the above statement on $\Gr(2, 6)$ can also easily be found using Computer Algebra.
 For example, the following Sage script shows that
