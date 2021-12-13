@@ -749,6 +749,145 @@ This is done in the following lemma.
     Again, you can do this similarly as before, but now two monomials ``cancel out''.
     We will not present this here as well.
 \end{proof}
+\begin{proof}
+    Consider the direction $\supseteq$.
+    Consider an element
+    \begin{equation*}
+        F = \sum_{a < b < c < d} f_{a, b, c, d} (x_{a, d} x_{b, c} - x_{a, c} x_{b, d} + x_{a, b} x_{c, d}) \in a
+    \end{equation*}
+    We want to show that $\mathrm{lt}(F) \in b$.
+    With the decomposition of $f_{a, b, c, d}$ into homogeneous components
+    \begin{equation*}
+        f_{a, b, c, d} = \sum_d f_{a, b, c, d}^{(d)}
+    \end{equation*}
+    we find that
+    \begin{equation*}
+        \mathrm{lt}(F) = \mathrm{lt}\Bigl( \sum_{a < b < c < d} f_{a, b, c, d}^{(\deg(\mathrm{lt}(F)) - 2)} (x_{a, d} x_{b, c} - x_{b, d} x_{a, c} + x_{a, b} x_{c, d}) \Bigr)
+    \end{equation*}
+    and so we may consider only the case that the $f_{a, b, c, d}$ are homogeneous of same degree $d := \deg(\mathrm{lt}(F)) - 2$.
+    Now write for $a < b < c < d$
+    \begin{equation*}
+        f_{a, b, c, d} = \sum_{s = 1}^{N_{a, b, c, d}} t_{a, b, c, d, s}
+    \end{equation*}
+    with nonzero terms $t_{a, b, c, d, s} \in R$.
+
+    Hence we have
+    \begin{equation*}
+        F = \sum_{a < b < c < d, \ s} t_{a, b, c, d, s} (x_{a, d} x_{b, c} - x_{a, c} x_{b, d} + x_{a, b} x_{c, d})
+    \end{equation*}
+    By sorting according to the monomial ordering, find
+    \begin{align*}
+        t_{a_1, b_1, c_1, d_1, s_1} \ x_{a_1, d_1} \ x_{b_1, c_1} \succeq t_{a_2, b_2, c_2, d_2, s_2} \ x_{a_2, d_2} \ x_{b_2, c_2} \succeq ... \\
+    \end{align*}
+    for some $a_i < b_i < c_i < d_i, \ i \leq N$.
+
+    \paragraph{Case 1} Assume that there is $i \leq N$ such that
+    \begin{equation*}
+        \mathrm{lt}(F) \equiv t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i}
+    \end{equation*}
+    Here we use $\equiv$ to mean that both sides are equal up to multiplication by a scaling factor $\epsilon \in k^*$.
+    We are only interested in divisibility in $R$, so units do not matter, and notation would be unnecessarily blown up if we always had to include some $\epsilon \in k^*$.
+
+    Then we are already done, as
+    \begin{equation*}
+        t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i} \in J
+    \end{equation*}
+
+    \paragraph{Case 2} Assume that there is $i \leq N$ such that
+    \begin{equation*}
+        \mathrm{lt}(F) \equiv t_{a_i, b_i, c_i, d_i, s_i} \ x_{b_i, d_i} \ x_{a_i, c_i}
+    \end{equation*}
+    Note that
+    \begin{equation*}
+        t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i} \succ t_{a_i, b_i, c_i, d_i, s_i} \ x_{b_i, d_i} \ x_{a_i, c_i} \equiv \mathrm{lt}(F)
+    \end{equation*}
+    Hence the former term does not occur in $F$, and so must ``cancel out'' in the sum representation of $F$.
+    However, the other term (or terms) with whom this cancels out might still be of the form $t_{(...)} \ x_{b_i, d_i} \ x_{a_i, c_i}$.
+    Thus, we have to use some kind of induction to go to the beginning of the cancellation chain.
+    
+    \subparagraph{Claim} For all $j \leq i$ have that there exists an $l \leq N$ with
+    \begin{align*}
+        x_{a_l, d_l} \divides t_{a_j, b_j, c_j, d_j, s_j} \quad \text{or} 
+    \end{align*}
+    and
+    \begin{align*}
+        x_{b_l, c_l} \divides t_{a_j, b_j, c_j, d_j, s_j} \quad \text{or} \quad a_l < a_j < c_j < d_l \quad \text{or} \quad a_l < b_j < d_j < d_l
+    \end{align*}
+    
+    \begin{equation*}
+        x_{a_l, d_l} \divides t_{a_j, b_j, c_j, d_j, s_j} \quad \text{or} \quad x_{b_l, c_l} \divides t_{a_j, b_j, c_j, d_j, s_j}
+    \end{equation*}
+
+    For the proof, use induction on $j$.
+    First consider the case $j = 1$. We have that
+    \begin{equation*}
+        \underbrace{t_{a_1, b_1, c_1, d_1, s_1} \ x_{a_1, d_1} \ x_{b_1, c_1}}_{=: T} \succeq t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i} \succ t_{a_i, b_i, c_i, d_i, s_i} \ x_{b_i, d_i} \ x_{a_i, c_i} \equiv \mathrm{lt}(F)
+    \end{equation*}
+    Hence the term $T$ must cancel out in the sum representation of $F$, so there must be some $l \neq 1$ with
+    \begin{equation*}
+        T \equiv t_{a_l, b_l, c_l, d_l, s_l} \ x_{a_l, d_l} \ x_{b_l, c_l}
+    \end{equation*}
+    Note that $T$ cannot cancel out with a term of the form $t_{(...)} \ x_{b_l, d_l} \ x_{a_l, c_l}$ as $T \succ$ all terms of this form.
+    Hence the term that $T$ cancels out with must be of the above form.
+
+    We also have that $T \succ$ all terms of the form $t_{a_1, b_1, c_1, d_1, s'}$ for $s' \neq s_1$.
+    So either $(a_l, d_l) \neq (a_1, d_1)$ or $(b_l, c_l) \neq (b_1, c_1)$.
+    If $(a_l, d_l) \neq (a_1, d_1)$ and $(b_l, c_l) \neq (b_1, c_1)$, we are clearly done.
+    Assume $(a_l, d_l) \neq (a_1, d_1)$ and $(b_l, c_l) = (b_1, c_1)$.
+    Then
+    \begin{equation*}
+        x_{a_l, d_l} \divides t_{a_1, b_1, c_1, d_1, s_1}
+    \end{equation*}
+    So it is left to show that
+    \begin{equation*}
+        a_l < a_1 < c_1 < d_l \quad \text{or} \quad a_l < b_1 < d_1 < d_l
+    \end{equation*}
+    Since $b_1 = b_l, c_1 = c_l$, the only possible relative ordering of $a_l, d_l, a_1, d_1$ such that this is not satisfied is
+    \begin{equation*}
+        a_1 < a_l < a_d < d_1
+    \end{equation*}
+
+    Now we consider the induction step, so assume $j > 1$. 
+    Again have that
+    \begin{equation*}
+        \underbrace{t_{a_j, b_j, c_j, d_j, s_j} \ x_{a_j, d_j} \ x_{b_j, c_j}}_{=: T} \succeq t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i} \succ t_{a_i, b_i, c_i, d_i, s_i} \ x_{b_i, d_i} \ x_{a_i, c_i} \equiv \mathrm{lt}(F)
+    \end{equation*}
+    and so $T$ must cancel out in the sum representation of $F$.
+    If one of the terms that $T$ cancels out with is of the form
+    \begin{equation*}
+        t_{a_l, b_l, c_l, d_l, s_l} \ x_{a_l, d_l} \ x_{b_l, c_l}
+    \end{equation*}
+    then we can proceed exactly as in the base case.
+
+    The only difference is that now there are more possibilities for the terms that $T$ might cancel out with.
+    In particular, it is now possible that the we only find
+    \begin{equation*}
+        T \equiv t_{a_m, b_m, c_m, d_m, s_m} \ x_{b_m, d_m} \ x_{a_m, c_m}
+    \end{equation*}
+    for some $m < j$ with $(a_m, b_m, c_m, d_m) \neq (a_j, b_j, c_j, d_j)$.
+    However, then we can apply the induction hypothesis to see that
+    \begin{equation*}
+        x_{a_l, d_l} \divides t_{a_m, b_m, c_m, d_m, s_m} \quad \text{or} \quad x_{b_l, c_l} \divides t_{a_m, b_m, c_m, d_m, s_m}
+    \end{equation*}
+    Clearly
+    \begin{equation*}
+        x_{a_l, d_l}, \ x_{b_l, c_l} \perp x_{b_m, d_m} x_{a_m, c_m}
+    \end{equation*}
+    and so 
+    \begin{equation*}
+        x_{a_l, d_l} \divides t_{a_j, b_j, c_j, d_j, s_j} \quad \text{or} \quad x_{b_l, c_l} \divides t_{a_j, b_j, c_j, d_j, s_j}
+    \end{equation*}
+    So the claim is shown now.
+
+    To complete case 2, we now apply the claim to $j = i$ and see that
+    \begin{equation*}
+        x_{a_l, d_l} \divides t_{a_i, b_i, c_i, d_i, s_i} \quad \text{or} \quad x_{b_l, c_l} \divides t_{a_i, b_i, c_i, d_i, s_i}
+    \end{equation*}
+    Hence
+    \begin{equation*}
+        x_{a_l, d_l} \ x_{b_i, d_i} \ x_{a_i, c_i} \divides \mathrm{lt}(F) \quad \text{or} \quad x_{b_l, c_l} \ x_{b_i, d_i} \ x_{a_i, c_i} \divides \mathrm{lt}(F)
+    \end{equation*}
+\end{proof}
 
 \begin{definition}
     Consider the graph $G_n = (V_n, E_n)$ where $V_n = \{ (i, j) \ | \ 0 \leq i < j \leq n \}$ and
