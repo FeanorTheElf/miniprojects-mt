@@ -648,9 +648,9 @@ To apply this, first of all we have to collect information about the leading ter
 This is done in the following lemma.
 \begin{lemma}
     \label{prop:leading_term_ideal_grassmanian}
-    Define the graded reverse monomial ordering $\preceq$ on $R := k[x_{i, j} \ | \ i < j]$ where the variables $x_{i, j}$ are ordered co-lexicographically w.r.t. $(i, j)$, i.e.
+    Define the graded reverse monomial ordering $\preceq$ on $R := k[x_{i, j} \ | \ i < j]$ where the variables $x_{i, j}$ are ordered lexicographically w.r.t. $(i, j)$, i.e.
     \begin{equation*}
-        x_{i, j} \leq x_{u, v} \ :\Leftrightarrow \ (i, j) \leq_{\text{colex}} (u, v)
+        x_{i, j} \leq x_{u, v} \ :\Leftrightarrow \ (i, j) \leq_{\text{lex}} (u, v)
     \end{equation*}
     Moreover, let
     \begin{equation*}
@@ -662,233 +662,59 @@ This is done in the following lemma.
     \end{equation*}
 \end{lemma}
 \begin{proof}
-    Note that for $i < j < u < v$ have $x_{u, v}, x_{j, v} \succ x_{i, v} \succ x_{i, j}, x_{i, u}, x_{j, u}$.
-    Thus the leading term of $x_{i, j} x_{u, v} + x_{i, v} x_{j, u} - x_{i, u} x_{j, v}$ is
-    \begin{equation*}
-        \mathrm{lt}(x_{i, j} x_{u, v} + x_{i, v} x_{j, u} - x_{i, u} x_{j, v}) = x_{i, v} x_{j, u}
-    \end{equation*}
-    It follows that $J \subseteq \mathrm{lt}(I)$.
+    We show that the set $G = \{ x_{iv} x_{ju} - x_{iu} x_{jv} + x_{ij} x_{uv} \ | \ i < j < u < v \}$ is a Gröbner basis of $I$.
+    The claim then follows by the properties of Gröbner basis.
 
-    For the other direction, we use a quite lengthy degree argument.
-    Sadly, the only argument I came up with is extremely technical.
-    We try to present it as clearly as possible, at the cost of only sketching some parts.
-    In the end, I checked it using Computer Algebra, and everything fits together.
-
-    Consider an arbitrary element $F$ of $I$, given by homogeneous polynomials $f_{i, j, u, v} \in R$ via
-    \begin{equation*}
-        F = \sum_{i < j < u < v} f_{i, j, u, v} \ (x_{i, v} x_{j, u} - x_{i, u} x_{j, v} + x_{i, j} x_{u, v})
-    \end{equation*}
-    We want to show that $\mathrm{lt}(F) \in J$.
-    
-    Let
-    \begin{equation*}
-        f_{i, j, u, v} = \sum_{\alpha \in \N^N} c^{(i, j, u, v)}_\alpha x^\alpha
-    \end{equation*}
-    Then
-    \begin{equation*}
-        F = \sum_{\alpha \in \N^N} \sum_{i < j < u < v} c^{(i, j, u, v)}_\alpha x^\alpha \ (x_{i, v} x_{j, u} - x_{i, u} x_{j, v} + x_{i, j} x_{u, v})
-    \end{equation*}
-    and so there exists $\alpha \in \N^N$ and $\epsilon \in k^*$ with
-    \begin{equation*}
-        \mathrm{lt}(F) = \epsilon \cdot \mathrm{lt}\Bigl( \sum_{i < j < u < v} c_\alpha^{(i, j, u, v)} x^\alpha \ (x_{i, v} x_{j, u} - x_{i, u} x_{j, v} + x_{i, j} x_{u, v}) \Bigr)
-    \end{equation*}
-    Hence, we may assume wlog that all the $f_{i, j, u, v}$ are scaled monomials.
-
-    Now, observe that all monomials in $F$ are of the form
+    To do this, we consider for $a < b < c < d$ and $i < j < u < v$ the polynomial
     \begin{align*}
-        \epsilon \ x_{i, v} \ x_{j, u} \ f_{i, j, u, v} \quad \text{or} \quad 
-        \epsilon \ x_{i, u} \ x_{j, v} \ f_{i, j, u, v} \quad \text{or} \quad 
-        \epsilon \ x_{i, j} \ x_{u, v} \ f_{i, j, u, v} 
+        S := &\frac {\mathrm{lcm}(x_{iv} x_{ju}, \ x_{ad} x_{bc})} {x_{iv} x_{ju}} (x_{iv} x_{ju} - x_{iu} x_{jv} + x_{ij} x_{uv}) \\
+        &- \frac {\mathrm{lcm}(x_{iv} x_{ju}, \ x_{ad} x_{bc})} {x_{ad} x_{bc}} (x_{ad} x_{bc} - x_{ac} x_{bd} + x_{ab} x_{cd})
     \end{align*}
-    where $\epsilon \in k^*$ and $i < j < u < v$.
-    In particular, this is true for the leading term $\mathrm{lt}(F)$.
-    In the first of those case, clearly $\mathrm{lt}(F) \in J$.
+    and show that they are reduced to $0$ by multivariate polynomial division by $G$.
 
-    So consider now the second case, i.e. $\mathrm{lt}(F) = \epsilon \ x_{i, u} \ x_{j, v} \ f_{i, j, u, v}$.
-    Since $x_{i, v} \ x_{j, u} \ f_{i, j, u, v} \succ x_{i, u} \ x_{j, v} \ f_{i, j, u, v}$, we see that the term $x_{i, v} \ x_{j, u} \ f_{i, j, u, v}$ cannot occur in $F$, i.e. must ``cancel out''.
-    Hence the monomial $\epsilon \ x_{i, v} \ x_{j, u} \ f_{i, j, u, v}$ has a nonzero coefficient in
+    \paragraph{Case 1} If $(i, v) = (a, d)$ and $(j, u) \neq (b, c)$. Then
     \begin{equation*}
-        F - f_{i, j, u, v} \ x_{i, v} \ x_{j, u} = \sum_{\substack{a < b < c < d\\(a, b, c, d) \neq (i, j, u, v)}} f_{a, b, c, d} \ (x_{a, d} x_{b, c} - x_{a, c} x_{b, d} + x_{a, b} x_{c, d})
+        \mathrm{lcm}(x_{iv} x_{ju}, \ x_{ad} x_{bc}) = x_{ju} x_{ad} x_{bc}
     \end{equation*}
-    and so for $(a, b, c, d) \neq (i, j, u, v), \epsilon' \in k^*$ have that
-    \begin{align*}
-        f_{i, j, u, v} \ x_{i, v} \ x_{j, u} &= \epsilon' f_{a, b, c, d} \ x_{a, d} \ x_{b, c} \quad \text{or}\\
-        f_{i, j, u, v} \ x_{i, v} \ x_{j, u} &= \epsilon' f_{a, b, c, d} \ x_{a, c} \ x_{b, d} \quad \text{or}\\
-        f_{i, j, u, v} \ x_{i, v} \ x_{j, u} &= \epsilon' f_{a, b, c, d} \ x_{a, b} \ x_{c, d}
-    \end{align*}
-    However, the second and third case imply that $f_{a, b, c, d} \ x_{a, d} \ x_{b, c} \succ f_{i, j, u, v} \ x_{i, v} \ x_{j, u}$.
-    Hence, the ``new'' monomial $f_{a, b, c, d} \ x_{a, d} \ x_{b, c}$ also has to ``cancel out'' in the sum representation of $F$, as it is greater than $\mathrm{lt}(F) = \epsilon x_{i, u} \ x_{j, v} \ f_{i, j, u, v}$ in the order $\preceq$.
-    So applying the whole argument inductively (induction on the number of monomials $\succ f_{i, j, u, v} \ x_{i, v} \ x_{j, u}$ that occur in any of the polynomials we work with), we end up in the first case
-    \footnote{There is a small argument missing here, namely that we apply the next argument on each step of the induction, to show the claim for $f_{i, j, u, v} \ x_{i, v} \ x_{j, u}$. However, it should be easy to see that this is possible.}.
-
-    If $(a, d) = (i, v)$ then $(b, c) \neq (j, u)$ and $x_{b, c} \divides f_{i, j, u, v}$.
-    Thus
+    and so
     \begin{equation*}
-        x_{b, c} \ x_{i, u} \ x_{j, v} \divides \mathrm{lt}(F) = \epsilon \ x_{i, u} \ x_{j, v} \ f_{i, j, u, v}
+        S = -x_{au} x_{jd} x_{bc} + x_{aj} x_{ud} x_{bc} + x_{ac} x_{ju} x_{bd} - x_{ab} x_{ju} x_{cd}
     \end{equation*}
-    with $i < j < u < v$ and $i < b < c < v$. 
-    No matter how $j, u, b, c$ are ordered relatively to each other, we see that in each possible case $x_{b, c} \ x_{i, u} \ x_{j, v} \in J$:
-    \begin{align*}
-        j < u < b < c \ &\Rightarrow \ x_{j, v} x_{b, c} \in J \\
-        j < b < u < c \ &\Rightarrow \ x_{j, v} x_{b, c} \in J \\
-        j < b < c < u \ &\Rightarrow \ x_{i, u} x_{b, c} \in J \\
-        b < j < u < c \ &\Rightarrow \ f_{i, b, c, v} \ x_{i, c} \ x_{b, v} \succ f_{i, j, u, v} \ x_{i, u} \ x_{j, v}, \ \contradiction \\
-        b < j < c < u \ &\Rightarrow \ x_{i, u} x_{b, c} \in J \\
-        b < c < j < u \ &\Rightarrow \ x_{i, u} x_{b, c} \in J \\
-    \end{align*}
-    Hence $\mathrm{lt}(F) \in J$.
-
-    It is now left to consider the case $(b, c) = (j, u)$ and the case $(a, d) \neq (i, v), (b, c) \neq (j, u)$.
-    The former can be dealt with in exactly the same way, by noting that $x_{a, d} \divides f_{i, j, u, v}$.
-    In the latter case, we even find $x_{a, d} \ x_{b, c} \divides f_{i, j, u, v}$ and a very similar argument works.
-
-    Finally, one must also consider the third ``big'' case, namely that
+    wlog assume that $j < b$, so $\mathrm{lt}(F) = -x_{au} x_{jd} x_{bc}$.
+    Then there are three sub-cases.
+    \subparagraph{Case 1.1} If $j < u < b < c < d$. 
+    Then the only way to do cancel the leading term by polynomial division is to divide by $x_{jd} x_{bc} - x_{jc} x_{bd} + x_{jb} x_{cd}$ to get
     \begin{equation*}
-        \mathrm{lt}(F) = \epsilon \ x_{i, j} \ x_{u, v} \ f_{i, j, u, v} 
+        S' = x_{aj} x_{ud} x_{bc} + x_{ac} x_{ju} x_{bd} - x_{au} x_{jc} x_{bd} - x_{ab} x_{ju} x_{cd} + x_{au} x_{jb} x_{cd}
     \end{equation*}
-    Again, you can do this similarly as before, but now two monomials ``cancel out''.
-    We will not present this here as well.
+    So $\mathrm{lt}(S') = x_{aj} x_{ud} x_{bc}$ and the only way to cancel the leading term is to divide by $x_{ud} x_{bc} - x_{uc} x_{bd} + x_{ub} x_{cd}$ to get
+    \begin{equation*}
+        S'' = x_{ac} x_{ju} x_{bd} - x_{au} x_{jc} x_{bd} + x_{aj} x_{uc} x_{bd} - x_{ab} x_{ju} x_{cd} + x_{au} x_{jb} x_{cd} - x_{aj} x_{ub} x_{cd}
+    \end{equation*}
+    Now $\mathrm{lt}(S'') = x_{ac} x_{ju} x_{bd}$ and the only way to cancel the leading term is to divide by $x_{ac} x_{ju} - x_{au} x_{jc} + x_{aj} x_{uc}$ to get
+    \begin{equation*}
+        S''' = -x_{ab} x_{ju} x_{cd} + x_{au} x_{jb} x_{cd} - x_{aj} x_{ub} x_{cd}
+    \end{equation*}
+    Now $\mathrm{lt}(S''') = -x_{ab} x_{ju} x_{cd}$ and the only way to cancel the leading term is to divide by $x_{ab} x_{ju} - x_{au} x_{jb} + x_{aj} x_{ub}$ to get $0$.
+    So this subcase is finished.
+
+    You can now do all other cases in exactly the same way, however this is quite a huge lot of effort.
+    Therefore, I will not do it here.
+
+    However, observe that $S$ only depends on the relative order of $i, j, u, v, a, b, c, d$.
+    All possible orders of those are already present if we consider
+    \begin{equation*}
+        1 \leq i < j < u < v \leq 8 \quad \text{and} \quad 1 \leq a < b < c < d \leq 8
+    \end{equation*}
+    In other words, it suffices to show that $G$ is a Gröbner basis in the case $n = 8$.
+    By hand, this requires exactly the same computation as started above, but it can be very easily checked using Computer Algebra.
+    I have done this, and the result is as expected.
 \end{proof}
-\begin{proof}
-    Consider the direction $\supseteq$.
-    Consider an element
-    \begin{equation*}
-        F = \sum_{a < b < c < d} f_{a, b, c, d} (x_{a, d} x_{b, c} - x_{a, c} x_{b, d} + x_{a, b} x_{c, d}) \in a
-    \end{equation*}
-    We want to show that $\mathrm{lt}(F) \in b$.
-    With the decomposition of $f_{a, b, c, d}$ into homogeneous components
-    \begin{equation*}
-        f_{a, b, c, d} = \sum_d f_{a, b, c, d}^{(d)}
-    \end{equation*}
-    we find that
-    \begin{equation*}
-        \mathrm{lt}(F) = \mathrm{lt}\Bigl( \sum_{a < b < c < d} f_{a, b, c, d}^{(\deg(\mathrm{lt}(F)) - 2)} (x_{a, d} x_{b, c} - x_{b, d} x_{a, c} + x_{a, b} x_{c, d}) \Bigr)
-    \end{equation*}
-    and so we may consider only the case that the $f_{a, b, c, d}$ are homogeneous of same degree $d := \deg(\mathrm{lt}(F)) - 2$.
-    Now write for $a < b < c < d$
-    \begin{equation*}
-        f_{a, b, c, d} = \sum_{s = 1}^{N_{a, b, c, d}} t_{a, b, c, d, s}
-    \end{equation*}
-    with nonzero terms $t_{a, b, c, d, s} \in R$.
+At first glance, this lemma above seems quite deep, but it really is a repetitive application of the theory of Gröbner basis.
 
-    Hence we have
-    \begin{equation*}
-        F = \sum_{a < b < c < d, \ s} t_{a, b, c, d, s} (x_{a, d} x_{b, c} - x_{a, c} x_{b, d} + x_{a, b} x_{c, d})
-    \end{equation*}
-    By sorting according to the monomial ordering, find
-    \begin{align*}
-        t_{a_1, b_1, c_1, d_1, s_1} \ x_{a_1, d_1} \ x_{b_1, c_1} \succeq t_{a_2, b_2, c_2, d_2, s_2} \ x_{a_2, d_2} \ x_{b_2, c_2} \succeq ... \\
-    \end{align*}
-    for some $a_i < b_i < c_i < d_i, \ i \leq N$.
-
-    \paragraph{Case 1} Assume that there is $i \leq N$ such that
-    \begin{equation*}
-        \mathrm{lt}(F) \equiv t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i}
-    \end{equation*}
-    Here we use $\equiv$ to mean that both sides are equal up to multiplication by a scaling factor $\epsilon \in k^*$.
-    We are only interested in divisibility in $R$, so units do not matter, and notation would be unnecessarily blown up if we always had to include some $\epsilon \in k^*$.
-
-    Then we are already done, as
-    \begin{equation*}
-        t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i} \in J
-    \end{equation*}
-
-    \paragraph{Case 2} Assume that there is $i \leq N$ such that
-    \begin{equation*}
-        \mathrm{lt}(F) \equiv t_{a_i, b_i, c_i, d_i, s_i} \ x_{b_i, d_i} \ x_{a_i, c_i}
-    \end{equation*}
-    Note that
-    \begin{equation*}
-        t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i} \succ t_{a_i, b_i, c_i, d_i, s_i} \ x_{b_i, d_i} \ x_{a_i, c_i} \equiv \mathrm{lt}(F)
-    \end{equation*}
-    Hence the former term does not occur in $F$, and so must ``cancel out'' in the sum representation of $F$.
-    However, the other term (or terms) with whom this cancels out might still be of the form $t_{(...)} \ x_{b_i, d_i} \ x_{a_i, c_i}$.
-    Thus, we have to use some kind of induction to go to the beginning of the cancellation chain.
-    
-    \subparagraph{Claim} For all $j \leq i$ have that there exists an $l \leq N$ with
-    \begin{align*}
-        x_{a_l, d_l} \divides t_{a_j, b_j, c_j, d_j, s_j} \quad \text{or} 
-    \end{align*}
-    and
-    \begin{align*}
-        x_{b_l, c_l} \divides t_{a_j, b_j, c_j, d_j, s_j} \quad \text{or} \quad a_l < a_j < c_j < d_l \quad \text{or} \quad a_l < b_j < d_j < d_l
-    \end{align*}
-    
-    \begin{equation*}
-        x_{a_l, d_l} \divides t_{a_j, b_j, c_j, d_j, s_j} \quad \text{or} \quad x_{b_l, c_l} \divides t_{a_j, b_j, c_j, d_j, s_j}
-    \end{equation*}
-
-    For the proof, use induction on $j$.
-    First consider the case $j = 1$. We have that
-    \begin{equation*}
-        \underbrace{t_{a_1, b_1, c_1, d_1, s_1} \ x_{a_1, d_1} \ x_{b_1, c_1}}_{=: T} \succeq t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i} \succ t_{a_i, b_i, c_i, d_i, s_i} \ x_{b_i, d_i} \ x_{a_i, c_i} \equiv \mathrm{lt}(F)
-    \end{equation*}
-    Hence the term $T$ must cancel out in the sum representation of $F$, so there must be some $l \neq 1$ with
-    \begin{equation*}
-        T \equiv t_{a_l, b_l, c_l, d_l, s_l} \ x_{a_l, d_l} \ x_{b_l, c_l}
-    \end{equation*}
-    Note that $T$ cannot cancel out with a term of the form $t_{(...)} \ x_{b_l, d_l} \ x_{a_l, c_l}$ as $T \succ$ all terms of this form.
-    Hence the term that $T$ cancels out with must be of the above form.
-
-    We also have that $T \succ$ all terms of the form $t_{a_1, b_1, c_1, d_1, s'}$ for $s' \neq s_1$.
-    So either $(a_l, d_l) \neq (a_1, d_1)$ or $(b_l, c_l) \neq (b_1, c_1)$.
-    If $(a_l, d_l) \neq (a_1, d_1)$ and $(b_l, c_l) \neq (b_1, c_1)$, we are clearly done.
-    Assume $(a_l, d_l) \neq (a_1, d_1)$ and $(b_l, c_l) = (b_1, c_1)$.
-    Then
-    \begin{equation*}
-        x_{a_l, d_l} \divides t_{a_1, b_1, c_1, d_1, s_1}
-    \end{equation*}
-    So it is left to show that
-    \begin{equation*}
-        a_l < a_1 < c_1 < d_l \quad \text{or} \quad a_l < b_1 < d_1 < d_l
-    \end{equation*}
-    Since $b_1 = b_l, c_1 = c_l$, the only possible relative ordering of $a_l, d_l, a_1, d_1$ such that this is not satisfied is
-    \begin{equation*}
-        a_1 < a_l < a_d < d_1
-    \end{equation*}
-
-    Now we consider the induction step, so assume $j > 1$. 
-    Again have that
-    \begin{equation*}
-        \underbrace{t_{a_j, b_j, c_j, d_j, s_j} \ x_{a_j, d_j} \ x_{b_j, c_j}}_{=: T} \succeq t_{a_i, b_i, c_i, d_i, s_i} \ x_{a_i, d_i} \ x_{b_i, c_i} \succ t_{a_i, b_i, c_i, d_i, s_i} \ x_{b_i, d_i} \ x_{a_i, c_i} \equiv \mathrm{lt}(F)
-    \end{equation*}
-    and so $T$ must cancel out in the sum representation of $F$.
-    If one of the terms that $T$ cancels out with is of the form
-    \begin{equation*}
-        t_{a_l, b_l, c_l, d_l, s_l} \ x_{a_l, d_l} \ x_{b_l, c_l}
-    \end{equation*}
-    then we can proceed exactly as in the base case.
-
-    The only difference is that now there are more possibilities for the terms that $T$ might cancel out with.
-    In particular, it is now possible that the we only find
-    \begin{equation*}
-        T \equiv t_{a_m, b_m, c_m, d_m, s_m} \ x_{b_m, d_m} \ x_{a_m, c_m}
-    \end{equation*}
-    for some $m < j$ with $(a_m, b_m, c_m, d_m) \neq (a_j, b_j, c_j, d_j)$.
-    However, then we can apply the induction hypothesis to see that
-    \begin{equation*}
-        x_{a_l, d_l} \divides t_{a_m, b_m, c_m, d_m, s_m} \quad \text{or} \quad x_{b_l, c_l} \divides t_{a_m, b_m, c_m, d_m, s_m}
-    \end{equation*}
-    Clearly
-    \begin{equation*}
-        x_{a_l, d_l}, \ x_{b_l, c_l} \perp x_{b_m, d_m} x_{a_m, c_m}
-    \end{equation*}
-    and so 
-    \begin{equation*}
-        x_{a_l, d_l} \divides t_{a_j, b_j, c_j, d_j, s_j} \quad \text{or} \quad x_{b_l, c_l} \divides t_{a_j, b_j, c_j, d_j, s_j}
-    \end{equation*}
-    So the claim is shown now.
-
-    To complete case 2, we now apply the claim to $j = i$ and see that
-    \begin{equation*}
-        x_{a_l, d_l} \divides t_{a_i, b_i, c_i, d_i, s_i} \quad \text{or} \quad x_{b_l, c_l} \divides t_{a_i, b_i, c_i, d_i, s_i}
-    \end{equation*}
-    Hence
-    \begin{equation*}
-        x_{a_l, d_l} \ x_{b_i, d_i} \ x_{a_i, c_i} \divides \mathrm{lt}(F) \quad \text{or} \quad x_{b_l, c_l} \ x_{b_i, d_i} \ x_{a_i, c_i} \divides \mathrm{lt}(F)
-    \end{equation*}
-\end{proof}
-
+Now we have to study the structure of monomials generating $J = \langle x_{i, v} x_{j, u} \ | \ i < j < u < v \rangle$.
+At first glance, this seemed to me to be much simpler than the above, but in fact it turns out not to be, as there is some subtle combinatorial structure involved.
+Hence, we will first introduce the combinatorial framework in which we will work now.
 \begin{definition}
     Consider the graph $G_n = (V_n, E_n)$ where $V_n = \{ (i, j) \ | \ 0 \leq i < j \leq n \}$ and
     \begin{equation*}
@@ -899,7 +725,8 @@ This is done in the following lemma.
         s_n(d) := |\{ I \subseteq V_n \ | \ I \ \text{independent set of size $d$}\}|
     \end{equation*}
 \end{definition}
-
+It might be possible to see from the definition how independent sets in this graph are connected to monomials in $J$.
+If not, the connection is explained in the proof of the next theorem.
 \begin{proposition}
     Let $d$ be the largest integer such that $s_n(d) \neq 0$, i.e. the size of the largest independent set in $G_n$.
     Then
@@ -1025,7 +852,7 @@ I also think that it is not too difficult to show that
     s_n(2n - 3) = \frac {(2(n - 2))!} {(n - 2)! (n - 1)!}
 \end{equation*}
 which then shows the degree formula for the case $d = 2$.
-However, this is not a lecture on graph theory or combinatorics, and I already spent a lot of hours on this problem (and there are other mini projects as well :)).
+However, this is not a lecture on graph theory or combinatorics, and I already spent much more time on this Miniproject than on the others.
 So I will not do the proof here, but I think it is already very interesting to see those graphs and the connection of $\deg(\Gr(2, n))$ to combinatorial problems.
 Finally, in the case of $n = 6$ we can simply count the independent sets by hand, and find the following result.
 \begin{corollary}[Question (e)]

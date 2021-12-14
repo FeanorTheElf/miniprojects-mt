@@ -47,14 +47,14 @@
 We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
 
 \section{Part I}
-
+First of all, we introduce the notion of a rank function on a graded poset.
 \begin{proposition}
     \label{prop:definition_rank_function}
     Let $P$ be a graded poset in which every maximal chain has length $n + 1$. Then the function
     \begin{equation*}
         r: P \to \{ 0, ..., n \}, \quad x \mapsto \max\{ k \in \N \ | \ \exists a_1, ..., a_k \in P: \ a_1 < a_2 < ... < a_k < x \}
     \end{equation*}
-    is well-defined and the unique function with $x < y$ implies $r(x) < r(y)$ for all $x, y \in P$.
+    is well-defined and the unique function such that $x < y$ implies $r(x) < r(y)$ for all $x, y \in P$.
     We call it the \emph{rank function} of $P$.
 \end{proposition}
 \begin{proof}
@@ -99,7 +99,7 @@ Now we will show some basic properties of the rank function.
     Say $C = \{ b_1, ..., b_{n + 1} \}$ with $b_1 < ... < b_{n + 1}$.
 
     Hence we find $r(b_i) < r(b_{i + 1})$ and so inductively that $r(b_i) \geq i - 1$ and $r(b_i) \leq i - 1$ since $r(b_1) \geq 0$ and $r(b_{n + 1}) \leq n$.
-    It follows that $r(b_i) = i - 1$ and so $x = b_{r(x) + 1}, y = {r(y) + 1}$.
+    It follows that $r(b_i) = i - 1$ and so $x = b_{r(x) + 1}, y = b_{r(y) + 1}$.
     Therefore, we have a chain
     \begin{equation*}
         x < b_{r(x) + 2} < ... < b_{r(y)} < y
@@ -109,6 +109,7 @@ Now we will show some basic properties of the rank function.
 \end{proof}
 
 \section{Part II}
+In this part, we want to study whether graded posets satisfy an analogue of the LYM inequality.
 \begin{proposition}
     \label{prop:characterization_lym}
     For a graded poset $P$ with layers $L_0, ..., L_n$ the following statements are equivalent:
@@ -134,7 +135,7 @@ Now we will show some basic properties of the rank function.
 \begin{proof}
     Show the directions (ii) $\Rightarrow$ (iii) $\Rightarrow$ (i) $\Rightarrow$ (ii)
     \paragraph{(ii) $\Rightarrow$ (iii)} Use induction on $n$.
-    Again, the base case is trivial, just take chains $\{x\}$ for each $x \in A = L_0$.
+    The base case is trivial, just take chains $\{x\}$ for each $x \in A = L_0$.
     So assume that $n > 0$. The set
     \begin{equation*}
         A' := \bigcup_{i = 0}^{n - 1} L_i
@@ -144,13 +145,13 @@ Now we will show some basic properties of the rank function.
         |\{j \ | \ x \in C_j\}| = |\{j \ | \ y \in C_j\}| \ \text{for all $x, y \in L_i$}
     \end{equation*}
     by induction hypothesis.
-    Let now $V_1, V_2 := [t] \times L_n$ (treat them as disjoint) and consider the bipartite graph $G := (V_1 \sqcup V_2, E)$ where $E$ is defined as follows:
+    Let now $V_1 := \{1\} \times [t] \times L_n$ and $V_2 := \{2\} \times [t] \times L_n$ and consider the bipartite graph $G := (V_1 \sqcup V_2, E)$ where $E$ is defined as follows:
     \begin{equation*}
-        \{ \underbrace{(i, a)}_{\in V_1}, \underbrace{(j, b)}_{\in V_2} \} \in E \ \Leftrightarrow \ \max C_j < a
+        \{ \underbrace{(1, i, a)}_{\in V_1}, \underbrace{(2, j, b)}_{\in V_2} \} \in E \ \Leftrightarrow \ \max C_j < a
     \end{equation*}
-    We use Hall's theorem to show that $G$ has a perfect matching.
+    We use Hall's theorem to show that $G$ has a matching.
 
-    Consider any $W = \{ (i_1, a_1), ..., (i_w, a_w) \} \subseteq V_1$ and let $F = \{ a_1, ..., a_w \}$.
+    Consider any $W = \{ (1, i_1, a_1), ..., (1, i_w, a_w) \} \subseteq V_1$ and let $F = \{ a_1, ..., a_w \}$.
     Then
     \begin{equation*}
         W \subseteq [t] \times F \ \Rightarrow \ |W| \leq t|F|
@@ -165,9 +166,9 @@ Now we will show some basic properties of the rank function.
 
     Since $\max C_j \in L_{n - 1}$ for all $j$, we have
     \begin{align*}
-        N(W) =& \{ (j, b) \ | \ b \in L_n, \exists a \in F: \max C_j < a \} \\
-        =& L_n \times \{ j \ | \ \exists a \in F: \max C_j < a \} \\
-        =& L_n \times \{ j \ | \ \max C_j \in \partial F \}
+        N(W) =& \{ (2, j, b) \ | \ b \in L_n, \exists a \in F: \max C_j < a \} \\
+        =& \{2\} \times \{ j \ | \ \exists a \in F: \max C_j < a \} \times L_n \\
+        =& \{2\} \times \{ j \ | \ \max C_j \in \partial F \} \times L_n
     \end{align*}
     and so by the above
     \begin{align*}
@@ -177,12 +178,12 @@ Now we will show some basic properties of the rank function.
     \begin{equation*}
         |W| \leq t |F| = k |L_{n - 1}| |F| \leq k |\partial F| |L_n| = |N(W)|
     \end{equation*}
-    So Hall's theorem yields a perfect matching $M \subseteq E$ from $V_1$ to $V_2$.
+    So Hall's theorem yields a matching $M \subseteq E$ from $V_1$ to $V_2$.
     As $|V_1| = |V_2|$, this is already a 1-to-one correspondence.
 
     Now consider the sets
     \begin{equation*}
-        C'_m := C_j \cup \{ a \} \ \text{where} \ m = \{\underbrace{(i, a)}_{\in V_1}, \underbrace{(j, b)}_{\in V_2}\} \in M
+        C'_m := C_j \cup \{ a \} \ \text{where} \ m = \{\underbrace{(1, i, a)}_{\in V_1}, \underbrace{(2, j, b)}_{\in V_2}\} \in E
     \end{equation*}
     These are chains, as $\max C_j < a$ for each $C'_m$.
     Further, for each $x, y \in L_i, i < n$ have that
