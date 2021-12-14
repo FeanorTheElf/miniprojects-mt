@@ -183,12 +183,12 @@ In this part, we want to study whether graded posets satisfy an analogue of the 
 
     Now consider the sets
     \begin{equation*}
-        C'_m := C_j \cup \{ a \} \ \text{where} \ m = \{\underbrace{(1, i, a)}_{\in V_1}, \underbrace{(2, j, b)}_{\in V_2}\} \in E
+        C'_m := C_j \cup \{ a \} \ \text{for each} \ m = \{\underbrace{(1, i, a)}_{\in V_1}, \underbrace{(2, j, b)}_{\in V_2}\} \in M
     \end{equation*}
     These are chains, as $\max C_j < a$ for each $C'_m$.
     Further, for each $x, y \in L_i, i < n$ have that
     \begin{equation*}
-        |\{ C'_m \ | \ x \in C'_m \}| = |L_n \times \{ j \ | \ x \in C_j \}| = |L_n \times \{ j \ | \ y \in C_j \}| = |\{ C'_m \ | \ y \in C'_m \}|
+        |\{ m \ | \ x \in C'_m \}| = |L_n \times \{ j \ | \ x \in C_j \}| = |L_n \times \{ j \ | \ y \in C_j \}| = |\{ C'_m \ | \ y \in C'_m \}|
     \end{equation*}
     as $M$ is a matching from $V_2$ to $V_1$.
     Finally, for all $x \in L_n$ we have that
@@ -233,7 +233,8 @@ In this part, we want to study whether graded posets satisfy an analogue of the 
 \end{proof}
 
 \section{Part III}
-We even show the slightly stronger stronger statement that the implication to the second condition of Prop.\ref{prop:characterization_lym} already holds ``locally'', i.e. for each layer separately.
+In this part, we show that sufficiently symmetric posets satisfy the conditions introduced in the previous part.
+We even show a slightly stronger stronger statement than required in the task, namely that the implication to the second condition of Prop.\ref{prop:characterization_lym} already holds ``locally'', i.e. for each layer separately.
 \begin{proposition}
     \label{prop:biregular_implies_lym}
     Let $P$ be a graded poset with layers $L_0, ..., L_n$ and let $0 < i \leq n$ such that
@@ -276,10 +277,10 @@ We even show the slightly stronger stronger statement that the implication to th
 
 \section{Part IV}
 \begin{example}
-    Let $\Pi_m = \{ \pi \subseteq \powerset(n) \ | \ \text{$\pi$ partition} \}$ be the poset of partitions ordered by refinement.
+    Let $\Pi_m = \{ \pi \subseteq \powerset(m) \ | \ \text{$\pi$ partition} \}$ be the poset of partitions ordered by refinement.
     Then $\Pi_m$ is a graded poset with rank function
     \begin{equation*}
-        r: \Pi_m \to \{ 0, ..., n - 1 \}, \quad \pi \mapsto n - |\pi|
+        r: \Pi_m \to \{ 0, ..., m - 1 \}, \quad \pi \mapsto m - |\pi|
     \end{equation*}
 \end{example}
 \begin{proof}
@@ -287,10 +288,10 @@ We even show the slightly stronger stronger statement that the implication to th
     Next we show that for all $x < y$ have $r(x) < r(y)$.
     However, if $x$ is a proper refinement of $y$, then clearly $|x| > |y|$, so $r(x) < r(y)$.
 
-    Now assume there is a maximal chain $\pi_1 < ... < \pi_t$ in $\Pi_m$.
-    As the chain is maximal and $\Pi_m$ has the largest element $[n]$, we may assume that $\pi_t = [n]$ and thus $r(\pi_t) = n - 1$.
-    Similarly, we may assume that $p_1 = \powerset(n)$ and so $r(\pi_1) = 0$.
-    We have to show that $t = n$, and so it suffices to show that $r(\pi_i) = 1 + r(\pi_{i - 1})$ for all $0 < i \leq t$.
+    Now assume there is a maximal chain $\pi_1 < ... < \pi_t$ in $\Pi_m$, and want to show that $t = m$.
+    As the chain is maximal and $\Pi_m$ has the largest element $[m]$, we may assume that $\pi_t = [m]$ and thus $r(\pi_t) = m - 1$.
+    Similarly, we may assume that $p_1 = \{ \{a\} \ | \ a \in [m]\}$ and so $r(\pi_1) = 0$.
+    So it suffices to show that $r(\pi_i) = 1 + r(\pi_{i - 1})$ for all $0 < i \leq t$.
 
     Assume not, i.e. $|\pi_{i - 1}| \geq 2 + |\pi_i|$ for some $0 < i \leq t$.
     Since $\pi_{i - 1}$ is a refinement of $\pi_i$, we find that
@@ -408,17 +409,17 @@ We even show the slightly stronger stronger statement that the implication to th
     \end{proof}
     We can now plug this into the second condition of Prop.~\ref{prop:characterization_lym} to see
     \begin{align*}
-        \frac {|\partial \mathcal{A}|} {|L_{n - 3}|} &= \frac {{m \choose m/2}\left( 2^{m/2 - 1} - 1\right)} {S(m, 3)} = \frac {{m \choose m/2}\left( 2^{m/2 - 1} - 1\right)} {\frac 1 2 \left( 3^{m - 1} - 2^m + 1 \right)} \\
-        &\quad \sim \frac {2^{m + m/2}} {\sqrt{n}(3^{m - 1} - 2^m)} \sim \frac {3 \left( 2^{3/2} \right)^m} {\sqrt{n} 3^m} = \frac 3 {\sqrt{n}} c^m
+        \frac {|\partial \mathcal{A}|} {|L_{m - 3}|} &= \frac {{m \choose m/2}\left( 2^{m/2 - 1} - 1\right)} {S(m, 3)} = \frac {{m \choose m/2}\left( 2^{m/2 - 1} - 1\right)} {\frac 1 2 \left( 3^{m - 1} - 2^m + 1 \right)} \\
+        &\quad \sim \frac {2^{m + m/2}} {\sqrt{m}(3^{m - 1} - 2^m)} \sim \frac {3 \left( 2^{3/2} \right)^m} {\sqrt{m} 3^m} = \frac 3 {\sqrt{m}} c^m
     \end{align*}
     and
     \begin{align*}
-        \frac {|\mathcal{A}|} {|L_{n - 2}|} &= \frac {\frac 1 2 {m \choose m/2}} {S(m, 2)} = \frac {{m \choose m/2}} {2^m - 2} \sim \frac {2^m} {\sqrt{n}2^m} = \frac 1 {\sqrt{n}}
+        \frac {|\mathcal{A}|} {|L_{m - 2}|} &= \frac {\frac 1 2 {m \choose m/2}} {S(m, 2)} = \frac {{m \choose m/2}} {2^m - 2} \sim \frac {2^m} {\sqrt{m}2^m} = \frac 1 {\sqrt{m}}
     \end{align*}
     for some $0 < c < 1$ (here $\sim$ means asymptotically equivalent as $m \to \infty$).
-    In particular, find for sufficiently large $m$ that
+    In particular, find for all $\epsilon > 0$ and sufficiently large $m$ that
     \begin{equation*}
-        \frac {|\partial \mathcal{A}|} {|L_{n - 3}|} < \frac {|\mathcal{A}|} {|L_{n - 2}|}
+        \frac {|\partial \mathcal{A}|} {|L_{m - 3}|} < \epsilon \frac {|\mathcal{A}|} {|L_{m - 2}|}
     \end{equation*}
     and so the conditions of Prop.~\ref{prop:characterization_lym} are not satisfied.
 \end{example}
@@ -476,9 +477,10 @@ Note that this definition is compatible with the definition of a symmetric chain
     Use induction on $d$.
     The base case $d = 1$ is trivial, so assume that $d > 1$.
     By induction hypothesis, have a symmetric chain decomposition $\mathcal{C}$ of $\mathcal{P}_{k, d - 1}$.
-    For some $C = \{ A_i, A_{i + 1}, ..., A_{d(k - 1) - i} \} \in \mathcal{C}, i < \frac n 2$ with $r(A_j) = j$ and $0 \leq l \leq k, n - 2i - 1$ consider now the chain
+    Now consider some $C = \{ A_i, A_{i + 1}, ..., A_{d(k - 1) - i} \} \in \mathcal{C}, i < \frac n 2$ with $r(A_j) = j$.
+    For each $0 \leq l \leq k, n - 2i - 1$ define the chain
     \begin{equation*}
-        \tilde{C}_l := \{ (A_{i + l}, j) \ | \ 0 \leq j \leq k - l \} \cup \{ (A_j, k - l) \ | \ i + l < j \leq d(k - 1) - (i + l) \}
+        \tilde{C}_l := \{ \underbrace{(A_{i + l}, j)}_{\mathclap{:= (a_1, ..., a_{d - 1}, j) \ \text{if} \ A_{i + l} = (a_1, ..., a_{d - 1})}} \ | \ 0 \leq j \leq k - l \} \cup \{ (A_j, k - l) \ | \ i + l < j \leq d(k - 1) - (i + l) \}
     \end{equation*}
     Then $\tilde{C}_l$ is symmetric w.r.t. $i + l$, as for $i + l \leq j \leq dk - (i + l)$ we have
     \begin{align*}
@@ -521,7 +523,7 @@ Now we want to investigate whether $\mathcal{P}_{k, d}$ does.
     Note that a maximal chain in $L_{l - 1} \cup L_l$ corresponds to a pair $u_i < v_j$.
 
     Now consider a (finite) sequence of maximal chains $(C_k)_{k \in I}$ such that the chain corresponding to $u_i < v_j$ occurs $a_{ij} |I|$ times.
-    By the assumption, we know that for each $i$
+    By the assumption, we know that for each $i$ have
     \begin{equation*}
         |\{k \ | \ u_i \in C_k\}| = \sum_{u_i < v_j} a_{ij}|I| = \frac 1 {|L_0|} |I|
     \end{equation*}
@@ -540,14 +542,15 @@ Using this, I could check that $\mathcal{P}_{k, d}$ indeed satisfies the conditi
 Note that already for these ``small'' numbers, we get quite huge posets $|\mathcal{P}_{k, d}|$.
 Hence, I believe that this is true for all $\mathcal{P}_{k, d}$.
 
-My successful-looking attempt is based on the observation that elements of $\mathcal{P}_{k, d}$ ``behave similarly'' (in the sense that there is an element of the automorphism group $\mathrm{Aut}(\mathcal{P}_{k, d})$ mapping one to the other) if the have the same number of equally sized entries.
-This looks promising, as the proof for $\powerset(n)$ and equivalently the proof of Prop.~\ref{prop:biregular_implies_lym} relies on the fact that all elements in one layer of $\powerset(n)$ ``behave similarly'' in this sense.
+My successful-looking attempt at proving this is based on the observation that elements of $\mathcal{P}_{k, d}$ ``behave similarly'' (in the sense that there is an element of the automorphism group $\mathrm{Aut}(\mathcal{P}_{k, d})$ mapping one to the other) if the have the same number of equally sized entries.
+This looks promising, as the proof for $\powerset(n)$ relies on the fact that all elements in one layer of $\powerset(n)$ ``behave similarly'' in this sense.
+In particular, note that Prop.~\ref{prop:biregular_implies_lym} would already be applicable in such a case.
 
 This is formalized in the next definition.
 \begin{definition}
     Let $P = \mathcal{P}_{k, d}$. Then define
     \begin{equation*}
-        P(n_0, ..., n_k) := \{ x \in P \ | \ |\{i \ | \ x(i) = j\}| = n_j \}
+        P(n_0, ..., n_k) := \bigl\{ x \in P \ \bigm| \ |\{i \ | \ x(i) = j\}| = n_j \bigl\}
     \end{equation*}
     Further, for any subset $F \subseteq P$ write
     \begin{equation*}
@@ -558,9 +561,9 @@ This is formalized in the next definition.
     \label{prop:properties_n_distribution_subsets}
     The size of $|P(n_0, ..., n_k)|$ is given by the multinomial coefficient
     \begin{equation*}
-        |P(n_0, ..., n_k)| = { d \choose n_0, ..., n_k } =  \frac {n!} {n_0! ... n_k!}
+        |P(n_0, ..., n_k)| = { d \choose n_0, ..., n_k } =  \frac {d!} {n_0! ... n_k!}
     \end{equation*}
-    if $n_0 + ... + n_k = d$ (otherwise, it is clearly zero).
+    if $n_0 + ... + n_k = d$ and $n_i \geq 0$ (otherwise, it is clearly zero).
 
     Further, for all $n_0, ..., n_k \in \Z$ with $\sum n_i = d$ and all $a \in P(n_0, ..., n_k), 0 \leq \delta < k$ have
     \begin{align*}
@@ -569,6 +572,37 @@ This is formalized in the next definition.
     \end{align*}
     even if any of the $n_i$ are negative.
 \end{lemma}
+\begin{proof}
+    For $n_0 + ... + n_k = d$ and $n_i \geq 0$ we have
+    \begin{align*}
+        &|P(n_0, ..., n_k)| = |\bigl\{ x \in P \ \bigm| \ |\{i \ | \ x(i) = j\}| = n_j\bigl\}| \\
+        =& \sum_{A_0 \in [d]^{(n_0)}} |\bigl\{ x \in \{0, ..., k\}^{[d] \setminus A_0} \ \bigm| \ |\{i \ | \ x(i) = j\}| = n_j\bigl\}| \\
+        =& \sum_{A_0 \in [d]^{(n_0)}} \sum_{A_1 \in ([d] \setminus A_0)^{(n_1)}} |\bigl\{ x \in \{0, ..., k\}^{[d] \setminus A_0 \setminus A_1} \ \bigm| \ |\{i \ | \ x(i) = j\}| = n_j\bigl\}| \\
+        =& \ ... \\
+        =& \sum_{A_0 \in [d]^{(n_0)}} ... \sum_{A_k \in ([d] \setminus A_0 \setminus ... \setminus A_{k - 1})^{(n_k)}} 1 \\
+        =& \sum_{A_0 \in [d]^{(n_0)}} ... \sum_{A_{k - 1} \in ([d] \setminus A_0 \setminus ... \setminus A_{k - 2})^{(n_k)}} {d - n_0 - ... - n_{k - 1} \choose n_k} \\
+        =& \ ... \\
+        =& {d \choose n_0} {d - n_0 \choose n_1} ... {d - n_0 - ... - n_{k - 1} \choose n_k} = \prod_i \frac {(d - n_0 - ... - n_{i - 1})!} {n_i! (d - n_0 - ... - n_i!)} \\
+        =& \frac {d!} {n_0! ... n_k!} \prod_i \frac {(d - n_0 - ... - n_i)!} {(d - n_0 - ... - n_i)!} = \frac {d!} {n_0! ... n_k!}
+    \end{align*}
+    Further have for all $n_0 + ... + n_k = d$ and $a \in P(n_0, ..., n_k)$ that there is a bijection
+    \begin{align*}
+        \{ i \in [d] \ | \ a(i) = \delta + 1 \} &\to \partial a \cap P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k), \\
+        i &\mapsto f_{a, i}: j \mapsto \begin{cases}
+            a(j) & \text{if $j \neq i$} \\
+            a(j) - 1 & \text{otherwise}
+        \end{cases}
+    \end{align*}
+    It is easy to see that the image of some $i$ is indeed an element of $\partial a$ and of $P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)$.
+    Clearly the function is also injective, and surjectivity can be shown by considering some $b \in \partial a \cap P(n_0, ..., n_\delta + 1, n_{\delta + 1} - 1, ..., n_k)$ and showing by induction that
+    \begin{equation*}
+        \{ i \ | \ b(i) = j \} = \{ i \ | \ a(i) = j \}
+    \end{equation*}
+    for all $j \neq \delta, \delta + 1$.
+    Note that the set $\{ i \in [d] \ | \ a(i) = \delta + 1 \}$ has size exactly $n_{\delta + 1}$ and so the claim follows.
+
+    The analogue statement for the upper shadow of $a$ can be proven in the same way.
+\end{proof}
 \begin{definition}
     Define the \emph{core} of $\mathcal{P}_{k, d}$ as the poset
     \begin{equation*}
@@ -589,8 +623,11 @@ This is formalized in the next definition.
     \begin{equation*}
         R: \mathcal{P}_{k, d} \to \mathcal{C}_{k, d}, \quad A \mapsto \bigl( |\{j \ | \ A(j) = i\}| \bigr)_{0 \leq i \leq k}
     \end{equation*}
-    that preserves the ordering and the fiber of a point $(n_0, ..., n_k)$ is exactly $P(n_0, ..., n_k)$.
+    that preserves the ordering and the fibre of a point $(n_0, ..., n_k)$ is exactly $P(n_0, ..., n_k)$.
 \end{lemma}
+\begin{proof}
+    All of these statements are very easy to check.
+\end{proof}
 
 \begin{proposition}
     \label{prop:core_of_multisets}
@@ -680,6 +717,30 @@ In particular, we have the following.
     Exactly as in Lemma~\ref{prop:lp_algorithm}.
 \end{proof}
 Using a simple implementation of this approach, I could check that for some arbitrarily chosen values of $k, d$ up to $(k, d) = (8, 9)$, the poset $\mathcal{P}_{k, d}$ indeed satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
+
+After quite a long time trying to prove that $\mathcal{P}_{k, d}$ satisfies an LYM-inequality analogue, I finally gave up and searched the literature.
+There I found that $\mathcal{P}_{k, d}$ is also called divisor lattice and indeed we have the following statement.
+\begin{proposition}
+    $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}, i.e. an LYM-inequality.
+\end{proposition}
+\begin{proof}
+    See e.g. \cite[Theorem 4.2.3]{anderson}.
+\end{proof}
+Interestingly, I have also found a variant of the LYM inequality for the poset $\Pi_m$ that we studied earlier.
+\begin{proposition}
+    Let $\mathcal{A} \subseteq \Pi_m$ be a nonempty antichain. Then define
+    \begin{equation*}
+        a_{n_1, ..., n_k} := |\bigl\{ A \in \mathcal{A} \ \bigm| \ |A| = k, \ |\{ S \in A \ | \ |S| = j \}| = n_j \bigr\}|
+    \end{equation*}
+    the number of partitions $A \in \mathcal{A}$ such that the classes in $A$ have sizes $n_1, ..., n_k$.
+    Then
+    \begin{equation*}
+        \sum_{k \geq 1} \sum_{n_1, ..., n_k} \frac {a_{n_1, ..., n_k} k!} {{m \choose n_1, ..., n_k} {m - 1 \choose k - 1}} \leq 1
+    \end{equation*}
+\end{proposition}
+\begin{proof}
+    See \cite{lym_partitions}.
+\end{proof}
 
 \section{Appendix (Code described in Part VI)}
 To find the computational results mentioned above, I have implemented the described algorithm in Rust.
