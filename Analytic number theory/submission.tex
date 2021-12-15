@@ -100,7 +100,7 @@ First, we will give another characterization of Dirichlet characters.
     So $f$ is a well-defined group homomorphism and we obviously have $\chi_f = \chi$.
 \end{proof}
 For simplicity of notation we sometimes will identify a Dirichlet character and its group homomorphism if it is always clear which one is meant.
-\begin{example}[Ex (i)]
+\begin{example}[Question (i)]
     \label{ex:nontrivial_dirichlet_character_mod_4}
     The function
     \begin{equation*}
@@ -129,12 +129,20 @@ Now we want to define Dirichlet series of Dirichlet characters.
     We will call it the Dirichlet series of $\chi$.
 \end{proposition}
 \begin{proof}
-    By Lemma~\ref{prop:characterization_dirichlet_character}, we know that $\chi$ corresponds to a group homomorphism $f: (\Z/q\Z)^\units \to \C^\units$ such that $\chi(\N) = f((\Z/q\Z)^*) \cup \{ 0 \} \subseteq \C$ is a finite subset of $\C$.
+    By Lemma~\ref{prop:characterization_dirichlet_character}, we know that $\chi$ corresponds to a group homomorphism
+    \begin{equation*}
+        f: (\Z/q\Z)^\units \to \C^\units
+    \end{equation*}
+    such that $\chi(\N) = f((\Z/q\Z)^*) \cup \{ 0 \} \subseteq \C$ is a finite subset of $\C$.
     Hence, there is $C > 0$ with $|\chi(n)| \leq C$ for all $n \in \N$, and it follows that
     \begin{equation*}
-        \sum_{1 \leq n \leq X} \left| \chi(n) n^{-s} \right| \leq \sum_{1 \leq n \leq X} C \left| n^{-s} \right| \leq C \sum_{1 \leq n \leq X} n^{-1 - \epsilon} \leq C \sum_{n \geq 1} n^{-1 - \epsilon}
+        \sum_{1 \leq n \leq X} \left| \chi(n) n^{-s} \right| \leq \sum_{1 \leq n \leq X} C \left| n^{-s} \right| \leq C \sum_{1 \leq n \leq X} \left| n^{-s} \right|
     \end{equation*}
-    which is finite.
+    We know that the series
+    \begin{equation*}
+        \sum_{n \geq 1} n^{-s}
+    \end{equation*}
+    converges uniformly on $\Re(s) \geq 1 + \epsilon$ and so the claim follows.
 \end{proof}
 \begin{proposition}
     \label{prop:dirichlet_series_at_one}
@@ -175,7 +183,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
         =& \ O(qCX^{-s} + qCY^{-s}) + \sum_{X/q \leq n \leq Y/q} \ \sum_{0 < k \leq q} \chi(qn + k) \Bigl( (qn)^{-s} + \underbrace{(qn + k)^{-s} - (qn)^{-s}}_{= O(sn^{-(1 + \epsilon)})} \Bigr) \\
         =& \ O(qCX^{-s}) + \sum_{X/q \leq n \leq Y/q} \Bigl( (qn)^{-s} c + \sum_{0 < k \leq q} O(Csn^{-(1 + \epsilon)}) \Bigr) = \\
         =& \ O(qCX^{-s}) + 0 + O\Bigl( Cqs \sum_{X/q \leq n \leq Y/q} n^{-(1 + \epsilon)} \Bigr) \\
-        =& \ O(qCX^{-s}) + O\Bigl( Cqs \sum_{X/q \leq n} n^{-(1 + \epsilon)} \Bigr)
+        =& \ O(qCX^{-s}) + O\Bigl( Cqs \sum_{n \geq X/q} n^{-(1 + \epsilon)} \Bigr)
     \end{align*}
     which is well-defined and finite.
     Further, the expression converges uniformly (as a function in $s$ on $[\epsilon, \infty[$) to $0$ as $X \to \infty$. 
@@ -188,7 +196,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
     It follows that $\lim_{t \to s^+} L(t, \chi_f)$ exists and is equal to $\sum_{n \geq 1} \chi(n) n^{-s}$.
 \end{proof}
 Applied to our example, we find
-\begin{example}[Ex (ii)]
+\begin{example}[Question (ii)]
     Let $f: \N \to \C$ be the Dirichlet character from Example~\ref{ex:nontrivial_dirichlet_character_mod_4} with corresponding group homomorphism $g: (\Z/4\Z)^\units \to \C$.
     Then
     \begin{equation*}
@@ -212,7 +220,7 @@ Interestingly, we can also study the series
     \sum_p f(p) p^{-s}
 \end{equation*}
 using Euler Products.
-\begin{example}[Ex (ii)]
+\begin{example}[Question (ii)]
     \label{ex:dirichlet_sum_over_primes}
     Have for $\Re(s) > 1$ that
     \begin{equation*}
@@ -248,7 +256,7 @@ using Euler Products.
     However, $3 \equiv n$ is not a square modulo $4$, so find that $a \not\equiv b \mod 4$.
     As both $a$ and $b$ must be odd, we see that either $a \equiv 3 \mod 4$ or $b \equiv 3 \mod 4$ and the claim follows by the induction hypothesis.
 \end{proof}
-\begin{corollary}[Ex (iii)]
+\begin{corollary}[Question (iii)]
     There are infinitely many primes $p$ with $p \equiv 3 \mod 4$.
 \end{corollary}
 \begin{proof}
@@ -262,7 +270,7 @@ using Euler Products.
     However, $q \neq p_i$ as $p_i \perp P + 2$ for all $i$ (if $p_i \divides P + 2$, then $p_i \divides P + 2 - P = 2$, a contradiction).
     This contradicts our assumption.
 \end{proof}
-For the case of primes $\equiv 1 \mod 4$, I have remembered the two-square theorem and its connection to primes in the ring $\Z[i]$ of Gaussian integers, and somehow my train of thoughts went into Algebraic Number Theory.
+For the case of primes $\equiv 1 \mod 4$, I have remembered Fermat's theorem on the sum of two squares and its connection to primes in the ring $\Z[i]$ of Gaussian integers, and somehow my train of thoughts went into Algebraic Number Theory.
 After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch} that requires the reader to prove the following proposition.
 \begin{proposition}
     \label{prop:primes_1_mod_q}
@@ -296,13 +304,14 @@ After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch
     However, the former is a contradiction, as $\omega_q \in \mathcal{O}^\units$ is a unit and no $n \geq 2$ is a unit.
 \end{proof}
 The book also mentions that the general case can be proven by using L-series in algebraic number fields.
-\begin{corollary}[Ex (iii)]
+I am pretty sure that those are exactly the functions $L(\chi, s)$ that we defined above.
+\begin{corollary}[Question (iii)]
     There are infinitely many primes $p$ with $p \equiv 1 \mod 4$.
 \end{corollary}
 \begin{proof}
     This is just a special case of Prop.~\ref{prop:primes_1_mod_q}.
 \end{proof}
-\begin{example}[Ex (iii)]
+\begin{example}[Question (iii)]
     Using a computer, we can also study the actual frequency of prime numbers $\equiv 1, 3 \mod 4$ among e.g. the first $10^8$ integers.
     This seems to indicate that both numbers are asymptotically equal, which seems natural, given the result of Example~\ref{ex:dirichlet_sum_over_primes}.
     For example, there are 332180 primes $\equiv 1 \mod 4$ and 332398 primes $\equiv 3 \mod 4$ smaller than $10^8$.
@@ -314,7 +323,7 @@ The book also mentions that the general case can be proven by using L-series in 
 We have already shown that Dirichlet characters are, in principle, group homomorphisms $(\Z/q\Z)^\units \to \C^\units$.
 If we now assume $q$ to be prime, we get an even nicer characterization.
 So for the whole section, assume that $q \geq 3$ is a prime.
-\begin{corollary}[Ex (i)]
+\begin{corollary}[Question (i)]
     \label{prop:dirichlet_character_image_group}
     Let $\chi, \chi': \N \to \C$ be Dirichlet characters mod $q$ and $r$ a representative of a primitive root modulo $q$.
     If $\chi(r) = \chi'(r)$, then $\chi = \chi'$.
@@ -336,7 +345,7 @@ So for the whole section, assume that $q \geq 3$ is a prime.
     \end{equation*}
 \end{proof}
 This correspondence also works in the other direction.
-\begin{corollary}[Ex (ii)]
+\begin{corollary}[Question (ii)]
     \label{prop:dirichlet_character_primitive_root}
     Let $\omega \in \C$ be a $(q - 1)$-th root of unity, i.e. $\omega^{q - 1} = 1$ and let $r \in \Z$ be a representative of a primitive root modulo $q$.
     Then
@@ -363,12 +372,15 @@ Using Corollary~\ref{prop:dirichlet_character_image_group}, we can describe it q
 \begin{proof}
     We have that $S_q = \{ x \in \C^\units \ | \ x^{q - 1} = 1 \}$ and the claim directly follows from Corollary~\ref{prop:dirichlet_character_image_group}.
 \end{proof}
-Note that the endomorphism monoid $\mathrm{End}((\Z/q\Z)^\units)$ is not a group, except in the trivial case $q = 2$.
-The reason is that e.g. the trivial group homomorphism $r \mapsto 1$ is not surjective and thus not invertible.
+Note that the endomorphisms $\mathrm{End}((\Z/q\Z)^\units)$ form a ring w.r.t. pointwise multiplication and composition
+(this is the case for the endomorphisms of any abelian group).
+In particular, the endomorphisms and so the Dirichlet characters form a group w.r.t. pointwise multiplication.
 \begin{definition}
     Denote by $\mathrm{Dir}(q)$ the set of Dirichlet characters modulo $q$.
 \end{definition}
-By Corollary~\ref{prop:dirichlet_character_primitive_root} each group endomorphism $f \in \mathrm{End}((\Z/q\Z)^\units)$ is determined by its value at a primitive root of unity $r \in (\Z/q\Z)^\units$, hence
+By Corollary~\ref{prop:dirichlet_character_image_group} each Dirichlet character resp. group endomorphism of $(\Z/q\Z)^\units$ is determined by its value at a primitive root of unity $r \in (\Z/q\Z)^\units$.
+Further, by Corollary~\ref{prop:dirichlet_character_primitive_root}, we also have a Dirichlet character resp. group endomorphism for each possible value at a primitive root of unity.
+Hence
 \begin{equation*}
     |\mathrm{Dir}(q)| = |\mathrm{End}((\Z/q\Z)^\units)| = |(\Z/q\Z)^\units| = q - 1
 \end{equation*}
@@ -378,7 +390,7 @@ It follows that there are exactly $q - 1$ distinct Dirichlet characters modulo a
     Hence, everything up to now can also be done for odd prime powers, if we replace $q - 1$ by $\phi(q)$.
 \end{remark}
 Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good idea to study in which cases the value $\sum_{x \in (\Z/q\Z)^\units} \chi(x)$ is zero.
-\begin{proposition}[Ex (iii)]
+\begin{proposition}[Question (iii)]
     \label{prop:finite_sums_characters}
     Let $\chi_0$ be the trivial Dirichlet character given by $r \mapsto 1$.
     Then
@@ -407,7 +419,7 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
     \end{equation*}
     So it is left to show that we get zero in the other cases.
     
-    Consider a Dirichlet character $\chi \neq \chi_0$ given by $r \mapsto \xi$ for a $q$-th root of unity $\xi \neq 1$.
+    Consider a Dirichlet character $\chi \neq \chi_0$ given by $r \mapsto \xi$ for a primitive $q$-th root of unity $\xi \neq 1$.
     Then
     \begin{equation*}
         \sum_{a \in (\Z/q\Z)^\units} \chi(a) = \sum_{k = 0}^{q - 2} \chi(r^k) = \sum_{k = 0}^{q - 2} \xi^k = \frac {1 - \xi^{q - 1}} {q - \xi} = 0 
@@ -417,7 +429,7 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
         \sum_{\chi \in \mathrm{Dir}(q)} \chi(a) &= \sum_{\chi \in \mathrm{Dir}(q)} \chi(r)^k \\
         &= \sum_{\xi \ \text{$q$-th root of unity}} \xi^k = \sum_{l = 0}^{q - 2} \omega^{kl} = \frac {1 - (\omega^{q - 1})^k} {1 - \omega^k} = 0 
     \end{align*}
-    where $\omega \in \C$ is a primitive $q$-th root of unity and $r \in \Z$ is a primitive root modulo $q$.
+    where $\omega \in \C$ is any primitive $q$-th root of unity and $r \in \Z$ is a primitive root modulo $q$.
     
     For the last part, note that for any $q$-th root of unity $\xi$, we have $\xi\overline{\xi} \in \R$ with $\xi\overline{\xi} = |\xi|^2 > 0$.
     Furthermore, $\overline{\xi}$ is also a $q$-th root of unity, and so we see that $\xi\overline{\xi} = 1$ (the only real, positive root of unity is 1).
@@ -432,7 +444,7 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
     The condition $ab^{-1} = 1$ is equivalent to $a \equiv b \mod q$, so the claim follows.
 \end{proof}
 Using these basic results, we can now prove facts on the Dirichlet series of characters.
-\begin{proposition}[Ex (iv)]
+\begin{proposition}[Question (iv)]
     \label{prop:representation_mangoldt_series_congruent_a}
     Let $a \perp q$. Then for $\Re(s) > 1$ have
     \begin{equation*}
@@ -459,7 +471,7 @@ Using these basic results, we can now prove facts on the Dirichlet series of cha
     \end{align*}
     as infinite summation clearly commutes with finite sums.
 \end{proof}
-\begin{example}[Ex (v)]
+\begin{example}[Question (v)]
     \label{ex:nontrivial_dirichlet_characters_mod_5}
     We consider the Dirichlet characters mod 5.
     A (primitive) 5-th root of unity $\omega_5 \in \C$ is given by $\omega_5 = \exp(2\pi i/5)$.
@@ -476,7 +488,7 @@ Using these basic results, we can now prove facts on the Dirichlet series of cha
 \section{Part III}
 Again, let $q \geq 3$ be a prime.
 Let further $\chi$ be a Dirichlet character mod $q$.
-\begin{proposition}[Ex (i)]
+\begin{proposition}[Question (i)]
     \label{prop:logarithmic_derivative_L}
     For $\Re(s) > 1$ have that
     \begin{equation*}
@@ -528,7 +540,7 @@ Let further $\chi$ be a Dirichlet character mod $q$.
 \end{proof}
 Now we want to find an analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
 First of all, we consider $\chi_0$.
-\begin{proposition}[Ex (ii)]
+\begin{proposition}[Question (ii)]
     \label{prop:formula_trivial_L_series}
     For $\Re(s) > 1$ we have
     \begin{equation*}
@@ -546,7 +558,7 @@ First of all, we consider $\chi_0$.
 \end{proof}
 For the other Dirichlet characters, the situation is slightly more complicated.
 First, we will bound the value of the partial sums of a Dirichlet character.
-\begin{lemma}[Ex (iii)]
+\begin{lemma}[Question (iii)]
     \label{prop:bound_partsums_character}
     Let $\chi \neq \chi_0$ be a Dirichlet character mod $q$ and consider the sum function
     \begin{equation*}
@@ -573,7 +585,7 @@ However, the best known results are significantly stronger than that.
     See \cite[Ch. 23]{davenport}.
 \end{proof}
 Now we can show the analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
-\begin{proposition}[Ex (iv)]
+\begin{proposition}[Question (iv)]
     Let $\chi \neq \chi_0$ be a Dirichlet character mod $q$.
     Then
     \begin{align*}
@@ -588,9 +600,10 @@ Now we can show the analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
         \sum_{n \geq 1} \chi(n) n^{-s} =& A(1 - \epsilon) (1 - \epsilon)^{-s} - (-s) \int_{1 - \epsilon}^\infty A(t) t^{-(s + 1)} dt \\
         =& s \int_1^\infty A(t) t^{-(s + 1)} dt
     \end{align*}
-    Further, the integral converges absolutely by Lemma~\ref{prop:bound_partsums_character}, and thus is holomorphic on $\Re(s) > 0$.
+    Further, the integral converges absolutely for $\Re(s) > 0$ and uniformly for $\Re(s) \geq \epsilon$ for all $\epsilon > 0$ by Lemma~\ref{prop:bound_partsums_character}.
+    Thus it is holomorphic on $\Re(s) > 0$.
 \end{proof}
-\begin{corollary}[Ex (iv)]
+\begin{corollary}[Question (iv)]
     \label{prop:logarithmic_derivative_L_bounded}
     The function $L(s, \chi)'/L(s, \chi)$ is bounded on a neighborhood of $1$, provided that $L(1, \chi) \neq 0$.
 \end{corollary}
@@ -609,14 +622,24 @@ We will prove two auxiliary lemmas before.
     \begin{equation*}
         \rho_a(s) := \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
     \end{equation*}
-    is a meromorphic function on $\Re(s) > 0$ with a simple poles at $1$ (and possibly other poles on $\Re(s) > 0$).
+    defined on $\Re(s) > 1$ has a meromorphic continuation to $\Re(s) > 0$ with a simple poles at $1$ (and possibly other poles on $\Re(s) > 0$), provided that $L(\chi, 1) \neq 0$ for all $\chi \in \mathrm{Dir}(q) \setminus \{ \chi_0 \}$.
 \end{lemma}
 \begin{proof}
-    By Prop.~\ref{prop:logarithmic_derivative_L}, we have for $\chi \in \mathrm{Dir}(q)$ that
+    By Prop.~\ref{prop:logarithmic_derivative_L}, we have for $\chi \in \mathrm{Dir}(q)$ and $\Re(s) > 1$ that
     \begin{equation*}
         \frac {\overline{\chi(a)}} {q - 1} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s} = \frac {\overline{\chi(a)}} {q - 1} \frac {L(s, \chi)'} {L(s, \chi)}
     \end{equation*}
-    If $\chi \neq \chi_0$, then Corollary~\ref{prop:logarithmic_derivative_L_bounded} shows that this function has no pole at $s = 1$.
+    Hence
+    \begin{equation*}
+        \rho_a(s) := \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \frac {L(s, \chi)'} {L(s, \chi)}
+    \end{equation*}
+    for $\Re(s) > 1$ and the right-hand side is a meromorphic continuation of $\rho_a(s)$ to $\Re(s) > 0$.
+
+    If $\chi \neq \chi_0$, then Corollary~\ref{prop:logarithmic_derivative_L_bounded} shows that the function
+    \begin{equation*}
+        \frac {\overline{\chi(a)}} {q - 1} \cdot \frac {L(s, \chi)'} {L(s, \chi)}
+    \end{equation*}
+    has no pole at $s = 1$.
     
     If $\chi = \chi_0$ on the other hand, Prop.~\ref{prop:formula_trivial_L_series} shows that
     \begin{equation*}
@@ -629,13 +652,13 @@ We will prove two auxiliary lemmas before.
     has a simple pole at $s = 1$.
     Since $a \perp q$, we see that $\chi_0(a) = 1$ and thus also
     \begin{equation*}
-        \frac {\overline{\chi_0(a)}} {q - 1} \sum_{n \geq 1} \frac {\Lambda(n) \chi_0(n)} {n^s} = \frac {\overline{\chi_0(a)}} {q - 1} \frac {L(s, \chi_0)'} {L(s, \chi_0)}
+        \frac {\overline{\chi_0(a)}} {q - 1} \cdot \frac {L(s, \chi_0)'} {L(s, \chi_0)}
     \end{equation*}
     has a simple pole at $s = 1$.
 
     Together, this yields that the sum of those functions
     \begin{equation*}
-        \rho_a(s) = \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
+        \rho_a(s) = \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {L(\chi, s)'} {L(\chi, s)}
     \end{equation*}
     is a meromorphic function with a simple pole at $s = 1$.
 \end{proof}
@@ -663,7 +686,8 @@ We will prove two auxiliary lemmas before.
     \end{align*}
     where the last equality was proven in the lecture.
 \end{proof}
-\begin{proposition}[Ex (v)]
+\begin{proposition}[Question (v)]
+    \label{prop:infinite_primes_congruent}
     Assume that $L(1, \chi) \neq 0$ for all $\chi \in \mathrm{Dir}(q) \setminus \{ \chi_0 \}$.
     Then for all $a \perp q$ there are infinitely many primes $p \equiv a \mod q$.
 \end{proposition}
@@ -687,7 +711,7 @@ We will prove two auxiliary lemmas before.
     \end{align*}
     However this function has no pole at $s = 1$, a contradiction to Lemma~\ref{prop:rho_pole_at_one}.
 \end{proof}
-\begin{example}[Ex (vi)]
+\begin{example}[Question (vi)]
     For all the nontrivial Dirichlet characters $\chi_1, ..., \chi_4$ defined in Example~\ref{ex:nontrivial_dirichlet_characters_mod_5}, we have
     \begin{equation*}
         L(1, \chi_i) \neq 0
@@ -713,8 +737,9 @@ We will prove two auxiliary lemmas before.
         \Im\left( \frac {L(1, \chi_i)} {\omega} \right) = \sum_{k \geq 0} b_k \Im(\omega) = \Im(\omega) \underbrace{ \sum_{k \geq 0} b_k }_{> 0}
     \end{equation*}
     Since $\chi_i$ is a nontrivial Dirichlet character, we see that $\Im(\omega) \neq 0$ and so $\Im(L(1, \chi_i)/\omega) \neq 0$, thus $L(1, \chi_i) \neq 0$.
+    The claim now follows by Prop.~\ref{prop:infinite_primes_congruent}.
 \end{proof}
-\begin{remark}[Ex (vii)]
+\begin{remark}[Question (vii)]
     TODO
 \end{remark}
 

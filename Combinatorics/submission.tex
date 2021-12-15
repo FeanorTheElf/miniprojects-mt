@@ -644,10 +644,14 @@ This is formalized in the next definition.
     Now consider a chain $C'_i$ from the assumption.
     Note that by Lemma~\ref{prop:properties_n_distribution_subsets}, we see that for $(n_0, ..., n_k) \in C'_i$ have
     \begin{itemize}
-        \item Every element in $P(n_0, ..., n_k)$ is covered by $n_\delta$ elements
-        \item Every element in $P(n_0, ..., n_k)$ covers $n_{\delta + 1}$ elements
+        \item Every element in $P(n_0, ..., n_k)$ is covered by $n_\delta$ elements in $P'_i$
+        \item Every element in $P(n_0, ..., n_k)$ covers $n_{\delta + 1}$ elements in $P'_i$
     \end{itemize}
-    The $P(n_0, ..., n_k)$ are exactly the layers of the poset $P'_i := \bigcup_{c \in C'_i} P(c)$.
+    where $P'_i \subseteq P$ is the graded poset that is given by the preimage of $C'_i$ under the canonical map $\mathcal{P}_{k, d} \to \mathcal{C}_{k, d}$, i.e.
+    \begin{equation*}
+        P'_i := \bigcup_{c \in C'_i} P(c) = R^{-1}(C'_i)
+    \end{equation*}
+    The $P(n_0, ..., n_k)$ are exactly the layers of the poset $P'_i$.
     Hence Prop.~\ref{prop:biregular_implies_lym} yields that there is a sequence of maximal chains
     \begin{equation*}
         C_{i, 1}, ..., C_{i, t_i}
@@ -718,6 +722,7 @@ In particular, we have the following.
     Exactly as in Lemma~\ref{prop:lp_algorithm}.
 \end{proof}
 Using a simple implementation of this approach, I could check that for some arbitrarily chosen values of $k, d$ up to $(k, d) = (8, 9)$, the poset $\mathcal{P}_{k, d}$ indeed satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
+Note that for this choice of $k, d$ we already have that $|\mathcal{P}_{8, 9}| = 134217728$ which is absolutely infeasible for more naive approaches.
 
 After quite a long time trying to prove that this holds generally, I finally gave up and searched the literature.
 There I found that $\mathcal{P}_{k, d}$ is also called divisor lattice and indeed we have the following statement.
