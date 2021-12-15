@@ -634,7 +634,7 @@ This is formalized in the next definition.
     Assume that $\mathcal{C}_{k, d}$ satisfies a ``scaled variant'' of condition (3) of Prop.~\ref{prop:characterization_lym}, namely:
     There exists a (finite) sequence $C'_1, ..., C'_t$ of maximal chains such that for a chain $C'$ chosen uniformly at random among them, we have
     \begin{equation*}
-        \Pr[ (n_0, ..., n_k) \in C' ] = \frac {|P(n_0, ..., n_k)|} {|L_{\sum_i i n_i}|}
+        \Pr[ (n_0, ..., n_k) \in C' ] = \frac {|P(n_0, ..., n_k)|} {|L_{r(n_0, ..., n_k)}|}
     \end{equation*}
     Then $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
 \end{proposition}
@@ -685,6 +685,7 @@ Hence, we get the following statement.
         A < B \ :\Leftrightarrow \ \exists a \in A, b \in B: a < b
     \end{equation*}
     for $A, B \in \mathcal{C}(P)$.
+    Note that then $\mathcal{C}(P)$ is a graded poset.
     
     If there exists a sequence of maximal chains $C'_1, ..., C'_t$ in $\mathcal{C}(P)$ such that for a chain $C$ chosen uniformly at random from among them, have
     \begin{equation*}
@@ -693,7 +694,7 @@ Hence, we get the following statement.
     for all $A \in \mathcal{C}(P)$, then $P$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
 \end{proposition}
 \begin{proof}
-    Exactly as above.
+    Exactly as in Prop.~\ref{prop:core_of_multisets}.
 \end{proof}
 I still do not know how to use this to prove that $\mathcal{P}_{k, d}$ does indeed satisfy Prop.~\ref{prop:characterization_lym}, but at least it provides a way for an even faster algorithm to test it for specific $k, d$.
 The idea is just that we can adjust the LP algorithm from Lemma~\ref{prop:lp_algorithm} to check the scaled variant, and so we get a polynomial time algorithm in $|\mathcal{C}_{k, d}|$.
@@ -718,7 +719,7 @@ In particular, we have the following.
 \end{proof}
 Using a simple implementation of this approach, I could check that for some arbitrarily chosen values of $k, d$ up to $(k, d) = (8, 9)$, the poset $\mathcal{P}_{k, d}$ indeed satisfies the conditions of Prop.~\ref{prop:characterization_lym}.
 
-After quite a long time trying to prove that $\mathcal{P}_{k, d}$ satisfies an LYM-inequality analogue, I finally gave up and searched the literature.
+After quite a long time trying to prove that this holds generally, I finally gave up and searched the literature.
 There I found that $\mathcal{P}_{k, d}$ is also called divisor lattice and indeed we have the following statement.
 \begin{proposition}
     $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}, i.e. an LYM-inequality.
@@ -726,21 +727,65 @@ There I found that $\mathcal{P}_{k, d}$ is also called divisor lattice and indee
 \begin{proof}
     See e.g. \cite[Theorem 4.2.3]{anderson}.
 \end{proof}
-Interestingly, I have also found a variant of the LYM inequality for the poset $\Pi_m$ that we studied earlier.
+Interestingly, I have also found a variant of the LYM inequality (``pseudo-LYM inequality'') for the poset $\Pi_m$ that we studied earlier.
 \begin{proposition}
     Let $\mathcal{A} \subseteq \Pi_m$ be a nonempty antichain. Then define
     \begin{equation*}
-        a_{n_1, ..., n_k} := |\bigl\{ A \in \mathcal{A} \ \bigm| \ |A| = k, \ |\{ S \in A \ | \ |S| = j \}| = n_j \bigr\}|
+        a(n_1, ..., n_k) := |\bigl\{ A \in \mathcal{A} \ \bigm| \ |A| = k, \ |\{ S \in A \ | \ |S| = j \}| = n_j \bigr\}|
     \end{equation*}
     the number of partitions $A \in \mathcal{A}$ such that the classes in $A$ have sizes $n_1, ..., n_k$.
     Then
     \begin{equation*}
-        \sum_{k \geq 1} \sum_{n_1, ..., n_k} \frac {a_{n_1, ..., n_k} k!} {{m \choose n_1, ..., n_k} {m - 1 \choose k - 1}} \leq 1
+        \sum_{k \geq 1} \sum_{n_1, ..., n_k} \frac {a(n_1, ..., n_k) k!} {{m \choose n_1, ..., n_k} {m - 1 \choose k - 1}} \leq 1
     \end{equation*}
 \end{proposition}
 \begin{proof}
     See \cite{lym_partitions}.
 \end{proof}
+Note that the total number of partitions $\pi$ such that the classes in $\pi$ have sizes $n_1, ..., n_k$ is given by an expression involving the multinomial coefficient, namely
+\begin{equation*}
+    |\bigl\{ \pi \in \Pi_m \ \bigm| \ |\pi| = k, |\{ S \in \pi \ | \ |S| = j\}| = n_j \bigr\}| = {m \choose n_1, ..., n_k} \underbrace{ \prod_i \frac 1 {|\{ j \ | \ n_j = i\}|!} }_{=: \gamma(n_1, ..., n_k)}
+\end{equation*}
+Intuitively, the reason is that there are $m!$ ways to order the elements $[m]$, and after splitting such a sequence in chunks of sizes $n_1, ..., n_k$, there are $n_1! \cdot ... \cdot n_k!$ ways to order the element within the chunks.
+Hence the multinomial coefficient
+\begin{equation*}
+    {m \choose n_1, ..., n_k}
+\end{equation*}
+gives the number of ways to distribute the elements of $[m]$ into ordered buckets of sizes $n_1, ..., n_k$.
+A partition corresponds to unordered buckets, i.e. swapping chunks of equal size does not change the partition.
+There are $1/\gamma(n_1, ..., n_k)$ ways to do so, and hence we get the expression mentioned above.
+
+Furthermore, the number $a(n_1, ..., n_k)$ and the underlying set do not depend on the order of $n_1, ..., n_k$.
+Hence, the partitions $A \in \mathcal{A}$ such that the classes of $A$ have sizes $n_1, ..., n_k$ might be counted multiple times.
+Note that the number of different orderings of $n_1, ..., n_k$ is given by $k!/\gamma(n_1, ..., n_k)$.
+Hence
+\begin{equation*}
+    \sum_{n_1, ..., n_k} \frac 1 {k!} {m \choose n_1, ..., n_k} = |L_{m - k}|
+\end{equation*}
+just counts all the partitions in one layer of $\Pi_m$.
+
+Now note also that
+\begin{equation*}
+    {m - 1 \choose k - 1}
+\end{equation*}
+is exactly the number of different sequences $n_1 \leq ... \leq n_k$ by the ``stars and bars'' method.
+Then one can see that the expression
+\begin{equation*}    
+    \sum_{k \geq 1} \sum_{n_1, ..., n_k} \frac {a(n_1, ..., n_k) k!} {{m \choose n_1, ..., n_k} {m - 1 \choose k - 1}} = \sum_{k \geq 1} \frac 1 {{m - 1 \choose k - 1}} \sum_{n_1, ..., n_k} \frac {a(n_1, ..., n_k)} {\frac 1 {k!} {m \choose n_1, ..., n_k}}
+\end{equation*}
+is very similar to the LYM inequality.
+The only difference is that elements elements corresponding to different class sizes $n_1, ..., n_k$ might receive slightly different weight, depending on how many duplicate $n_i$ occur in that sequence.
+
+Finally, there is still one interesting thought I had while thinking about the above inequality.
+Note that the decomposition
+\begin{equation*}
+    \Pi_m = \bigcup_{k \geq 1, \ n_1 \leq ... \leq n_k} \{ \pi \in \Pi_m \ | \ |\pi| = k, |\{ S \in \pi \ | \ |S| = j \}| = n_j \}
+\end{equation*}
+corresponds exactly to the core $\mathcal{C}(\Pi_m)$ of $\Pi_m$ as discussed above.
+In particular, the decomposition is exactly
+\begin{equation*}
+    \Pi_m = \bigcup \ \{ \mathrm{Aut}(\Pi_m).\pi \ | \ \pi \in \Pi_m \}
+\end{equation*}
 
 \section{Appendix (Code described in Part VI)}
 To find the computational results mentioned above, I have implemented the described algorithm in Rust.
