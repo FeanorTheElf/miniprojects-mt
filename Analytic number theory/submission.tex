@@ -52,7 +52,7 @@ Finally, let $\primes$ be the set of prime numbers in $\N$.
 
 For convenience, we include the definition of a Dirichlet character from the task description first.
 \begin{definition}
-    Let $q \geq 2$, then a \emph{Dirichlet character (mod $q$)} is a function $\chi: \N \to \C$ such that
+    Let $q \geq 2$, then a \emph{Dirichlet character (modulo $q$)} is a function $\chi: \N \to \C$ such that
     \begin{itemize}
         \item $\chi$ is completely multiplicative, so $\chi(a)\chi(b) = \chi(ab)$
         \item $\chi$ is periodic modulo $q$, so $\chi(n + q) = \chi(n)$
@@ -62,7 +62,7 @@ For convenience, we include the definition of a Dirichlet character from the tas
 First, we will give another characterization of Dirichlet characters.
 \begin{lemma}[Characterization of Dirichlet characters]
     \label{prop:characterization_dirichlet_character}
-    We have a one-to-one correspondence between Dirichlet characters mod $q$ and group homomorphisms $(\Z/q\Z)^\units \to \C^\units$ via
+    We have a one-to-one correspondence between Dirichlet characters modulo $q$ and group homomorphisms $(\Z/q\Z)^\units \to \C^\units$ via
     \begin{align*}
         \{ f: (\Z/q\Z)^\units \to \C^\units \ | \ f \ \text{group hom} \} &\to \{ \chi: \N \to \C \ | \ \chi \ \text{Dirichlet character mod $q$} \} \\
         f &\mapsto \chi_f := \left( \N \to \C, \ n \mapsto \begin{cases}
@@ -74,7 +74,7 @@ First, we will give another characterization of Dirichlet characters.
 \begin{proof}
     First of all, we show that the map is well-defined. Let $f: (\Z/q\Z)^\units \to \C^\units$ be a (multiplicative) group homomorphism, and we show that $\chi_f$ is a Dirichlet character.
     
-    Note that property (ii) and (iii) directly follow from the definition, as $\chi_f(n)$ only depends on the value of $n \mod q$.
+    Note that property (ii) and (iii) directly follow from the definition, as $\chi_f(n)$ only depends on the value of $n$ modulo $q$.
     So consider some $a, b \in \N$.
     If both $a \perp q$ and $b \perp q$ then
     \begin{equation*}
@@ -105,9 +105,9 @@ For simplicity of notation we sometimes will identify a Dirichlet character and 
     The function
     \begin{equation*}
         f: \N \to \C, \quad n \mapsto \begin{cases}
-            0 & \text{if $n \equiv 0, 2 \mod 4$} \\
-            1 & \text{if $n \equiv 1 \mod 4$} \\
-            -1 & \text{if $n \equiv 3 \mod 4$}
+            0 & \text{if $n \equiv 0, 2 \pmod 4$} \\
+            1 & \text{if $n \equiv 1 \pmod 4$} \\
+            -1 & \text{if $n \equiv 3 \pmod 4$}
         \end{cases}
     \end{equation*}
     is a Dirichlet character.
@@ -117,7 +117,7 @@ For simplicity of notation we sometimes will identify a Dirichlet character and 
     \begin{equation*}
         g: (\Z/4\Z)^\units = \{ 1, 3 \} \to \C^*, \quad 1 \mapsto 1, \ 3 \mapsto -1
     \end{equation*}
-    (this is a group homomorphism, as $3^2 = 9 \equiv 1 \mod 4$)
+    (this is a group homomorphism, as $3^2 = 9 \equiv 1 \pmod 4$)
 \end{proof}
 Now we want to define Dirichlet series of Dirichlet characters.
 \begin{proposition}
@@ -246,36 +246,36 @@ using Euler Products.
 \end{proof}
 \begin{lemma}
     \label{prop:prime_factor_3_mod_4}
-    Let $n \equiv 3 \mod 4$. Then $n$ has a prime factor $p \equiv 3 \mod 4$.
+    Let $n \equiv 3 \pmod 4$. Then $n$ has a prime factor $p \equiv 3 \pmod 4$.
 \end{lemma}
 \begin{proof}
     Use induction on $n$.
     If $n = 3$, the claim is trivial. 
     So let $n > 3$. If $n$ is prime, the claim again follows.
     Otherwise, have $n = ab$ with nontrivial divisors $a, b$.
-    However, $3 \equiv n$ is not a square modulo $4$, so find that $a \not\equiv b \mod 4$.
-    As both $a$ and $b$ must be odd, we see that either $a \equiv 3 \mod 4$ or $b \equiv 3 \mod 4$ and the claim follows by the induction hypothesis.
+    However, $3 \equiv n$ is not a square modulo $4$, so find that $a \not\equiv b \pmod 4$.
+    As both $a$ and $b$ must be odd, we see that either $a \equiv 3$ or $b \equiv 3 \pmod 4$ and the claim follows by the induction hypothesis.
 \end{proof}
 \begin{corollary}[Question (iii)]
-    There are infinitely many primes $p$ with $p \equiv 3 \mod 4$.
+    There are infinitely many primes $p$ with $p \equiv 3 \pmod 4$.
 \end{corollary}
 \begin{proof}
     Assume there were only finitely many, say $p_1, ..., p_N$.
     Let $P := p_1 ... p_N$ if $N$ is even and $P := p_1^2 p_2 ... p_N$ if $N$ is odd.
     Then
     \begin{equation*}
-        P \equiv 3^{2 \lceil \frac N 2 \rceil} \equiv 1^{\lceil \frac N 2 \rceil} = 1 \mod 4
+        P \equiv 3^{2 \lceil \frac N 2 \rceil} \equiv 1^{\lceil \frac N 2 \rceil} = 1 \pmod 4
     \end{equation*}
-    Thus, by Lemma~\ref{prop:prime_factor_3_mod_4}, $P + 2$ has a prime factor $q \equiv 3 \mod 4$.
+    Thus, by Lemma~\ref{prop:prime_factor_3_mod_4}, $P + 2$ has a prime factor $q \equiv 3 \pmod 4$.
     However, $q \neq p_i$ as $p_i \perp P + 2$ for all $i$ (if $p_i \divides P + 2$, then $p_i \divides P + 2 - P = 2$, a contradiction).
     This contradicts our assumption.
 \end{proof}
-For the case of primes $\equiv 1 \mod 4$, I have remembered Fermat's theorem on the sum of two squares and its connection to primes in the ring $\Z[i]$ of Gaussian integers, and somehow my train of thoughts went into Algebraic Number Theory.
+For the case of primes $\equiv 1 \pmod 4$, I have remembered Fermat's theorem on the sum of two squares and its connection to primes in the ring $\Z[i]$ of Gaussian integers, and somehow my train of thoughts went into Algebraic Number Theory.
 After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch} that requires the reader to prove the following proposition.
 \begin{proposition}
     \label{prop:primes_1_mod_q}
     Let $q \geq 3$ be an integer.
-    Then there are infinitely many primes $p$ with $p \equiv 1 \mod q$.
+    Then there are infinitely many primes $p$ with $p \equiv 1 \pmod q$.
 \end{proposition}
 \begin{proof}
     Assume there were only finitely many such primes $p_i$, then we have their product $P = \prod_i p_i \in \Z$.
@@ -284,8 +284,8 @@ After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch
 
     Let now $K = \Q(\omega_q)$ be the $q$-th cyclotomic number field with a primitive $q$-th root of unity $\omega_q$ (i.e. $\Phi_q(\omega_q) = 0$).
     Let further $\mathcal{O} \subseteq K$ be the ring of integral elements over $\Z$ in $K$.
-    The prime decomposition law for Dedekind ring extension \cite[Chapter I, Prop 8.3]{neukirch} tells us that for a prime $p$, the ideal $(p)$ is reducible in $\mathcal{O}$ if and only if $\Phi_q \mod p$ is reducible.
-    As $(\Z/p\Z)^\units$ is cyclic of order $p - 1$, this is the case if and only if $q \divides p - 1$, i.e. $p \equiv 1 \mod q$.
+    The prime decomposition law for Dedekind ring extension \cite[Chapter I, Prop 8.3]{neukirch} tells us that for a prime $p$, the ideal $(p)$ is reducible in $\mathcal{O}$ if and only if $\Phi_q$ is reducible modulo $p$.
+    As $(\Z/p\Z)^\units$ is cyclic of order $p - 1$, this is the case if and only if $q \divides p - 1$, i.e. $p \equiv 1 \pmod q$.
 
     Now consider the element $\alpha = \omega_q - xqP \in \mathcal{O}$. Then
     \begin{align*}
@@ -306,15 +306,15 @@ After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch
 In a later chapter, the book also proves the general result \cite[Chapter VII, Theorem 5.14]{neukirch}.
 I am pretty sure that those are exactly the functions $L(\chi, s)$ that we defined above.
 \begin{corollary}[Question (iii)]
-    There are infinitely many primes $p$ with $p \equiv 1 \mod 4$.
+    There are infinitely many primes $p$ with $p \equiv 1 \pmod 4$.
 \end{corollary}
 \begin{proof}
     This is just a special case of Prop.~\ref{prop:primes_1_mod_q}.
 \end{proof}
 \begin{example}[Question (iii)]
-    Using a computer, we can also study the actual frequency of prime numbers $\equiv 1, 3 \mod 4$ among e.g. the first $10^8$ integers.
+    Using a computer, we can also study the actual frequency of prime numbers $\equiv 1, 3 \pmod 4$ among e.g. the first $10^8$ integers.
     This seems to indicate that both numbers are asymptotically equal, which seems natural, given the result of Example~\ref{ex:dirichlet_sum_over_primes}.
-    For example, there are 332180 primes $\equiv 1 \mod 4$ and 332398 primes $\equiv 3 \mod 4$ smaller than $10^8$.
+    For example, there are 332180 primes $\equiv 1 \pmod 4$ and 332398 primes $\equiv 3$ smaller than $10^8$.
     To find these numbers, the following python code was used.
     \lstinputlisting[language = python]{./primes.py}
 \end{example}
@@ -400,14 +400,14 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
             0 & \text{otherwise}
         \end{cases}, \\
         \sum_{\chi \in \mathrm{Dir}(q)} \chi(a) &= \begin{cases}
-            q - 1 & \text{if $a \equiv 1 \mod q$} \\
+            q - 1 & \text{if $a \equiv 1 \pmod q$} \\
             0 & \text{otherwise}
         \end{cases}
     \end{align*}
     Furthermore, for $b \perp q$ have
     \begin{equation*}
         \sum_{\chi \in \mathrm{Dir}(q)} \chi(a)\overline{\chi(b)} = \begin{cases}
-            q - 1 & \text{if $a \equiv b \mod q$} \\
+            q - 1 & \text{if $a \equiv b \pmod q$} \\
             0 & \text{otherwise}
         \end{cases}
     \end{equation*}
@@ -424,7 +424,7 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
     \begin{equation*}
         \sum_{a \in (\Z/q\Z)^\units} \chi(a) = \sum_{k = 0}^{q - 2} \chi(r^k) = \sum_{k = 0}^{q - 2} \xi^k = \frac {1 - \xi^{q - 1}} {q - \xi} = 0 
     \end{equation*}
-    By using the earlier results on the structure of $\mathrm{Dir}(q)$ we see that for $a \equiv r^k \not\equiv 1 \mod q$, have
+    By using the earlier results on the structure of $\mathrm{Dir}(q)$ we see that for $a \equiv r^k \not\equiv 1 \pmod q$, have
     \begin{align*}
         \sum_{\chi \in \mathrm{Dir}(q)} \chi(a) &= \sum_{\chi \in \mathrm{Dir}(q)} \chi(r)^k \\
         &= \sum_{\xi \ \text{$q$-th root of unity}} \xi^k = \sum_{l = 0}^{q - 2} \omega^{kl} = \frac {1 - (\omega^{q - 1})^k} {1 - \omega^k} = 0 
@@ -441,14 +441,14 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
             0 & \text{otherwise}
         \end{cases}
     \end{equation*}
-    The condition $ab^{-1} = 1$ is equivalent to $a \equiv b \mod q$, so the claim follows.
+    The condition $ab^{-1} = 1$ is equivalent to $a \equiv b \pmod q$, so the claim follows.
 \end{proof}
 Using these basic results, we can now prove facts on the Dirichlet series of characters.
 \begin{proposition}[Question (iv)]
     \label{prop:representation_mangoldt_series_congruent_a}
     Let $a \perp q$. Then for $\Re(s) > 1$ have
     \begin{equation*}
-        \sum_{n \equiv a \mod q} \frac {\Lambda(n)} {n^s} = \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
+        \sum_{n \equiv a \ (\text{mod} \ q)} \frac {\Lambda(n)} {n^s} = \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \sum_{n \geq 1} \frac {\Lambda(n) \chi(n)} {n^s}
     \end{equation*}
     (All those series obviously converge absolutely since $\Re(s) > 1$)
 \end{proposition}
@@ -456,14 +456,14 @@ Using these basic results, we can now prove facts on the Dirichlet series of cha
     By Prop.~\ref{prop:finite_sums_characters} we have for all $n \in \N$ that
     \begin{equation*}
         \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \chi(n) = \begin{cases}
-            1 & \text{if $a \equiv n \mod q$} \\
+            1 & \text{if $a \equiv n \pmod q$} \\
             0 & \text{otherwise}
         \end{cases}
     \end{equation*}
     It follows that
     \begin{align*}
-        \sum_{n \equiv a \mod q} \Lambda(n) n^{-s} =& \sum_{n \geq 1} \Lambda(n) n^{-s} \begin{cases}
-            1 & \text{if $a \equiv n \mod q$} \\
+        \sum_{n \equiv a \ (\text{mod} \ q)} \Lambda(n) n^{-s} =& \sum_{n \geq 1} \Lambda(n) n^{-s} \begin{cases}
+            1 & \text{if $a \equiv n \pmod q$} \\
             0 & \text{otherwise}
         \end{cases} \\
         =& \sum_{n \geq 1} \Lambda(n) n^{-s} \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \chi(n) \\
@@ -475,7 +475,7 @@ Using these basic results, we can now prove facts on the Dirichlet series of cha
     \label{ex:nontrivial_dirichlet_characters_mod_5}
     We consider the Dirichlet characters mod 5.
     A (primitive) 5-th root of unity $\omega_5 \in \C$ is given by $\omega_5 = \exp(2\pi i/5)$.
-    On the other hand, a primitive root modulo 5 is e.g. given by $r = 2$ since $2^2 \equiv -1 \mod 5$.
+    On the other hand, a primitive root modulo 5 is e.g. given by $r = 2$ since $2^2 \equiv -1 \pmod 5$.
     Thus we have the trivial Dirichlet character $\chi_0$ and $5 - 1 = 4$ nontrivial Dirichlet characters mod 5, namely those given by
     \begin{align*}
         \chi_1: 1 &\mapsto 1,\ 2 \mapsto \omega_5 = \exp(2\pi i/5),\ 3 \mapsto \omega_5^3 = \exp(6\pi i/5),\ 4 \mapsto \omega_5^2 = \exp(4\pi i/5),\ \\
@@ -666,11 +666,11 @@ We will prove two auxiliary lemmas before.
     \label{prop:correlation_theta_Psi}
     Let $a \perp q$ and define
     \begin{equation*}
-        \Psi_a(x) := \sum_{n < x, \ n \equiv a \mod q} \Lambda(n)
+        \Psi_a(x) := \sum_{n < x, \ n \equiv a \ (\text{mod} \ q)} \Lambda(n)
     \end{equation*}
     and
     \begin{equation*}
-        \theta_a(x) := \sum_{p < x, \ p \equiv a \mod q} \log(p)
+        \theta_a(x) := \sum_{p < x, \ p \equiv a \ (\text{mod} \ q)} \log(p)
     \end{equation*}
     Then
     \begin{equation*}
@@ -680,8 +680,8 @@ We will prove two auxiliary lemmas before.
 \begin{proof}
     Have
     \begin{align*}
-        \Psi_a(x) - \theta_a(x) =& \sum_{p^k < x, \ p^k \equiv a \mod q} \log(p) - \sum_{p < x, \ p \equiv a \mod q} \log(p) \\
-        =& \sum_{p^k < x, \ k \geq 2, \ p^k \equiv a \mod q} \log(p) \leq \sum_{p^k < x, \ k \geq 2} \log(p) \\
+        \Psi_a(x) - \theta_a(x) =& \sum_{p^k < x, \ p^k \equiv a \ (\text{mod} \ q)} \log(p) - \sum_{p < x, \ p \equiv a \ (\text{mod} \ q)} \log(p) \\
+        =& \sum_{p^k < x, \ k \geq 2, \ p^k \equiv a \ (\text{mod} \ q)} \log(p) \leq \sum_{p^k < x, \ k \geq 2} \log(p) \\
         =& \Psi(x) - \theta(x) = O(x^{1/2}\log(x))
     \end{align*}
     where the last equality was proven in the lecture.
@@ -689,7 +689,7 @@ We will prove two auxiliary lemmas before.
 \begin{proposition}[Question (v)]
     \label{prop:infinite_primes_congruent}
     Assume that $L(1, \chi) \neq 0$ for all $\chi \in \mathrm{Dir}(q) \setminus \{ \chi_0 \}$.
-    Then for all $a \perp q$ there are infinitely many primes $p \equiv a \mod q$.
+    Then for all $a \perp q$ there are infinitely many primes $p \equiv a \pmod q$.
 \end{proposition}
 \begin{proof}
     Assume not, then $\theta_a(x)$ is bounded, i.e. $\theta_a(x) = O(1)$.
@@ -697,13 +697,13 @@ We will prove two auxiliary lemmas before.
 
     By Prop.~\ref{prop:representation_mangoldt_series_congruent_a} we have that for $\Re(s) > 1$
     \begin{equation*}
-        \rho_a(s) = \sum_{n \equiv a \mod q} \Lambda(n) n^{-s}
+        \rho_a(s) = \sum_{n \equiv a \ (\text{mod} \ q)} \Lambda(n) n^{-s}
     \end{equation*}
     Partial summation yields that for $\Re(s) > 1$ have
     \begin{align*}
-        \rho_a(s) =& \sum_{n \equiv a \mod q} \Lambda(n) n^{-s} \\
-        =& \lim_{t \to \infty} \Bigl( \underbrace{ t^{-s} \sum_{n < t, \ n \equiv a \mod q} \Lambda(n) }_{ = t^{-s} \Psi_a(t) = t^{-s} O(t\log t) = o(1)} \Bigr) 
-        + s \int_1^\infty \Bigl( \underbrace{\sum_{n < t, \ n \equiv a \mod q} \Lambda(n) }_{ = \Psi_a(t)} \Bigr) t^{-(s + 1)} dt \\
+        \rho_a(s) =& \sum_{n \equiv a \ (\text{mod} \ q)} \Lambda(n) n^{-s} \\
+        =& \lim_{t \to \infty} \Bigl( \underbrace{ t^{-s} \sum_{n < t, \ n \equiv a \ (\text{mod} \ q)} \Lambda(n) }_{ = t^{-s} \Psi_a(t) = t^{-s} O(t\log t) = o(1)} \Bigr) 
+        + s \int_1^\infty \Bigl( \underbrace{\sum_{n < t, \ n \equiv a \ (\text{mod} \ q)} \Lambda(n) }_{ = \Psi_a(t)} \Bigr) t^{-(s + 1)} dt \\
         =& s \int_1^\infty \Psi_a(t) t^{-s - 1} dt = s \int_1^\infty O(t^{1/2}\log t) t^{-s - 1} dt \\
         =& O\left( |s| \int_1^\infty \log(t) t^{-\Re(s) - 1/2} dt \right) \\
         =& O\left( |s| \left( \frac 1 {1/2 - \Re(s)} 1^{1/2 - \Re(s)} + \frac 1 {1/2 - \Re(s)} \int_1^\infty t^{-\Re(s) - 1/2} dt \right) \right) \\
@@ -716,7 +716,7 @@ We will prove two auxiliary lemmas before.
     \begin{equation*}
         L(1, \chi_i) \neq 0
     \end{equation*}
-    It follows that there are infinitely many primes $\equiv a \mod 5$, for all $a \perp 5$.
+    It follows that there are infinitely many primes $\equiv a \pmod 5$, for all $a \perp 5$.
 \end{example}
 \begin{proof}
     By Prop.~\ref{prop:dirichlet_series_at_one} we know that
@@ -759,7 +759,7 @@ Finally, we want to reflect on the general approach and highlight how we used of
     More concretely, consider
     \begin{equation*}
         f: \N \to \C, \quad n \mapsto \begin{cases}
-            1 & \text{if $n \equiv a \mod q$} \\
+            1 & \text{if $n \equiv a \pmod q$} \\
             0 & \text{otherwise}
         \end{cases}
     \end{equation*}
@@ -789,8 +789,8 @@ Finally, we want to reflect on the general approach and highlight how we used of
     \begin{equation*}
         f\Lambda \neq f\log * f\mu \quad \text{and} \quad \frac 1 {\zeta_a(s)} \neq \sum_{n \geq 1} f(n) \mu(n) n^{-s}
     \end{equation*}
-    Note that we find $n \equiv a \mod q$ such that $n$ has no nontrivial factor $\equiv a \mod q$.
-    E.g. take $n = 9 \equiv 4 \mod 5$, then
+    Note that we find $n \equiv a \pmod q$ such that $n$ has no nontrivial factor $\equiv a \pmod q$.
+    E.g. take $n = 9 \equiv 4 \pmod 5$, then
     \begin{equation*}
         \log(3) = (f\Lambda)(6) \neq \sum_{cd = 9} f(c)\log(c)f(d)\mu(d) = 0
     \end{equation*}
