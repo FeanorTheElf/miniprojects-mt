@@ -319,7 +319,7 @@ We even show a slightly stronger stronger statement than required in the task, n
     \label{prop:partitions_recursion}
     For the number $S(m, k) := |\{ \pi \in \Pi_m \ | \ |\pi| = k\}|$ we have recursion
     \begin{equation*}
-        S(m, 1) = 1 \quad \text{and} \quad S(m, k) = \sum_{n = 1}^{m - 1} {m - 1 \choose n} S(n, k - 1)
+        S(m, 1) = 1 \quad \text{and} \quad S(m, k) = \sum_{n = k - 1}^{m - 1} {m - 1 \choose n} S(n, k - 1)
     \end{equation*}
     where $1 \leq k \leq m$.
 \end{proposition}
@@ -335,9 +335,9 @@ We even show a slightly stronger stronger statement than required in the task, n
         =& \sum_{\emptyset \neq A \subseteq [m], \ 1 \in A} |\{ \pi \in \Pi_{m - |A|} \ | \ |\pi| = k - 1 \}| \\
         =& \sum_{i = 1}^m \ \sum_{A \subseteq [m], \ |A| = i, \ 1 \in A} |\{ \pi \in \Pi_{m - i} \ | \ |\pi| = k - 1 \} \\
         =& \sum_{i = 1}^m {m - 1 \choose i - 1} S(m - i, k - 1) = \sum_{i = 0}^{m - 1} {m - 1 \choose m - i - 1} S(i, k - 1) \\
-        =& \sum_{i = 1}^{m - 1} {m - 1 \choose i} S(i, k - 1)
+        =& \sum_{i = 1}^{m - 1} {m - 1 \choose i} S(i, k - 1) = \sum_{n = k - 1}^{m - 1} {m - 1 \choose n} S(n, k - 1)
     \end{align*}
-    as for $k > 1$ have that $S(0, k) = 0$.
+    as for $k > 1$ have that $S(0, k) = 0$ and $S(m, k) = 0$ if $m < k$.
 \end{proof}
 \begin{example}
     \label{ex:partitions_have_no_lym}
