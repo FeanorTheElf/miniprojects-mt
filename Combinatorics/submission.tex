@@ -730,8 +730,99 @@ There I found that $\mathcal{P}_{k, d}$ is also called divisor lattice and indee
     $\mathcal{P}_{k, d}$ satisfies the conditions of Prop.~\ref{prop:characterization_lym}, i.e. an LYM-inequality.
 \end{proposition}
 \begin{proof}
-    See e.g. \cite[Theorem 4.2.3]{anderson}.
+    The proof is similar to \cite[Theorem 4.2.3]{anderson}.
+    However, I really like the proof and so we present it here in a somewhat modified form.
+
+    We show condition (2) of Prop.~\ref{prop:characterization_lym}, so consider some pair of consecutive layers $L_{i - 1}, L_i$.
+    Let further $F \subseteq L_i$. 
+    We want to show that
+    \begin{equation*}
+        |L_{i - 1} \times F| \leq |L_i \times \partial F|
+    \end{equation*}
+    Let now $P' := \{ 0, ..., 2k \}^d$ and note that we have the decompositions
+    \begin{align*}
+        L_{i - 1} \times F &= \bigcup_{M \in P', r(M) = 2i - 1} \{ (u, a) \in L_{i - 1} \times F \ | \ u + a = M \} \quad \text{and} \\
+        L_i \times \partial F &= \bigcup_{M \in P', r(M) = 2i - 1} \{ (v, b) \in L_i \times \partial F \ | \ v + b = M \}
+    \end{align*}
+    Hence it suffices to show that
+    \begin{equation*}
+        |\{ (u, a) \in L_{i - 1} \times F \ | \ u + a = M \}| \leq |\{ (v, b) \in L_i \times \partial F \ | \ v + b = M \}|
+    \end{equation*}
+    for each $M \in P', r(M) = 2i - 1$.
+
+    To do so, we show the following, stronger claim by induction.
 \end{proof}
+\begin{lemma}
+    Let $k_1, ..., k_d > 0$ and consider the poset
+    \begin{equation*}
+        P = \bigtimes_{i = 1}^d \{ 0, ..., k_d \}
+    \end{equation*}
+    Let further $M = (M_1, ..., M_d)$ with $M_i \leq 2k_i$ of rank $\sum_i M_i = 2l - 1$ and $F \subseteq L_l$ such that $M$ is an upper bound for $F$.
+    Then
+    \begin{equation*}
+        |\{ (u, a) \in L_{l - 1} \times F \ | \ u + a = M \}| \leq |\{ (v, b) \in L_l \times \partial F \ | \ v + b = M \}|
+    \end{equation*}
+\end{lemma}
+\begin{proof}
+    Use induction on $\sum_i k_i$. 
+    The base case is trivial, so assume $\sum_i k_i > 1$.
+
+    \paragraph{Case 1} If there exists $j$ such that $M_j < k_j$ then clearly
+    \begin{equation*}
+        F, \partial F \in P' := \{ 0, ..., k_1 \} \times ... \times \{ 0, ..., k_j - 1 \} \times ... \times \{ 0, ..., k_d \}
+    \end{equation*}
+    and also $u \in P'$ for all $u \in L_{l - 1}$ with $u + a = M$ for some $a \in F$.
+    Hence the induction hypothesis yields
+    \begin{equation*}
+        |\{ (u, a) \in L_{l - 1} \times F \ | \ u + a = M \}| \leq |\{ (v, b) \in L_l \times \partial F \ | \ v + b = M \}|
+    \end{equation*}
+
+    \paragraph{Case 2} If there exists $j$ such that $M_j > k_j \geq 1$, then consider
+    \begin{align*}
+        F' := &\{ a - e_j \ | \ a \in F, a(j) \neq 0 \} \in \\
+        &P' := \{ 0, ..., k_1 \} \times ... \times \{ 0, ..., k_j - 1 \} \times ... \times \{ 0, ..., k_d \}
+    \end{align*}
+    Clearly $M - 2e_j \geq (k_1, ..., k_j - 1, ..., k_d) \geq a - e_j$ for all $a \in F$, and so $M - 2e_j$ is an upper bound for $F'$.
+    By induction hypothesis, we now get that
+    \begin{equation*}
+        |\{ (u, a) \in L_{l - 2} \times F' \ | \ u + a = M - 2e_j \}| \leq |\{ (v, b) \in L_{l - 1} \times \partial F' \ | \ v + b = M - 2e_j \}|
+    \end{equation*}
+    However, observe that the map
+    \begin{align*}
+        \{ (u, a) \in L_{l - 2} \times F' \ | \ u + a = M - 2e_j \} &\to \{ (u, a) \in L_{l - 1} \times F \ | \ u + a = M \} \\
+        (u, a) &\mapsto (u + e_j, a + e_j)
+    \end{align*}
+    is a bijection.
+    The only nontrivial part is to see that it is surjective, so consider some $(u, a) \in L_{l - 1} \times F$ with $u + a = M$.
+    Then $u(j), a(j) \leq k_j < M(j)$ and so $a(j) = M(j) - u(j) \geq 1$, hence $a - e_j \in F'$.
+    Clearly $u - e_j \in L_{l - 2}$ and $u - e_j + a - e_j = M - 2e_j$.
+    So $(u, a)$ has the preimage $(u - e_j, a - e_j)$.
+
+    Similarly, see that the map
+    \begin{align*}
+        \{ (u, a) \in L_{l - 1} \times \partial F' \ | \ u + a = M - 2e_j \} &\to \{ (u, a) \in L_l \times \partial F \ | \ u + a = M \} \\
+        (u, a) &\mapsto (u + e_j, a + e_j)
+    \end{align*}
+    is a bijection.
+    Thus
+    \begin{equation*}
+        |\{ (u, a) \in L_{l - 1} \times F \ | \ u + a = M \}| \leq |\{ (v, b) \in L_l \times \partial F \ | \ v + b = M \}|
+    \end{equation*}
+    
+    \paragraph{Case 3} If $M = (k_1, ..., k_d)$, see that $2l - 1 = \sum_i k_i$ and so the layers $L_{l - 1}, L_l$ must be the two unique middle layers.
+    Now note that $|L_l| = |L_{l - 1}|$ and so it suffices to show that $|\partial F| \geq |F|$.
+    However, this follows directly by the symmetric chain decomposition of the poset $P$.
+    We have proven the symmetric chain decomposition only for $k_1 = ... = k_d$, but the general version can be found in \cite{anderson}.
+\end{proof}
+There are two parts I find interesting in this proof.
+\begin{itemize}
+    \item First of all, the idea to consider all $\bigtimes_i \{ 0, ..., k_i \}$ with possibly distinct $k_i$ makes it easy to use induction, as it suffices to decrease just one coordinate to use the induction hypothesis.
+    \item The decomposition
+    \begin{equation*}
+        L_{i - 1} \times F = \bigcup_{M \in P', r(M) = 2i - 1} \{ (u, a) \in L_{i - 1} \times F \ | \ u + a = M \}
+    \end{equation*}
+    is just very clever, as it really transforms the set of tuples $(u, a)$ into multiple sets that are more or less $\{ a \in F \ | \ a \leq M \}$ and much easier to handle.
+\end{itemize}
 Interestingly, I have also found a variant of the LYM inequality (``pseudo-LYM inequality'') for the poset $\Pi_m$ that we studied earlier.
 \begin{proposition}
     Let $\mathcal{A} \subseteq \Pi_m$ be a nonempty antichain. Then define
@@ -773,7 +864,7 @@ Now note also that
 \begin{equation*}
     {m - 1 \choose k - 1}
 \end{equation*}
-is exactly the number of different sequences $n_1 \leq ... \leq n_k$ by the ``stars and bars'' method.
+is exactly the number of different sequences $n_1 \leq ... \leq n_k$ summing to $m$ by the ``stars and bars'' method.
 Then one can see that the expression
 \begin{equation*}    
     \sum_{k \geq 1} \sum_{n_1, ..., n_k} \frac {a(n_1, ..., n_k) k!} {{m \choose n_1, ..., n_k} {m - 1 \choose k - 1}} = \sum_{k \geq 1} \frac 1 {{m - 1 \choose k - 1}} \sum_{n_1, ..., n_k} \frac {a(n_1, ..., n_k)} {\frac 1 {k!} {m \choose n_1, ..., n_k}}
