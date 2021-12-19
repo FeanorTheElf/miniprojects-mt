@@ -65,10 +65,10 @@ In this Miniproject, we want to study the Grassmanian
     \Gr(d, V) := \{ U \subseteq V \ | \ U \ \text{$d$-dimensional subspace} \}
 \end{equation*}
 as an object of Algebraic Geometry.
-First of all, this requires finding a ``natural'' embedding of $\Gr(d, V)$ in to projective space, and showing that w.r.t. that embedding, the Grassmanian is a projective variety.
+First of all, this requires finding a ``natural'' embedding of $\Gr(d, V)$ into projective space, and showing that w.r.t. that embedding, the Grassmanian is a projective variety.
 
 After that is established, we can continue to study its geometric properties, like vanishing ideal, dimension and degree.
-This part will only be considered in the case $d = 2$.
+In this part, we will restrict to $d = 2$.
 
 \subsection*{Conventions}
 We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
@@ -115,11 +115,10 @@ More interesting are the following properties.
     be arbitrary vectors in $\extpow^{j - 1} V$ resp. $\extpow^{d - j - 1} V$ for some $1 \leq j \leq d - 1$.
     Note that for $v = \sum \tau_i b_i, v' = \sum \tau'_i b_i \in V$ have then
     \begin{align*}
-        &(u \wedge v \wedge v' \wedge w) + (u \wedge v' \wedge v \wedge w) = \sum_{i_1, ..., i_{j - 1}, i_{j + 2}, ..., i_d} \quad \sum_{0 \leq i, i' \leq n} \lambda_{i_1, ..., i_{j - 1}} \mu_{i_{j + 2}, ..., i_d} \tau_i \tau'_{i'} \\
+        &(u \wedge v \wedge v' \wedge w) + (u \wedge v' \wedge v \wedge w) = \sum_{i_1, ..., i_{j - 1}, i_{j + 2}, ..., i_d} \ \sum_{0 \leq i_j, i_{j + 1} \leq n} \lambda_{i_1, ..., i_{j - 1}} \mu_{i_{j + 2}, ..., i_d} \tau_{i_j} \tau'_{i_{j + 1}} \\
         &\Bigl(\underbrace{\bigl( b_{i_1} \wedge ... \wedge b_{i_j} \wedge b_{i_{j + 1}} \wedge ... \wedge b_{i_d}\bigr) + \bigl( b_{i_1} \wedge ... \wedge b_{i_{j - 1}} \wedge b_{i_{j + 1}} \wedge b_{i_j} \wedge b_{i_{j + 2}} \wedge ... \wedge b_{i_d} \bigr)}_{= 0 \ \text{as it is an element of the space $U$}} \Bigl) \\
         &= 0
     \end{align*}
-    for all $u \in \extpow^{i - 1}(V), w \in \extpow^{(d - i - 1)}(V)$.
     Hence
     \begin{equation*}
         u \wedge v \wedge v' \wedge w = -(u \wedge v' \wedge v \wedge w)
@@ -154,11 +153,11 @@ More interesting are the following properties.
     Consider $u_1 = \sum \lambda_i v_i, u_2 = \sum_i \mu_i v_i, u_3 = \sum_i \rho_i v_i$.
     Then by applying Lemma~\ref{prop:basic_properties_exterior_product}, we see that 
     \begin{align*}
-        u_1 \wedge u_2 =& \sum_{i, j} \ \lambda_i \mu_j (\underbrace{v_i \wedge v_j}_{\mathclap{\text{$= 0$ if $i = j$}}}) = \sum_{i < j} \lambda_i \mu_j (v_i \wedge v_j) - \sum_{i > j} \lambda_i \mu_j (v_i \wedge v_j) \\
+        u_1 \wedge u_2 =& \sum_{i, j} \ \lambda_i \mu_j (\underbrace{v_i \wedge v_j}_{\mathclap{\text{$= 0$ if $i = j$}}}) = \sum_{i < j} \lambda_i \mu_j (v_i \wedge v_j) + \sum_{i > j} \lambda_i \mu_j (v_i \wedge v_j) \\
         =& \sum_{i < j} (\lambda_i \mu_j - \lambda_j \mu_i)(v_i \wedge v_j) = \alpha (v_1 \wedge v_2) + \beta (v_1 \wedge v_3) + \gamma (v_2 \wedge v_3) \\
         =& \begin{cases}
-            \beta v_1 + \gamma v_2 \wedge \frac \alpha \beta v_2 + v_3 & \text{if $\beta \neq 0$} \\
-            \alpha v_1 - \gamma v_3 \wedge v_2 & \text{otherwise}
+            (\beta v_1 + \gamma v_2) \wedge (\frac \alpha \beta v_2 + v_3) & \text{if $\beta \neq 0$} \\
+            (\alpha v_1 - \gamma v_3) \wedge v_2 & \text{otherwise}
         \end{cases}
     \end{align*}
     and
@@ -182,6 +181,7 @@ More interesting are the following properties.
         w = \sum_i a_i e_i \wedge \sum_j b_j e_j = \sum_{i < j} (a_i b_j - a_j b_i) (e_i \wedge e_j)
     \end{equation*}
     In other words
+    \footnote{Strictly speaking, we require here that $e_i \wedge e_j, i < j$ are linearly independent. However, we will prove this very soon anyway.}
     \begin{equation*}
         a_1b_2 - a_2b_1 = 1, \ a_3b_4 - a_4b_3 = 1, \ a_i b_j - a_j b_i = 0 \ \text{for all $(i, j) \neq (1, 2), (3, 4)$}
     \end{equation*}
@@ -253,18 +253,18 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
     \begin{equation*}
         \vspan\{ (b_{i_1}, ..., b_{i_d}) \ | \ \text{$i_1, ..., i_d$ distinct} \}
     \end{equation*}
-    due to the properties of the free product (the spaces share now basis vectors).
+    due to the properties of the free product (the spaces share no basis vectors).
 
     Now consider for $i_1, ..., i_d$ distinct the ``sorting permutation'' $\sigma_i \in S_d$, which is the unique permutation such that $i_{\sigma(1)} < ... < i_{\sigma(d)}$.
     Then
     \begin{align*}
-        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} \underbrace{\bigl( b_{i_1}, ..., b_{i_d} \bigr)}_{\sgn(\sigma_i) = 1 \ \text{as} \ \sigma_i = \mathrm{id}} = &\sum_{\substack{j, \ i_1, ..., i_d\\\sgn(\sigma_i) = 1}} \underbrace{\sgn(\sigma_i) \bigl( \mu_{j, i_1, ..., i_d} - \mu_{j, i_1, ..., i_{j + 1}, i_j, ..., i_d} \bigr)}_{=: \mu'_{j, i_1, ..., i_d}} \\
+        \sum_{i_1 < ... < i_d} \lambda_{i_1, ..., i_d} \underbrace{\bigl( b_{i_1}, ..., b_{i_d} \bigr)}_{\sgn(\sigma_i) = 1 \ \text{as} \ \sigma_i = \mathrm{id}} = &\sum_{\substack{j, \ i_1, ..., i_d\\\sgn(\sigma_i) = 1}} \underbrace{\bigl( \mu_{j, i_1, ..., i_d} + \mu_{j, i_1, ..., i_{j + 1}, i_j, ..., i_d} \bigr)}_{=: \mu'_{j, i_1, ..., i_d}} \\
         &\Bigl( \bigl( b_{i_1}, ..., b_{i_d} \bigr) + \bigl( b_{i_1}, ..., b_{i_{j - 1}}, b_{i_{j + 1}}, b_{i_j}, b_{i_{j + 2}}, ..., b_{i_d} \bigr) \Bigr)
     \end{align*}
     This yields
     \begin{align*}
         &-\sum_{\substack{j, \ i_1, ..., i_d\\\sgn(\sigma_i) = 1}} \Bigl( \mu'_{j, i_1, ..., i_d} - \begin{cases}
-            \lambda_{i_1, ..., i_d} & \text{if $i_1 < ... < i_d, j = 0$} \\
+            \lambda_{i_1, ..., i_d} & \text{if $i_1 < ... < i_d, j = 1$} \\
             0 & \text{otherwise}
         \end{cases} \Bigr) (b_{i_1}, ..., b_{i_d}) \\
         =& \sum_{\substack{j, \ i_1, ..., i_d\\\sgn(\sigma_i) = -1}} \mu'_{j, i_1, ..., i_{j + 1}, i_j, ..., i_d} (b_{i_1}, ..., b_{i_d})
@@ -295,15 +295,15 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
     is a subspace of $\extpow^d V$.
 \end{lemma}
 \begin{proof}
-    wlog assume that $b_1, ..., b_m$ are a basis of $U$.
+    wlog assume that $b_1, ..., b_m$ are a basis of $W$.
     Then
     \begin{equation*}
-        w = \sum_{i_1 < ... < i_{d - 1} < m} \lambda_{i_1, ..., i_{d - 1} \leq m} (b_{i_1} \wedge ... \wedge b_{i_{d - 1}})
+        w = \sum_{i_1 < ... < i_{d - 1} \leq m} \lambda_{i_1, ..., i_{d - 1}} (b_{i_1} \wedge ... \wedge b_{i_{d - 1}})
     \end{equation*}
     So with $v = \sum_i \mu_i b_i$ get
     \begin{align*}
         v \wedge w =& \sum_{i_1 < ... < i_{d - 1} \leq m} \lambda_{i_1, ..., i_{d - 1}} (v \wedge b_{i_1} \wedge ... \wedge b_{i_{d - 1}}) \\
-        =& \sum_{i_1 \leq n, \ i_1 < ... < i_{d - 1} \leq m} \mu_{i_1} \lambda_{i_2, ..., i_d} (b_{i_1} \wedge ... \wedge b_{i_d})
+        =& \sum_{i_1 \leq n, \ i_2 < ... < i_d \leq m} \mu_{i_1} \lambda_{i_2, ..., i_d} (b_{i_1} \wedge ... \wedge b_{i_d})
     \end{align*}
     By assumption, we also find
     \begin{align*}
@@ -312,18 +312,11 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
     Both representations are equal, hence
     \begin{equation*}
         \sum_{i_1 \leq n, \ i_2 < ... < i_d \leq m} \Bigl( \mu_{i_1}\lambda_{i_2, ..., i_d} - \begin{cases}
-            \tau_{i_1, ..., i_d} & \text{if $i_1 \leq m$} \\
+            \tau_{i_1, ..., i_d} & \text{if $i_1 < i_2$} \\
             0 & \text{otherwise}
         \end{cases} \Bigr) (b_{i_1} \wedge ... \wedge b_{i_d}) = 0
     \end{equation*}
     Hence by the previous Lemma~\ref{prop:basis_product_independence}, we see that for all $i_2 < ... < i_d \leq m < i_1 \leq n$ have
-    \begin{equation*}
-        0 = \mu_{i_1}\lambda_{i_2, ..., i_d} - \begin{cases}
-            \tau_{i_1, ..., i_d} & \text{if $i_1 \leq m$} \\
-            0 & \text{otherwise}
-        \end{cases}
-    \end{equation*}
-    So in particular find for all $i_2 < ... < i_d \leq m < i_1 \leq n$ that
     \begin{equation*}
         \mu_{i_1} \lambda_{i_2, ..., i_d} = 0
     \end{equation*}
@@ -355,7 +348,6 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
     \begin{equation*}
         v_1 \wedge ... \wedge v_n = \underbrace{\det(A)}_{\neq 0} (b_1 \wedge ... \wedge b_n) \neq 0
     \end{equation*}
-    So clearly $v_1 \wedge ... \wedge v_d \neq 0$ as $0 \wedge (v_{d + 1} \wedge ... \wedge v_n) = 0$ for all $v_{d + 1}, ..., v_n \in V$.
 \end{proof}
 Now we can see that in general, the exterior product contains not decomposable elements.
 \begin{lemma}[Question (c)]
@@ -372,13 +364,13 @@ Now we can see that in general, the exterior product contains not decomposable e
     by Lemma~\ref{prop:basic_properties_exterior_product}. 
     The other direction is more interesting.
 
-    Let $\omega = v_1 + ... + v_t$ for linearly independent decomposable vectors $v_i \in \extpow^2 V$.
+    Let $\omega = v_1 + ... + v_t$ for linearly independent decomposable vectors $v_i \in \extpow^d V$.
     Then
     \begin{align*}
         0 =& \omega \wedge \omega = \sum_{i, j} v_i \wedge v_j = \sum_{i < j} (v_i \wedge v_j) + (v_j \wedge v_i) \\
-        =& \sum_{i < j} 2(v_i \wedge v_j) = 2\sum_i v_i \wedge \Bigl( \sum_{j > i} v_j \Bigr)
+        \overset{*}{=}& \sum_{i < j} 2(v_i \wedge v_j) = 2\sum_i v_i \wedge \Bigl( \sum_{j > i} v_j \Bigr)
     \end{align*}
-    Here we used that the reversing permutation $\bigl(1 \ 2d\bigr)\bigl(2 \ (2d - 1)\bigr)...\bigl(d \ (d + 1)\bigr) \in S_{2d}$ has even parity, i.e. $\sgn(\cdot) = 1$ (since $d$ is even).
+    Here we used for $*$ that the reversing permutation $\bigl(1 \ 2d\bigr)\bigl(2 \ (2d - 1)\bigr)...\bigl(d \ (d + 1)\bigr) \in S_{2d}$ has even parity, i.e. $\sgn(\cdot) = 1$ (since $d$ is even).
 
     Now note that
     \begin{equation*}
@@ -518,7 +510,7 @@ This corresponds to the following definition.
     This shows the well-definedness.
 
     It is clear by definition that $f$ is linear, so it is left to show that it is bijective. 
-    To show surjectivity, note that the $\pm e_I, I \in \{1, ..., n\}^{(d)}$ form a basis of $k^{\{1, ..., n\}^{(d)}}$.
+    To show surjectivity, note that the unit vectors $\pm e_I, I \in \{1, ..., n\}^{(d)}$ form a basis of $k^{\{1, ..., n\}^{(d)}}$.
     Clearly for $I = \{i_1, ..., i_d\}, J \in \{1, ..., n\}^{(d)}$ we have that
     \begin{equation*}
         f(e_{i_1} \wedge ... \wedge e_{i_d})_J = \det(A_J(e_{i_1}, ..., e_{i_j})) = \begin{cases}
@@ -533,7 +525,7 @@ This corresponds to the following definition.
         e_{i_1} \wedge ... \wedge e_{i_d}
     \end{equation*}
     for $i_1 < ... < i_d$ form a basis of $\extpow^d k^n$ by Lemma~\ref{prop:basis_product_independence}.
-    It follows that $\dim(\extpow^d k^n) = \dim(\Proj^{\{1, ..., n\}^{(d)}})$ and we find that $f$ is also injective.
+    It follows that $\dim(\extpow^d k^n) = \dim(k^{\{1, ..., n\}^{(d)}})$ and we find that $f$ is also injective.
 \end{proof}
 \begin{corollary}[Question (b)]
     \label{prop:image_phi}
@@ -665,7 +657,7 @@ This is done in the following lemma.
     \label{prop:leading_term_ideal_grassmanian}
     Define the graded reverse monomial ordering $\preceq$ on $R := k[x_{i, j} \ | \ i < j]$ where the variables $x_{i, j}$ are ordered lexicographically w.r.t. $(i, j)$, i.e.
     \begin{equation*}
-        x_{i, j} \leq x_{u, v} \ :\Leftrightarrow \ (i, j) \leq_{\text{lex}} (u, v)
+        x_{i, j} \leq x_{u, v} \ :\Leftrightarrow \ (i, j) \leq_{\text{lex}} (u, v) \ \Leftrightarrow \ i < u \ \text{or} \ i = u, j < v
     \end{equation*}
     Moreover, let
     \begin{equation*}
@@ -749,7 +741,7 @@ At first glance, this lemma above seems quite deep, but it really is a repetitiv
     \begin{equation*}
         \mathrm{lt}(f)^d \equiv t x_{i, v} x_{j, u}
     \end{equation*}
-    for some $i < j < u < v$ and any monomial $t \in R$.
+    for some $i < j < u < v$ and some monomial $t \in R$.
     Clearly $x_{i, v} \perp x_{j, u}$, and it follows that
     \begin{equation*}
         x_{i, v} x_{j, u} \divides \mathrm{lt}(f)
