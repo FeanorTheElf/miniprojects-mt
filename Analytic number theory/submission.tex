@@ -15,8 +15,8 @@
 \addbibresource{bibliography.bib}
 
 \title{Miniproject - Analytic Number Theory}
-\author{Simon Pohmann}
-\date{}
+\author{Student Number: 1462479}
+\date{19.12.2021}
 
 \newcommand{\primes}{\mathbb{P}}
 \newcommand{\R}{\mathbb{R}}
@@ -44,12 +44,21 @@
 
 \begin{document}
 \maketitle
+
+\subsection*{Introduction}
+In this Miniproject, we want to generalize the notion of the Riemannian Zeta function $\zeta(s)$ to investigate the frequency of primes in arithmetic progressions.
+The central notion to do so is to consider Dirichlet characters $\chi: \N \to \C$.
+We define this kind of map and study some of its properties.
+
+After that, we introduce the Dirichlet series corresponding to a Dirichlet character, denoted by $L(s, \chi)$.
+Using this series, we follow a path somewhat similar to what was done in the lecture to show an important part of Dirichlet's prime number theorem.
+
+\subsection*{Conventions}
 We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
 Further, we write $a \divides b$ if $a$ divides $b$ and $a \perp b$ if $a$ and $b$ are coprime.
 Finally, let $\primes$ be the set of prime numbers in $\N$.
 
 \section{Part I}
-
 For convenience, we include the definition of a Dirichlet character from the task description first.
 \begin{definition}
     Let $q \geq 2$, then a \emph{Dirichlet character (modulo $q$)} is a function $\chi: \N \to \C$ such that
@@ -833,6 +842,30 @@ Finally, we want to reflect on the general approach and highlight how we used of
     \end{equation*}
     as then the Dirichlet series become Dirichlet series over $\chi$ instead of $f$, which is much better manageable.
 \end{remark}
+
+\subsection*{Conclusion}
+In this work, we have seen the basic structure of Dirichlet characters and their connection to the group $(\Z/q\Z)^\units$.
+Furthermore, we have studied some properties of the series $L(s, \chi)$, in particular its analytic continuation to $\Re(s) > 0$ and an identiy for its logarithmic derivative.
+By using the theory developed before, we could then establish a connection between the latter and the distribution of primes $\equiv a \pmod q$.
+Assuming now a statement on the zeros of $L(s, \chi)$, we were able to prove Dirichlet's prime number theorem, namely that there are infinitely many primes $\equiv a \pmod q$ for all $a \perp q$ in the case of primes $q$.
+
+Finally, we have also seen a very short detour into analyzing primes $\equiv 1 \mod q$ using Algebraic Number theory.
+For this, we used the theory of cyclotomic number fields, which already hints at the strong connection of $L(s, \chi)$ to cyclotomic number fields that I could see in further literature.
+Of course, also the encounter of the group $(\Z/q\Z)^\units$ and the connection of Dirichlet characters to roots of unity go into that direction.
+
+Of course, the most central question when continuing on this path is to proof the fact $L(1, \chi) \neq 0$ for $\chi \neq \chi_0$ and thus complete the proof of Dirichlet's prime number theorem.
+After that, it seems to be possible to use further techniques from the lecture (like Perron's formula) and show some kind of ``modular prime number theorem'', i.e. study the asymptotical frequency of primes $\equiv a \mod q$.
+Since we already have a connection between $\Psi_a$ and $L(s, \chi)'/L(s, \chi)$ to which we could apply Perron's formula, we already have some ingredients for this proof.
+To complete this, it would now be necessary to apply theorems like the ones from Chapter 9 in the lecture to $L(s, \chi)$, and then prove some kind of zero-free region for $L(s, \chi)$.
+This would then show that
+\begin{equation*}
+    \rho_a(s) = \sum_{n \equiv a \ (\text{mod $q$})} \Lambda(n) n^{-s} = \frac 1 {q - 1} \sum_{\chi \in \mathrm{Dir}(q)} \overline{\chi(a)} \frac {L(s, \chi)'} {L(s, \chi)}
+\end{equation*}
+has only one simple pole at $1$ in the zero-free region.
+Using Cauchy's Residue theorem and moving the left contour of integration just left of the line $\Re(s) = 1$, we could then show a statement like $|\{ p \in \primes \ | \ p \equiv a \pmod q, p \leq x\}| \sim x / \log(x) / (q - 1)$, or whatever statement holds on the asymptotic frequency of primes in arithmetic progressions.
+
+All in all, we have seen how to study primes in congruence classes modulo $q$ using analytic techniques.
+As in the lecture, the next questions mainly deal with the distribution of zeros of $L(s, \chi)$.
 
 \printbibliography
 \end{document}
