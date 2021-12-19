@@ -44,6 +44,16 @@
 \begin{document}
 \maketitle
 
+\subsection*{Introduction}
+In this work, we will look at the LYM inequality
+\begin{equation*}
+    \sum_{i = 0}^n \frac {|A \cap L_i|} {|L_i|} \leq 1 \quad \text{for an antichain $A \subseteq \powerset(n)$}
+\end{equation*}
+and see how it generalizes to other posets than $\powerset(n)$.
+In particular, it will be necessary to study posets that can be decomposed into layers $L_0, ..., L_n$, which we will call graded posets.
+The goal then is to give a characterization of which posets satisfy such an inequality and then apply this to two examples.
+These are the collection of partitions of $[n]$, ordered by refinement, and the collection of multi-subsets of a multiset.
+
 We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
 
 \section{Part I}
@@ -234,7 +244,7 @@ In this part, we want to study whether graded posets satisfy an analogue of the 
 
 \section{Part III}
 In this part, we show that sufficiently symmetric posets satisfy the conditions introduced in the previous part.
-We even show a slightly stronger stronger statement than required in the task, namely that the implication to the second condition of Prop.\ref{prop:characterization_lym} already holds ``locally'', i.e. for each layer separately.
+We even show a slightly stronger stronger statement than required in the task, namely that the implication to the second condition of Prop.~\ref{prop:characterization_lym} already holds ``locally'', i.e. for each layer separately.
 \begin{proposition}
     \label{prop:biregular_implies_lym}
     Let $P$ be a graded poset with layers $L_0, ..., L_n$ and let $0 < i \leq n$ such that
@@ -276,6 +286,7 @@ We even show a slightly stronger stronger statement than required in the task, n
 \end{proof}
 
 \section{Part IV}
+Now we will present the first example of this Miniproject, namely the collection of partitions of $[m]$, ordered by refinement.
 \begin{example}
     Let $\Pi_m = \{ \pi \subseteq \powerset(m) \ | \ \text{$\pi$ partition} \}$ be the poset of partitions ordered by refinement.
     Then $\Pi_m$ is a graded poset with rank function
@@ -425,6 +436,9 @@ We even show a slightly stronger stronger statement than required in the task, n
 \end{example}
 
 \section{Part V}
+Now we come to the second example, namely multi-subsets of a $d$-element multiset, ordered by containment.
+Note that we can characterize multisets in different ways, e.g. as vectors $\N^d$ ordered elementwise, or as natural numbers ordered by divisibility.
+In this section, we will focus on the former perspective, but in the last part, we will have a short remark on the latter view.
 \begin{example}
     Let $\mathcal{P}_{k, d} := \{ 0, ..., k \}^d$ partially ordered by elementwise ordering.
     Then $\mathcal{P}_{k, d}$ is a graded poset with rank function
@@ -825,6 +839,7 @@ There are two parts I find interesting in this proof.
 \end{itemize}
 Interestingly, I have also found a variant of the LYM inequality (``pseudo-LYM inequality'') for the poset $\Pi_m$ that we studied earlier.
 \begin{proposition}
+    \label{prop:lym_variant_partitions}
     Let $\mathcal{A} \subseteq \Pi_m$ be a nonempty antichain. Then define
     \begin{equation*}
         a(n_1, ..., n_k) := |\bigl\{ A \in \mathcal{A} \ \bigm| \ |A| = k, \ |\{ S \in A \ | \ |S| = j \}| = n_j \bigr\}|
@@ -882,6 +897,30 @@ In particular, the decomposition is exactly
 \begin{equation*}
     \Pi_m = \bigcup \ \{ \mathrm{Aut}(\Pi_m).\pi \ | \ \pi \in \Pi_m \}
 \end{equation*}
+
+\subsection*{Conclusion}
+In this work, we have seen how to generalize the decomposition into layers of $\powerset(n)$ to other posets, which we call graded.
+Based on this, we could state an analogue of the LYM inequality for those posets, and give a characterization of it.
+Further, we found that indeed, the inequality does not hold for arbitrary graded posets, so the posets with LYM-inequality form a proper subclass of all graded posets.
+We have both seen an example of a graded poset with LYM-inequality (that is not $\powerset(n)$) and an example of a graded poset without LYM-inequality.
+
+Additionally, during the attempts to prove the first of those statements, we discovered a polynomial time algorithm (in the size of the poset) that can check whether a given graded poset has an LYM inequality.
+By considering the situation modulo symmetry, we could improve the algorithm such that its running time is polynomial in the count of orbits of the poset under its automorphism group.
+Of course, this improvement requires knowledge of the automorphism group, but in many cases (like for partitions or multisets), the elements of the poset consist of many ``parts'' and the automorphism group is given by all the permutations of those parts.
+We have implemented an ran this algorithm for the case of multisets.
+
+Finally, we had a short look at the literature, and included the proof that the collection of multisets indeed has an LYM-inequality.
+Interestingly, this topic of LYM generalizations seems to have been an important research topic in the last century.
+
+There are some questions that arise naturally from this work.
+Primarily, it might be the case that there are inequalities similar to the LYM inequality, as e.g. in Prop.~\ref{prop:lym_variant_partitions}.
+To me, it looks like one could at least provide an LYM-variant for arbitrary graded posets by weighting elements in each orbit of the automorphism group differently.
+The idea would then be similar to Prop.~\ref{prop:core_of_multisets}, but yield another result, without requiring the relatively complicated assumption.
+
+Of course, there are quite a lot of common graded posets, and it is an interesting question which of those satisfy the LYM inequality.
+I have seen quite a lot of literature about that, so it would certainly be a promising way to continue this work.
+
+In the end, this Miniproject generalized some aspects of the first section of the lecture to a wider class of posets.
 
 \section{Appendix (Code described in Part VI)}
 To find the computational results mentioned above, I have implemented the described algorithm in Rust.
