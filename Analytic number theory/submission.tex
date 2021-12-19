@@ -197,6 +197,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
 \end{proof}
 Applied to our example, we find
 \begin{example}[Question (ii)]
+    \label{ex:l_series_mod_4}
     Let $f: \N \to \C$ be the Dirichlet character from Example~\ref{ex:nontrivial_dirichlet_character_mod_4} with corresponding group homomorphism $g: (\Z/4\Z)^\units \to \C$.
     Then
     \begin{equation*}
@@ -209,11 +210,10 @@ Applied to our example, we find
         &= 2 \sum_{n \geq 0} \frac 1 {(4n + 1)(4n + 3)} > 0
     \end{align*}
     is positive. 
-    Wolfram Alpha \cite{wolfram_alpha} can give an explicit value to this sum, using the digamma function $\psi$. Namely
+    Wolfram Alpha \cite{wolfram_alpha} can give an explicit value to this sum. Namely
     \begin{equation*}
-        \sum_{x \in (\Z/4\Z)^\units} f(n) n^{-1} = \frac 1 4 (\psi(\frac 7 4) - \psi(\frac 5 4))
+        \sum_{n \geq 1} f(n) n^{-1} = \frac 2 3 + \frac 1 3 + \frac \pi 4 - 1 = \frac \pi 4
     \end{equation*}
-    which seems to be $\frac 1 4$.
 \end{example}
 Interestingly, we can also study the series
 \begin{equation*}
@@ -224,25 +224,47 @@ using Euler Products.
     \label{ex:dirichlet_sum_over_primes}
     Have for $\Re(s) > 1$ that
     \begin{equation*}
-        \sum_p \frac {f(p)} {p^s} = \log( L(f, s) ) + O( \zeta(2\Re(s)) )
+        \sum_p \frac {f(p)} {p^s} = \log( L(s, f) ) + O( \zeta(2\Re(s)) )
     \end{equation*}
-    In particular, we see that
+    and so
     \begin{equation*}
         \lim_{s \to 1^+} \sum_p \frac {f(p)} {p^s}
     \end{equation*}
-    exists.
+    exists. Furthermore, this value is negative.
 \end{example}
 \begin{proof}
-    By Taylor series expansion, see that
+    By Taylor series expansion, see
     \begin{equation*}
-        \log(1 - x) = -x + O(|x|^2)
+        \log(1 - x) = -x + O(x^2)
     \end{equation*}
     Hence for $\Re(s) > 1$ we can consider the logarithm of the Euler Product to find
     \begin{align*}
-        \log( L(f, s) ) =& \log\Bigl( \prod_p \sum_{k \geq 0} \frac {f(p^k)} {p^{ks}} \Bigr) = \log\Bigl( \prod_p \frac 1 {1 - f(p)/p^s} \Bigr) \\
+        \log( L(s, f) ) =& \log\Bigl( \prod_p \sum_{k \geq 0} \frac {f(p^k)} {p^{ks}} \Bigr) = \log\Bigl( \prod_p \frac 1 {1 - f(p)/p^s} \Bigr) \\
         =& \sum_p -\log\Bigl( 1 - \frac {f(p)} {p^s} \Bigr) = \sum_p \frac {f(p)} {p^s} + O\Bigl( \frac {f(p)^2} {p^{2\Re(s)}} \Bigr) \\
-        = & \sum_p \frac {f(p)} {p^s} + O\Bigl( \underbrace{\sum_p \frac {f(p)} {p^{2\Re(s)}}}_{\leq \zeta(2\Re(s))} \Bigr) = \sum_p \frac {f(p)} {p^s} + O(\zeta(2\Re(s)))
+        = & \sum_p \frac {f(p)} {p^s} + O\Bigl( \underbrace{\sum_p \frac {f(p)^2} {p^{2\Re(s)}}}_{\leq \zeta(2\Re(s))} \Bigr) = \sum_p \frac {f(p)} {p^s} + O(\zeta(2\Re(s)))
     \end{align*}
+    Note further that for $|x| \leq \frac 1 2$
+    \begin{align*}
+        \Bigl| \log(1 - x) + x + \frac {x^2} 2 \Bigr| \leq \Bigl| \frac {2x^3} 3 \Bigr|
+    \end{align*}
+    as by Taylor series expansion, find
+    \begin{equation*}
+        \log(1 - x) = -\sum_{n \geq 1} \frac {x^n} {n}
+    \end{equation*}
+    Thus
+    \begin{align*}
+        \Bigl| \log(L(s, f)) - \sum_p \frac {f(p)} {p^s} - \frac 1 2 \sum_p \frac {f(p)^2} {p^{2s}} \Bigr| \leq \frac 2 3 \sum_p \Bigl| \frac {f(p)^3} {p^{3s}} \Bigr|
+    \end{align*}
+    and since
+    \begin{equation*}
+        \frac 2 3 \sum_p \Bigl| \frac {f(p)^3} {p^3} \Bigr| \leq \frac 2 3 \sum_{n \geq 2} \frac 1 {n^3} = \frac 2 3 (\zeta(3) - 1) < \frac 1 5
+    \end{equation*}
+    we see that
+    \begin{equation*}
+        \sum_p \frac {f(p)} p < \frac 1 5 - \underbrace{\frac 1 2 \sum_p \frac {f(p)^2} {p^2}}_{\geq 0} + \underbrace{\log(L(1, f))}_{\leq -1/5} \leq 0
+    \end{equation*}
+    is negative.
+    Here I used that $\zeta(3) \leq 13/10$ and $L(1, f) \leq \exp(-1/5)$, both of which can be considered generally known (see e.g. the previous example and \cite{wolfram_alpha}) and can be easily checked using a computer.
 \end{proof}
 \begin{lemma}
     \label{prop:prime_factor_3_mod_4}
