@@ -17,8 +17,8 @@
 \addbibresource{bibliography.bib}
 
 \title{Miniproject - Algebraic Geometry}
-\author{Simon Pohmann}
-\date{}
+\author{Student Number: 1462479}
+\date{19.02.2021}
 
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\N}{\mathbb{N}}
@@ -58,6 +58,19 @@
 \begin{document}
 \maketitle
 
+\subsection*{Introduction}
+
+In this Miniproject, we want to study the Grassmanian
+\begin{equation*}
+    \Gr(d, V) := \{ U \subseteq V \ | \ U \ \text{$d$-dimensional subspace} \}
+\end{equation*}
+as an object of Algebraic Geometry.
+First of all, this requires finding a ``natural'' embedding of $\Gr(d, V)$ in to projective space, and showing that w.r.t. that embedding, the Grassmanian is a projective variety.
+
+After that is established, we can continue to study its geometric properties, like vanishing ideal, dimension and degree.
+This part will only be considered in the case $d = 2$.
+
+\subsection*{Conventions}
 We use the convention that $\N = \{ n \in \Z \ | \ n \geq 0 \}$.
 Further, we write $a \divides b$ if $a$ divides $b$ and $a \perp b$ if $a$ and $b$ are coprime.
 During this Miniproject, let $V$ be a finitely dimensional vector space with basis $B = (b_1, ..., b_n)$.
@@ -579,7 +592,7 @@ To use our standard methods of Algebraic Geometry, we first introduce coordinate
 \end{definition}
 \begin{proposition}[Question (a)]
     \label{prop:equations_grassmanian_2}
-    For the embedding $\phi: \Gr(2, V) \to \extpow^2 V$ we have
+    For the embedding $\phi: \Gr(2, V) \to \Proj(\extpow^2 V)$ we have
     \begin{equation*}
         \Gr(2, V) \cong \mathrm{im}\phi = \V(I)
     \end{equation*}
@@ -664,7 +677,8 @@ This is done in the following lemma.
     \end{equation*}
 \end{lemma}
 \begin{proof}
-    We show that the set $G = \{ x_{iv} x_{ju} - x_{iu} x_{jv} + x_{ij} x_{uv} \ | \ i < j < u < v \}$ is a Gröbner basis of $I$.
+    We show that the set $G = \{ x_{iv} x_{ju} - x_{iu} x_{jv} + x_{ij} x_{uv} \ | \ i < j < u < v \}$ is a Gröbner basis of $I$
+    \footnote{In this proof, we write $x_{ij} := x_{i, j}$ to somewhat simplify notation.}.
     The claim then follows by the properties of Gröbner basis.
 
     To do this, we consider for $a < b < c < d$ and $i < j < u < v$ the polynomial
@@ -713,7 +727,49 @@ This is done in the following lemma.
     I have done this, and the result is as expected.
 \end{proof}
 At first glance, this lemma above seems quite deep, but it really is a repetitive application of the theory of Gröbner basis.
+\begin{corollary}
+    Using the notation of Prop.~\ref{prop:equations_grassmanian_2}, we get that
+    \begin{equation*}
+        \I(\Gr(2, V)) = I
+    \end{equation*}
+\end{corollary}
+\begin{proof}
+    By Hilbert's Nullstellensatz, it is sufficient to show that $I$ is radical, as we know from Prop.~\ref{prop:equations_grassmanian_2} that $\V(I) = \Gr(2, V)$.
+    This follows from a very standard argument in Commutative Algebra, but for completeness, we will present the full proof here.
 
+    Assume that $f^d \in I$ for some $f \in R$.
+    We show that $f \in I$ by using induction on the position of $\mathrm{lt}(f)$ w.r.t. $\preceq$ (note that this is a well-ordering, so we can use induction on it).
+    The base case $f \in k$ is trivial, so assume that $f$ is not constant.
+    
+    By Lemma~\ref{prop:leading_term_ideal_grassmanian} we see that
+    \begin{equation*}
+        \mathrm{lt}(f)^d = \mathrm{lt}(f^d) \in J = \langle x_{i, v} x_{j, u} \ | \ i < j < u < v \rangle
+    \end{equation*}
+    Hence
+    \begin{equation*}
+        \mathrm{lt}(f)^d \equiv x_{i, v} x_{j, u}
+    \end{equation*}
+    for some $i < j < u < v$.
+    Clearly $x_{i, v} \perp x_{j, u}$, and it follows that
+    \begin{equation*}
+        x_{i, v} x_{j, u} \divides \mathrm{lt}(f)
+    \end{equation*}
+    Now consider
+    \begin{equation*}
+        f' := f - \frac {\mathrm{lt}(f)} {x_{i, v} x_{j, u}} (x_{i, v} x_{j, u} - x_{i, u} x_{j, v} + x_{i, j} x_{u, v}) \in R
+    \end{equation*}
+    Clearly $\mathrm{lt}(f') \prec \mathrm{lt}(f)$ as $x_{i, v} x_{j, v}, x_{i, j} x_{u, v} \prec x_{i, v} x_{j, u} \equiv \mathrm{lt}(f)$.
+    Furthermore
+    \begin{equation*}
+        (f')^d = \sum_{l = 0}^d {d \choose i} f^i (x_{i, v} x_{j, u} - x_{i, u} x_{j, v} + x_{i, j} x_{u, v})^{d - i} \in I
+    \end{equation*}
+    so by induction hypothesis, find that $f' \in I$.
+    It follows that also
+    \begin{equation*}
+        f = f'  - \frac {\mathrm{lt}(f)} {x_{i, v} x_{j, u}} (x_{i, v} x_{j, u} - x_{i, u} x_{j, v} + x_{i, j} x_{u, v}) \in I
+    \end{equation*}
+    and the claim is shown.
+\end{proof}
 Now we have to study the structure of monomials generating $J = \langle x_{i, v} x_{j, u} \ | \ i < j < u < v \rangle$.
 At first glance, this seemed to me to be much simpler than the above, but in fact it turns out not to be, as there is some subtle combinatorial structure involved.
 Hence, we will first introduce the combinatorial framework in which we will work now.
@@ -875,5 +931,39 @@ from which we easily deduce that
     \dim(\Gr(2, 6)) = 8 \quad \text{and} \quad \deg(\Gr(2, 6)) = \frac 1 {2880} \cdot 8! = 14
 \end{equation*}
 \lstinputlisting[language = python]{./gr26.sage}
+
+\subsection*{Conclusion}
+We have seen that the linear dependency structure between $d$-element subsets of $V$ can be described very well using the external power $\extpow^d V$.
+Therefore, this might look like a good candidate for describing the Grassmanian, and in this Miniproject, we have seen that indeed it is.
+In particular, it can provide a natural projective space in which to embed the Grassmanian, so that it becomes a projective variety.
+
+After this embedding is constructed, we have shown its close connection to the determinant, which is also a good way to describe linear dependency structures.
+Notably, the determinant is linear in each column or row, and the external product $\cdot \wedge ... \wedge \cdot$ is linear in each component.
+After that, we restricted to the case $d = 2$ and looked at the properties of $\Gr(2, d)$ as projective variety.
+Here we could show that the variety is cut out by quadratic equations, and analyse the concrete varieties $\Gr(2, 4), \Gr(2, 5)$ and $\Gr(2, 6)$ in detail.
+
+Finally, we have used some techniques from the theory of Gröbner basis in Commutative Algebra to further study the general case of $\Gr(2, n)$.
+These methods are quite useful to handle many multivariate polynomials, and in particular the cancellations that can occur when considering $R$-combinations of them.
+As a result of this part, we could determine the vanishing ideal of $\Gr(2, n)$.
+Furthermore, we could reduce the question of dimension and degree of $\Gr(2, n)$ to graph-theoretic questions and solve the one corresponding to the dimension.
+
+Continuing this study of the Grassmanian, the most obvious problem is of course how $\Gr(d, n)$ looks like for $d > 2$.
+In the lecture, we have already seen the degree formula
+\begin{equation*}
+    \deg(\Gr(d, n)) = (d(n - d))! \frac {1! \cdot 2! \cdot ... \cdot (d - 1)!} {(n - d)! \cdot (n - d + 1)! \cdot ... \cdot (n - 1)!}
+\end{equation*}
+and it seems possible that it could be proved by extending the techniques considered at the end of this Miniproject.
+However, the combinatorial problem will probably become significantly more complicated.
+Other question the work naturally leads to are about more properties of the Grassmanian.
+For example, one could show that it is an irreducible and nonsingular variety.
+Furthermore, we could consider intersections of subspaces.
+Here it would be interesting if or how one can describe them using external products, and if we maybe have a rational map
+\begin{equation*}
+    \Gr(d, n) \times \Gr(e, n) \to \Gr(d + e - n, n), \quad (U, V) \mapsto U \cap V
+\end{equation*}
+for $d + e \geq n$.
+All in all, Grassmanians are very fascinating objects, with a lot of nice properties.
+There are definitely a lot of interesting questions about them.
+
 \printbibliography
 \end{document}
