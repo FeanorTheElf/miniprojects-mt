@@ -164,7 +164,7 @@ In this part, we want to study whether graded posets satisfy an analogue of the 
     Consider any $W = \{ (1, i_1, a_1), ..., (1, i_w, a_w) \} \subseteq V_1$ and let $F = \{ a_1, ..., a_w \}$.
     Then
     \begin{equation*}
-        W \subseteq [t] \times F \ \Rightarrow \ |W| \leq t|F|
+        W \subseteq \{1\} \times [t] \times F \ \Rightarrow \ |W| \leq t|F|
     \end{equation*}
     By choice of $C_1, ..., C_t$, we have that the number of $j$ with $x \in C_j$ is the same for all $x \in L_{n - 1}$, say $k$.
     Since the $C_i$ are maximal chains, each intersects $L_{n - 1}$ in exactly one element.
@@ -189,7 +189,7 @@ In this part, we want to study whether graded posets satisfy an analogue of the 
         |W| \leq t |F| = k |L_{n - 1}| |F| \leq k |\partial F| |L_n| = |N(W)|
     \end{equation*}
     So Hall's theorem yields a matching $M \subseteq E$ from $V_1$ to $V_2$.
-    As $|V_1| = |V_2|$, this is already a 1-to-one correspondence.
+    As $|V_1| = |V_2|$, this is already a 1-to-1 correspondence.
 
     Now consider the sets
     \begin{equation*}
@@ -372,7 +372,7 @@ Now we will present the first example of this Miniproject, namely the collection
         \end{equation*}
         Applying this once more yields for $m \geq 3$ that
         \begin{align*}
-            S(m, 3) =& \sum_{n = 1}^{m - 1} {m - 1 \choose n} (2^{n - 1} - 1) = \frac 1 2 \sum_{n = 1}^{m - 1} {m - 1 \choose n} 2^n - \sum_{n = 1}^{m - 1} {m - 1 \choose n} 1 \\
+            S(m, 3) =& \sum_{n = 2}^{m - 1} {m - 1 \choose n} (2^{n - 1} - 1) = \frac 1 2 \sum_{n = 1}^{m - 1} {m - 1 \choose n} 2^n - \sum_{n = 1}^{m - 1} {m - 1 \choose n} 1 \\
             =&\frac 1 2 \sum_{n = 0}^{m - 1} {m - 1 \choose n} 2^n - \frac 1 2 - \sum_{n = 0}^{m - 1} {m - 1 \choose n} 1 + 1 \\
             =& \frac 1 2 (1 + 2)^{m - 1} - 2^{m - 1} + \frac 1 2 = \frac 1 2 (3^{m - 1} - 2^m + 1)
         \end{align*}
@@ -512,20 +512,23 @@ Note that for $k = 1$, this is exactly the proof that was done in the lecture to
 
 \section{Part VI}
 First of all, in Example~\ref{ex:partitions_have_no_lym} we have already shown that the poset $\Pi_m$ does not satisfy the conditions from Prop.~\ref{prop:characterization_lym}.
+Indeed, they do not satisfy (2) of Prop.~\ref{prop:characterization_lym} in a very strong sense:
+There is no constant $\epsilon > 0$ such that
+\begin{equation*}
+    \frac {|\partial F|} {|L_{i - 1}|} \geq \epsilon \frac {|F|} {|L_i|}
+\end{equation*}
+for all $F \subseteq L_i$.
+
 Now we want to investigate whether $\mathcal{P}_{k, d}$ does. 
 \begin{lemma}
     \label{prop:lp_algorithm}
     Let $P$ be a poset with layers $L_0, ..., L_d$.
     Fix $0 < l \leq d$ and let $L_{l - 1} = \{ u_1, ..., u_m \}, L_l = \{ v_1, ..., v_n \}$.
 
-    Assume there exists a matrix $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ such that
+    Assume there exists a matrix $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ such that for all $i, j$
     \footnote{We use $1 = (1, ..., 1)^T$ as the vector consisting of $1$ only here.}
     \begin{equation*}
-        1^T A 1 = 1
-    \end{equation*}
-    and for all $i, j$
-    \begin{equation*}
-        e_i^T A 1 = \frac 1 {|L_0|} \quad \text{and} \quad 1^T A e_j = \frac 1 {|L_1|}
+        e_i^T A 1 = \frac 1 {|L_{l - 1}|} \quad \text{and} \quad 1^T A e_j = \frac 1 {|L_l|}
     \end{equation*}
     and $a_{ij} = 0$ whenever $u_i \not< v_j$ holds.
 
@@ -536,16 +539,16 @@ Now we want to investigate whether $\mathcal{P}_{k, d}$ does.
     Let $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ be this matrix.
     Note that a maximal chain in $L_{l - 1} \cup L_l$ corresponds to a pair $u_i < v_j$.
 
-    Now consider a (finite) sequence of maximal chains $(C_k)_{k \in I}$ such that the chain corresponding to $u_i < v_j$ occurs $a_{ij} |I|$ times.
+    Now consider a (finite) sequence of maximal chains $(C_k)_{k \in I}$ such that the chain corresponding to $u_i < v_j$ occurs $a_{ij} |I|$ times (this exists as all the $a_{ij}$ are rational).
     By the assumption, we know that for each $i$ have
     \begin{equation*}
-        |\{k \ | \ u_i \in C_k\}| = \sum_{u_i < v_j} a_{ij}|I| = \frac 1 {|L_0|} |I|
+        |\{k \ | \ u_i \in C_k\}| = \sum_{u_i < v_j} a_{ij}|I| = \frac 1 {|L_{l - 1}|} |I|
     \end{equation*}
-    and so each element $u_i \in L_{l - 1}$ is contained in the same number $|I| / |L_0|$ of chains $C_k$.
+    and so each element $u_i \in L_{l - 1}$ is contained in the same number $|I| / |L_{l - 1}|$ of chains $C_k$.
 
     Similarly, for each $J$ have
     \begin{equation*}
-        |\{k \ | \ v_j \in C_k\}| = \sum_{v_j > u_i} a_{ij}|I| = \frac 1 {|L_1|} |I|
+        |\{k \ | \ v_j \in C_k\}| = \sum_{v_j > u_i} a_{ij}|I| = \frac 1 {|L_l|} |I|
     \end{equation*}
     The claim follows.
 \end{proof}
@@ -719,11 +722,7 @@ The idea is just that we can adjust the LP algorithm from Lemma~\ref{prop:lp_alg
 In particular, we have the following.
 \begin{lemma}
     Let $L_{l - 1} = \{u_1, ..., u_m\}$ and $L_l = \{v_1, ..., v_n\}$ be two consecutive layers of $\mathcal{C}_{k, d}$.
-    Assume there exists a matrix $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ such that 
-    \begin{equation*}
-        1^T A 1 = 1
-    \end{equation*}
-    and for all $i, j$
+    Assume there exists a matrix $A = (a_{ij}) \in \Q_{\geq 0}^{m \times n}$ such that for all $i, j$
     \begin{equation*}
         e_i^T A 1 = \frac {|P(u_i)|} {\sum_{u \in L_{l - 1}} |P(u)|} \quad \text{and} \quad 1^T A e_j = \frac {|P(v_j)|} {\sum_{v \in L_l} |P(v)|}
     \end{equation*}
@@ -842,7 +841,7 @@ Interestingly, I have also found a variant of the LYM inequality (``pseudo-LYM i
     \label{prop:lym_variant_partitions}
     Let $\mathcal{A} \subseteq \Pi_m$ be a nonempty antichain. Then define
     \begin{equation*}
-        a(n_1, ..., n_k) := |\bigl\{ A \in \mathcal{A} \ \bigm| \ |A| = k, \ |\{ S \in A \ | \ |S| = j \}| = n_j \bigr\}|
+        a(n_1, ..., n_k) := |\bigl\{ A \in \mathcal{A} \ \bigm| \ |A| = k, \ |\{ S \in A \ | \ |S| = j \}| = |\{ i \ | \ n_i = j \}| \bigr\}|
     \end{equation*}
     the number of partitions $A \in \mathcal{A}$ such that the classes in $A$ have sizes $n_1, ..., n_k$.
     Then
@@ -854,9 +853,10 @@ Interestingly, I have also found a variant of the LYM inequality (``pseudo-LYM i
     See \cite{lym_partitions}.
 \end{proof}
 Note that the total number of partitions $\pi$ such that the classes in $\pi$ have sizes $n_1, ..., n_k$ is given by an expression involving the multinomial coefficient, namely
-\begin{equation*}
-    |\bigl\{ \pi \in \Pi_m \ \bigm| \ |\pi| = k, |\{ S \in \pi \ | \ |S| = j\}| = n_j \bigr\}| = {m \choose n_1, ..., n_k} \underbrace{ \prod_i \frac 1 {|\{ j \ | \ n_j = i\}|!} }_{=: \gamma(n_1, ..., n_k)}
-\end{equation*}
+\begin{align*}
+    &|\bigl\{ \pi \in \Pi_m \ \bigm| \ |\pi| = k, |\{ S \in \pi \ | \ |S| = j\}| \\
+    = &|\{ i \ | \ n_i = j \}| \bigr\}| = {m \choose n_1, ..., n_k} \underbrace{ \prod_i \frac 1 {|\{ j \ | \ n_j = i\}|!} }_{=: \gamma(n_1, ..., n_k)}
+\end{align*}
 Intuitively, the reason is that there are $m!$ ways to order the elements $[m]$, and after splitting such a sequence in chunks of sizes $n_1, ..., n_k$, there are $n_1! \cdot ... \cdot n_k!$ ways to order the element within the chunks.
 Hence the multinomial coefficient
 \begin{equation*}
@@ -890,7 +890,7 @@ The only difference is that elements elements corresponding to different class s
 Finally, there is still one interesting thought I had while thinking about the above inequality.
 Note that the decomposition
 \begin{equation*}
-    \Pi_m = \bigcup_{k \geq 1, \ n_1 \leq ... \leq n_k} \{ \pi \in \Pi_m \ | \ |\pi| = k, |\{ S \in \pi \ | \ |S| = j \}| = n_j \}
+    \Pi_m = \bigcup_{k \geq 1, \ n_1 \leq ... \leq n_k} \bigl\{ \pi \in \Pi_m \ | \ |\pi| = k, |\{ S \in \pi \ | \ |S| = j \}| = |\{ i \ | \ n_i = j \}| \bigr\}
 \end{equation*}
 corresponds exactly to the core $\mathcal{C}(\Pi_m)$ of $\Pi_m$ as discussed above.
 In particular, the decomposition is exactly
