@@ -87,7 +87,7 @@ First, we will give another characterization of Dirichlet characters.
     So consider some $a, b \in \N$.
     If both $a \perp q$ and $b \perp q$ then
     \begin{equation*}
-        \chi_f(a)\chi_f(b) = \chi([a])\chi([b]) = \chi([ab]) = \chi_f(ab)
+        \chi_f(a)\chi_f(b) = f([a])f([b]) = f([ab]) = \chi_f(ab)
     \end{equation*}
     as also $ab \perp q$.
 
@@ -145,7 +145,7 @@ Now we want to define Dirichlet series of Dirichlet characters.
     such that $\chi(\N) = f((\Z/q\Z)^*) \cup \{ 0 \} \subseteq \C$ is a finite subset of $\C$.
     Hence, there is $C > 0$ with $|\chi(n)| \leq C$ for all $n \in \N$, and it follows that
     \begin{equation*}
-        \sum_{1 \leq n \leq X} \left| \chi(n) n^{-s} \right| \leq \sum_{1 \leq n \leq X} C \left| n^{-s} \right| \leq C \sum_{1 \leq n \leq X} \left| n^{-s} \right|
+        \sum_{X \leq n \leq Y} \left| \chi(n) n^{-s} \right| \leq \sum_{X \leq n \leq Y} C \left| n^{-s} \right| \leq C \sum_{X \leq n \leq Y} \left| n^{-s} \right|
     \end{equation*}
     We know that the series
     \begin{equation*}
@@ -171,9 +171,9 @@ Now we want to define Dirichlet series of Dirichlet characters.
     Then have for $\Re(s) > 1$ that
     \begin{align*}
         \sgn(c) \sum_{n \geq 1} \chi(n) n^{-s} &= \sum_{n \geq 0} \ \sum_{0 < k \leq q} \sgn(c) \chi(qn + k) (qn + k)^{-s} \\
-        &\geq \sum_{n \geq 0} \ \sum_{0 < k \leq q}\sgn(c) \chi(qn + k) (qn + n)^{-s} \\
-        &= \sum_{n \geq 0} \sgn(c) (qn + n)^{-s} \underbrace{\sum_{0 < k \leq q} \chi(qn + k)}_{= c} \\
-        &\geq \frac {|c|} {(q + 1)^s} \sum_{n \geq 1} n^{-s} = \frac {|c|} {(q + 1)^s} \zeta(s)
+        &\geq \sum_{n \geq 0} \ \sum_{0 < k \leq q}\sgn(c) \chi(qn + k) (qn + q)^{-s} \\
+        &= \sum_{n \geq 0} \sgn(c) (qn + q)^{-s} \underbrace{\sum_{0 < k \leq q} \chi(qn + k)}_{= c} \\
+        &= \frac {|c|} {q^s} \sum_{n \geq 1} n^{-s} = \frac {|c|} {(q + 1)^s} \zeta(s)
     \end{align*}
     which clearly has a pole at $s = 1$. Hence $\lim_{s \to 1^+} L(s, \chi_f)$ cannot exist.
 
@@ -182,17 +182,17 @@ Now we want to define Dirichlet series of Dirichlet characters.
     Observe that by Bernoulli's inequality, have for $0 < s \leq 1$ that
     \begin{align*}
         (qn)^{-s} - (qn + k)^{-s} &= \frac {(qn + k)^s - (qn)^s} {(q^2n^2 + qnk)^s} = (qn)^{s} \frac {(1 + k(qn)^{-1})^s - 1} {(q^2n^2 + qnk)^s} \\
-        &\leq (qn)^s \frac {sk(qn)^{-1}} {(q^2n^2 + qnk)^s} = \frac {sk} {qn(qn + k)^s} = O(sn^{-s - 1})
+        &\leq (qn)^s \frac {sk(qn)^{-1}} {(q^2n^2 + qnk)^s} = \frac {sk} {qn(qn + k)^s} = O(s(qn)^{-s - 1})
     \end{align*}
-    If $s > 1$ and $k \leq q$, then also $(qn)^{-s} - (qn + k)^{-s} = O(sn^{-(1 + \epsilon)})$ for some small enough $0 < \epsilon < 1$.
+    If $s > 1$ and $k \leq q$, then also $(qn)^{-s} - (qn + k)^{-s} = O(s(qn)^{-(1 + \epsilon)})$ for some small enough $0 < \epsilon < 1$.
     As $\chi((\Z/q\Z)^\units) \subseteq \C$ is finite, find $C > 0$ with $|\chi_f(n)| \leq C$ for all $n \in \N$. 
     Then for all $s \geq \epsilon$ and $X \leq Y$ it holds
     \begin{align*}
         &\sum_{X \leq n \leq Y} \chi(n) n^{-s} \\
-        =& \ O(qCX^{-s} + qCY^{-s}) + \sum_{X/q \leq n \leq Y/q} \ \sum_{0 < k \leq q} \chi(qn + k) \Bigl( (qn)^{-s} + \underbrace{(qn + k)^{-s} - (qn)^{-s}}_{= O(sn^{-(1 + \epsilon)})} \Bigr) \\
-        =& \ O(qCX^{-s}) + \sum_{X/q \leq n \leq Y/q} \Bigl( (qn)^{-s} c + \sum_{0 < k \leq q} O(Csn^{-(1 + \epsilon)}) \Bigr) = \\
-        =& \ O(qCX^{-s}) + 0 + O\Bigl( Cqs \sum_{X/q \leq n \leq Y/q} n^{-(1 + \epsilon)} \Bigr) \\
-        =& \ O(qCX^{-s}) + O\Bigl( Cqs \sum_{n \geq X/q} n^{-(1 + \epsilon)} \Bigr)
+        =& \ O(qCX^{-s} + qCY^{-s}) + \sum_{X/q \leq n \leq Y/q} \ \sum_{0 < k \leq q} \chi(qn + k) \Bigl( (qn)^{-s} + \underbrace{(qn + k)^{-s} - (qn)^{-s}}_{= O(s(qn)^{-(1 + \epsilon)})} \Bigr) \\
+        =& \ O(qCX^{-s}) + \sum_{X/q \leq n \leq Y/q} \Bigl( (qn)^{-s} c + \sum_{0 < k \leq q} O(Cs(qn)^{-(1 + \epsilon)}) \Bigr) = \\
+        =& \ O(qCX^{-s}) + 0 + O\Bigl( Cqs \sum_{X/q \leq n \leq Y/q} (qn)^{-(1 + \epsilon)} \Bigr) \\
+        =& \ O(qCX^{-s}) + O\Bigl( Cq^{-\epsilon}s \sum_{n \geq X/q} n^{-(1 + \epsilon)} \Bigr)
     \end{align*}
     which is well-defined and finite.
     Further, the expression converges uniformly (as a function in $s$ on $[\epsilon, \infty[$) to $0$ as $X \to \infty$. 
@@ -201,8 +201,8 @@ Now we want to define Dirichlet series of Dirichlet characters.
         \sum_{n < X} \chi(n) n^{-s} \quad \text{converges uniformly to} \quad \sum_{n \geq 1} \chi(n) n^{-s}
     \end{equation*}
     as $X \to \infty$ (on $[\epsilon, \infty[$). 
-    Thus the limit is continuous and extends $L(s, \chi_f)$ defined on $]1, \infty[$.
-    It follows that $\lim_{t \to s^+} L(t, \chi_f)$ exists and is equal to $\sum_{n \geq 1} \chi(n) n^{-s}$.
+    Thus the limit is continuous and extends $L(s, \chi)$ defined on $]1, \infty[$.
+    It follows that $\lim_{t \to s^+} L(t, \chi)$ exists and is equal to $\sum_{n \geq 1} \chi(n) n^{-s}$.
 \end{proof}
 Applied to our example, we find
 \begin{example}[Question (ii)]
@@ -244,7 +244,7 @@ using Euler Products.
 \begin{proof}
     By Taylor series expansion, see
     \begin{equation*}
-        \log(1 - x) = -x + O(x^2)
+        \log(1 - x) = -x + O(|x|^2)
     \end{equation*}
     Hence for $\Re(s) > 1$ we can consider the logarithm of the Euler Product to find
     \begin{align*}
@@ -256,7 +256,7 @@ using Euler Products.
     \begin{align*}
         \Bigl| \log(1 - x) + x + \frac {x^2} 2 \Bigr| \leq \Bigl| \frac {2x^3} 3 \Bigr|
     \end{align*}
-    as by Taylor series expansion, find
+    as by Taylor series expansion, find for $|x| < 1$
     \begin{equation*}
         \log(1 - x) = -\sum_{n \geq 1} \frac {x^n} {n}
     \end{equation*}
@@ -335,7 +335,7 @@ After some research, I have found an exercise in \cite[Chapter I, §10]{neukirch
     However, the former is a contradiction, as $\omega_q \in \mathcal{O}^\units$ is a unit and no $n \geq 2$ is a unit.
 \end{proof}
 In a later chapter, the book also proves the general result \cite[Chapter VII, Theorem 5.14]{neukirch}.
-I am pretty sure that those are exactly the functions $L(s, \chi)$ that we defined above.
+For this, it uses again the functions $L(s, \chi)$ as introduced here.
 \begin{corollary}[Question (iii)]
     There are infinitely many primes $p$ with $p \equiv 1 \pmod 4$.
 \end{corollary}
@@ -382,7 +382,7 @@ This correspondence also works in the other direction.
     Then
     \begin{equation*}
         g: \N \to \C, \quad n \mapsto \begin{cases}
-            \omega^{\log_r n} & \text{if $n \perp q$} \\
+            \omega^{\log_{[r]} [n]} & \text{if $n \perp q$} \\
             0 & \text{otherwise}
         \end{cases}
     \end{equation*}
@@ -396,7 +396,7 @@ Note that the image of a group homomorphism $f: (\Z/q\Z)^\units \to \C^\units$ i
 Using Corollary~\ref{prop:dirichlet_character_image_group}, we can describe it quite concretely.
 \begin{proposition}
     Let $\chi: \N \to \C$ be a Dirichlet character with group homomorphism $f: (\Z/q\Z)^\units \to \C^\units$.
-    Then $\mathrm{im}f \leq S$ is a subgroup where $S_q := \{ \omega_q^k \ | \ k \in \Z \}$ is the group of $q$-th roots of unity.
+    Then $\mathrm{im}f \leq S_q$ is a subgroup where $S_q := \{ \omega_q^k \ | \ k \in \Z \}$ is the group of $q$-th roots of unity.
     
     It is a fact from Algebra that $S_q \cong (\Z/q\Z)^\units$, hence Dirichlet characters modulo a prime $q$ are in 1-to-1 correspondence with the endomorphisms $\mathrm{End}((\Z/q\Z)^\units)$ of $(\Z/q\Z)^\units$.
 \end{proposition}
@@ -453,12 +453,12 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
     Consider a Dirichlet character $\chi \neq \chi_0$ given by $r \mapsto \xi$ for a primitive $q$-th root of unity $\xi \neq 1$.
     Then
     \begin{equation*}
-        \sum_{a \in (\Z/q\Z)^\units} \chi(a) = \sum_{k = 0}^{q - 2} \chi(r^k) = \sum_{k = 0}^{q - 2} \xi^k = \frac {1 - \xi^{q - 1}} {q - \xi} = 0 
+        \sum_{a \in (\Z/q\Z)^\units} \chi(a) = \sum_{k = 1}^{q - 1} \chi(r^k) = \sum_{k = 1}^{q - 1} \xi^k = \xi \frac {1 - \xi^{q - 1}} {q - \xi} = 0 
     \end{equation*}
     By using the earlier results on the structure of $\mathrm{Dir}(q)$ we see that for $a \equiv r^k \not\equiv 1 \pmod q$, have
     \begin{align*}
         \sum_{\chi \in \mathrm{Dir}(q)} \chi(a) &= \sum_{\chi \in \mathrm{Dir}(q)} \chi(r)^k \\
-        &= \sum_{\xi \ \text{$q$-th root of unity}} \xi^k = \sum_{l = 0}^{q - 2} \omega^{kl} = \frac {1 - (\omega^{q - 1})^k} {1 - \omega^k} = 0 
+        &= \sum_{\xi \ \text{$q$-th root of unity}} \xi^k = \sum_{l = 1}^{q - 1} \omega^{kl} = \omega^{k} \frac {1 - (\omega^{q - 1})^k} {1 - \omega^k} = 0 
     \end{align*}
     where $\omega \in \C$ is any primitive $q$-th root of unity and $r \in \Z$ is a primitive root modulo $q$.
     
@@ -472,7 +472,7 @@ Because of Lemma~\ref{prop:dirichlet_series_at_one} it might seem like a good id
             0 & \text{otherwise}
         \end{cases}
     \end{equation*}
-    The condition $ab^{-1} = 1$ is equivalent to $a \equiv b \pmod q$, so the claim follows.
+    The condition $[a][b]^{-1} = 1$ is equivalent to $a \equiv b \pmod q$, so the claim follows.
 \end{proof}
 Using these basic results, we can now prove facts on the Dirichlet series of characters.
 \begin{proposition}[Question (iv)]
@@ -637,13 +637,14 @@ Now we can show the analytic continuation of $L(s, \chi)$ to $\Re(s) > 0$.
 \end{proof}
 \begin{corollary}[Question (iv)]
     \label{prop:logarithmic_derivative_L_bounded}
-    The function $L(s, \chi)'/L(s, \chi)$ is bounded on a neighborhood of $1$, provided that $L(1, \chi) \neq 0$.
+    Let $\chi \neq \chi_0$ be a Dirichlet character modulo $q$.
+    Then the function $L(s, \chi)'/L(s, \chi)$ is bounded on a neighborhood of $1$, provided that $L(1, \chi) \neq 0$.
 \end{corollary}
 \begin{proof}
     As $L(s, \chi)'/L(s, \chi)$ is meromorphic on $\Re(s) > 0$, we know that it is holomorphic on some neighborhood of $1$ unless it has a pole at $s = 1$.
     In the third exercise class of ANT, it was shown that this would imply $L(1, \chi) = 0$ or $L(s, \chi)'$ has a pole at $s = 1$.
 
-    However, the derivative of a holomorphic function is again holomorphic, so $L(s, \chi)'$ has no pole at $s = 1$.
+    However, the derivative of a holomorphic function is again holomorphic, so $L(s, \chi)'$ has no pole at $s = 1$ (since we know that $L(s, \chi)$ has not pole at $s = 1$ for $\chi \neq \chi_0$).
     Provided that $L(1, \chi) \neq 0$, it follows that $L(s, \chi)'/L(s, \chi)$ is holomorphic on a compact neighborhood of $1$, so bounded.
 \end{proof}
 Now we can show the main result of this miniproject.
