@@ -9,8 +9,7 @@
 \usepackage{amssymb}
 \usepackage{amsthm}
 \usepackage{listings}
-\usepackage{stmaryrd}
-\usepackage[style=english]{csquotes}
+\usepackage[normalem]{ulem}
 \usepackage[language=english, backend=biber, style=alphabetic, sorting=nyt]{biblatex}
 \usepackage{tikz}
 
@@ -148,28 +147,7 @@ More interesting are the following properties.
 \begin{lemma}[Question (a)]
     Let $\dim(V) \leq 3$. Then every element of $\extpow^k(V)$ is decomposable.
 \end{lemma}
-\begin{proof}
-    Now let $v_1, v_2, v_3$ be a set of generators of $V$.
-    Consider $u_1 = \sum \lambda_i v_i, u_2 = \sum_i \mu_i v_i, u_3 = \sum_i \rho_i v_i$.
-    Then by applying Lemma~\ref{prop:basic_properties_exterior_product}, we see that 
-    \begin{align*}
-        u_1 \wedge u_2 =& \sum_{i, j} \ \lambda_i \mu_j (\underbrace{v_i \wedge v_j}_{\mathclap{\text{$= 0$ if $i = j$}}}) = \sum_{i < j} \lambda_i \mu_j (v_i \wedge v_j) + \sum_{i > j} \lambda_i \mu_j (v_i \wedge v_j) \\
-        =& \sum_{i < j} (\lambda_i \mu_j - \lambda_j \mu_i)(v_i \wedge v_j) = \alpha (v_1 \wedge v_2) + \beta (v_1 \wedge v_3) + \gamma (v_2 \wedge v_3) \\
-        =& \begin{cases}
-            (\beta v_1 + \gamma v_2) \wedge (\frac \alpha \beta v_2 + v_3) & \text{if $\beta \neq 0$} \\
-            (\alpha v_1 - \gamma v_3) \wedge v_2 & \text{otherwise}
-        \end{cases}
-    \end{align*}
-    and
-    \begin{align*}
-        u_1 \wedge u_2 \wedge u_3 =& \sum_{i, j, l} \ \lambda_i \mu_j \rho_l (\underbrace{v_i \wedge v_j \wedge v_l}_{\mathclap{\text{$= 0$ unless $i, j, l$ pairwise distinct}}}) \\
-        =& \sum_{\pi \in S_3} \lambda_{\pi(1)} \mu_{\pi(2)} \rho_{\pi(3)} (v_{\pi(1)} \wedge v_{\pi(2)} \wedge v_{\pi(3)}) \\
-        =& \sum_{\pi \in S_3} \lambda_{\pi(1)} \mu_{\pi(2)} \rho_{\pi(3)} \sgn(\pi) (v_1 \wedge v_2 \wedge v_3) \\
-        =& (v_1 \wedge v_2 \wedge v_3) \sum_{\pi \in S_3} \lambda_{\pi(1)} \mu_{\pi(2)} \rho_{\pi(3)} \sgn(\pi)
-    \end{align*}
-    are decomposable.
-    Further, it is easy to see from Lemma~\ref{prop:basic_properties_exterior_product} that $\extpow^k(V) = \{ 0 \}$ for $k \geq 4$, which is trivially decomposable.
-\end{proof}
+I did not include the proof here, as it contained a slight mistake.
 
 \begin{example}[Question (b)]
     Consider $V = k^4$. 
@@ -349,10 +327,16 @@ The next two lemmas are quite fundamental, as they can be used as a basic tool t
         v_1 \wedge ... \wedge v_n = \underbrace{\det(A)}_{\neq 0} (b_1 \wedge ... \wedge b_n) \neq 0
     \end{equation*}
 \end{proof}
-Now we can see that in general, the exterior product contains not decomposable elements.
+Sadly, I have made a crucial mistake in my solution to the next question.
+This mistake boils down to the fact that in general
+\begin{equation*}
+    \extpow^{2d} V \not\cong \extpow^2 \extpow^d V
+\end{equation*}
+Observe e.g. that $\dim \extpow^4 k^3 = 0$ but $\dim \extpow^2 \extpow^2 k^3 = 3$.
+In fact, the next lemma only holds for $d = 2$.
 \begin{lemma}[Question (c)]
     \label{prop:characterization_decomposable_d_even}
-    Let $d$ be even.
+    Let $d$ be \sout{even} two.
     An element $\omega \in \extpow^d V$ is decomposable if and only if $\omega \wedge \omega \in \extpow^{2d} V$ is zero.
 \end{lemma}
 \begin{proof}
@@ -370,7 +354,9 @@ Now we can see that in general, the exterior product contains not decomposable e
         0 =& \omega \wedge \omega = \sum_{i, j} v_i \wedge v_j = \sum_{i < j} (v_i \wedge v_j) + (v_j \wedge v_i) \\
         \overset{*}{=}& \sum_{i < j} 2(v_i \wedge v_j) = 2\sum_i v_i \wedge \Bigl( \sum_{j > i} v_j \Bigr)
     \end{align*}
-    Here we used for $*$ that the reversing permutation $\bigl(1 \ 2d\bigr)\bigl(2 \ (2d - 1)\bigr)...\bigl(d \ (d + 1)\bigr) \in S_{2d}$ has even parity, i.e. $\sgn(\cdot) = 1$ (since $d$ is even).
+    Here we used for $*$ that the reversing permutation $\bigl(1 \ 2d\bigr)\bigl(2 \ (2d - 1)\bigr)...\bigl(d \ (d + 1)\bigr) \in S_{2d}$ has even parity, i.e. $\sgn(\cdot) = 1$ (since $d$ is even)
+    \footnote{Here is the mistake: Here and further down, we consider $v_i \wedge v_j \in \extpow^2 \extpow^d V$, and so the permutation is just $(1 \ 2)$, which clearly has odd parity.
+    If we would consider $v_i \wedge v_j \in \extpow^{2d} V$, this step seems to work out, but below, we then cannot apply Lemma~\ref{prop:extpow_zero_iff_independent} and Lemma~\ref{prop:subspace_closed}}.
 
     Now note that
     \begin{equation*}
